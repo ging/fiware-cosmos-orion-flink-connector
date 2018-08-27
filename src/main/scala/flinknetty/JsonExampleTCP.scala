@@ -1,10 +1,13 @@
+/*
 package flinknetty
 import org.apache.flink.streaming.api.functions.AscendingTimestampExtractor
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.windowing.time.Time
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow
-import org.apache.flink.streaming.connectors.netty.example.{HttpReceiverSource, TcpReceiverSource}
+
+import connector.{HttpReceiverSource, TcpReceiverSource}
+
 import org.apache.flink.table.shaded.org.joda.time.DateTime
 import org.apache.flink.util.Collector
 import org.json4s._
@@ -110,3 +113,4 @@ object JsonExampleTCP {
     env.execute("Socket Window WordCount")
   }
 }
+*/

@@ -3,7 +3,9 @@ import org.apache.flink.streaming.api.scala._
 
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.windowing.time.Time
-import org.apache.flink.streaming.connectors.netty.example.{HttpReceiverSource, TcpReceiverSource, HttpHandler}
+
+import connector.{HttpReceiverSource, TcpReceiverSource, HttpHandler}
+
 import org.json4s._
 import org.json4s.jackson.Serialization
 import org.json4s.jackson.Serialization.read
@@ -53,7 +55,7 @@ object JsonExample {
 
 
 //      .flatMap {w => w.split("\\n") }
-     .map { w => read[NgsiEvent](w) }
+//     .map { w => read[NgsiEvent](w) }
 //     .map { w => read[Iterable[NgsiEvent]](w) }
 //          .keyBy("word")
 //          .timeWindow(Time.seconds(5), Time.seconds(1))
