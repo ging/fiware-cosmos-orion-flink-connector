@@ -33,13 +33,11 @@ import org.slf4j.LoggerFactory
  * netty http server
  *
  * @param ctx       Flink source context for collect received message
- * @param paramKey  the http query param key
  * @param threadNum cpu number used by netty epoll
  * @param logLevel  netty log level
  */
 class HttpServer(
   ctx: SourceContext[String],
-  paramKey: String,
   threadNum: Int = Runtime.getRuntime.availableProcessors(),
   logLevel: LogLevel = LogLevel.INFO
 ) extends ServerTrait {
@@ -72,7 +70,7 @@ class HttpServer(
           override def initChannel(ch: SocketChannel): Unit = {
             val p = ch.pipeline()
             p.addLast(new HttpServerCodec)
-            p.addLast(new HttpHandler(ctx, paramKey))
+            p.addLast(new HttpHandler(ctx))
           }
         })
       val f = b.bind(portNotInUse)

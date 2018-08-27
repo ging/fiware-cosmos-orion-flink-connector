@@ -21,20 +21,16 @@ import io.netty.channel.{ChannelFutureListener, ChannelHandlerContext, ChannelIn
 import io.netty.handler.codec.http.HttpResponseStatus._
 import io.netty.handler.codec.http.HttpVersion._
 import io.netty.handler.codec.http._
-import io.netty.handler.codec.json.JsonObjectDecoder
 import io.netty.util.{AsciiString, CharsetUtil}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.slf4j.LoggerFactory
-
 /**
  * http server handler, process http request
  *
  * @param sc       Flink source context for collect received message
- * @param paramKey the http query param key
  */
 class HttpHandler(
-  sc: SourceContext[String],
-  paramKey: String
+  sc: SourceContext[String]
 ) extends ChannelInboundHandlerAdapter {
 
   private lazy val logger = LoggerFactory.getLogger(getClass)
@@ -47,9 +43,11 @@ class HttpHandler(
     msg match {
       case request: DefaultLastHttpContent =>
         val content = request.content()
- 
-        //  val text = content.readBytes(15 )
-        val bb = ByteBufUtil.readBytes(request.content.alloc, request.content, request.content.readableBytes)
+        val bbu = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
+        val jsonString = bbu.toString(0,content.capacity(),CharsetUtil.UTF_8)
+        println(jsonString)
+        sc.collect(jsonString)
+
 
       case req:  HttpRequest =>
         if (HttpUtil.is100ContinueExpected(req)) {
@@ -64,9 +62,6 @@ class HttpHandler(
 
           val decoder = new QueryStringDecoder(req.uri)
           val param: java.util.Map[String, java.util.List[String]] = decoder.parameters()
-          if (param.containsKey(paramKey)) {
-            sc.collect(param.get(paramKey).get(0))
-          }
 
           ctx.writeAndFlush(buildResponse())
         }
@@ -88,5 +83,4 @@ class HttpHandler(
     logger.error("channel exception " + ctx.channel().toString, cause)
     ctx.close
   }
-
 }

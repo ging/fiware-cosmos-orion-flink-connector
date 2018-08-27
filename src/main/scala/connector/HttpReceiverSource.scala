@@ -31,12 +31,10 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceCont
  *   env.addSource(new TcpReceiverSource(7070, Some("http://localhost:9090/cb")))
  * }}}
  *
- * @param paramKey    the http query param key
  * @param tryPort     try to use this point, if this point is used then try a new port
  * @param callbackUrl register connector's ip and port to a third service
  */
 final class HttpReceiverSource(
-  paramKey: String,
   tryPort: Int,
   callbackUrl: Option[String] = None
 ) extends RichParallelSourceFunction[String] {
@@ -45,7 +43,7 @@ final class HttpReceiverSource(
   override def cancel(): Unit = server.close()
 
   override def run(ctx: SourceContext[String]): Unit = {
-    server = new HttpServer(ctx, paramKey)
+    server = new HttpServer(ctx)
     server.start(tryPort, callbackUrl)
   }
 }

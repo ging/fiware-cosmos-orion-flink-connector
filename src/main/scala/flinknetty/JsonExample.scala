@@ -46,14 +46,12 @@ object JsonExample {
                        )
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment;
-    val source = new HttpReceiverSource("msg", 9001, Some("http://localhost:3000/"))
+    val source = new HttpReceiverSource(9001)
     val text = env.addSource(source)
 //    val text = env.addSource(new TcpReceiverSource( 9001, Some("http://localhost:3000/")))
     //  val text = env.socketTextStream( "localhost", 9000, '\n' );
 
     val windowCounts = text
-
-
 //      .flatMap {w => w.split("\\n") }
 //     .map { w => read[NgsiEvent](w) }
 //     .map { w => read[Iterable[NgsiEvent]](w) }
