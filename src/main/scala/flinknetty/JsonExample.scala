@@ -3,7 +3,7 @@ import org.apache.flink.streaming.api.scala._
 
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.windowing.time.Time
-import org.apache.flink.streaming.connectors.netty.example.HttpReceiverSource
+import org.apache.flink.streaming.connectors.netty.example.{HttpReceiverSource, TcpReceiverSource, HttpHandler}
 import org.json4s._
 import org.json4s.jackson.Serialization
 import org.json4s.jackson.Serialization.read
@@ -44,7 +44,9 @@ object JsonExample {
                        )
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment;
-    val text = env.addSource(new HttpReceiverSource("msg", 9001, Some("http://localhost:3000/")))
+    val source = new HttpReceiverSource("msg", 9001, Some("http://localhost:3000/"))
+    val text = env.addSource(source)
+//    val text = env.addSource(new TcpReceiverSource( 9001, Some("http://localhost:3000/")))
     //  val text = env.socketTextStream( "localhost", 9000, '\n' );
 
     val windowCounts = text

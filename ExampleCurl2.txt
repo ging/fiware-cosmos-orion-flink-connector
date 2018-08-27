@@ -1,0 +1,4 @@
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{ creationTime: 228930314431312345, fiwareService:"rooms", fiwareServicePath:"unknown", timestamp:228930314431312345, entityType:"room", entityPattern:"1", entityId:"1", attrs: [{name: "room1", attType: "temperature", value: 22}, {name: "room2", attType: "temperature", value: 14}], count:2 }' \
+  http://localhost:9001
