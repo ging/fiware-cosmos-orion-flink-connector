@@ -48,6 +48,7 @@ under the License.
 		<flink.version>1.5.0</flink.version>
 		<scala.binary.version>2.11</scala.binary.version>
 		<scala.version>2.11.12</scala.version>
+		<play2.version>2.4.6</play2.version>
 	</properties>
 
 	<dependencies>
@@ -65,11 +66,13 @@ under the License.
 			<version>${flink.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.flink</groupId>
-			<artifactId>flink-table_2.11</artifactId>
-			<version>${flink.version}</version>
-		</dependency>
+
+	<!--	<dependency>
+			<groupId>com.typesafe.play</groupId>
+			<artifactId>play_2.11</artifactId>
+			<version>${play2.version}</version>
+		</dependency>-->
+
 		<!-- Scala Library, provided by Flink as well. -->
 		<dependency>
 			<groupId>org.scala-lang</groupId>
@@ -78,17 +81,7 @@ under the License.
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Add connector dependencies here. They must be in the default scope (compile). -->
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
-			<version>4.1.5.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.bahir</groupId>
-			<artifactId>flink-connector-netty_2.11</artifactId>
-			<version>1.1-SNAPSHOT</version>
-		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.json4s/json4s-jackson -->
 		<dependency>
 			<groupId>org.json4s</groupId>

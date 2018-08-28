@@ -45,10 +45,7 @@ class HttpHandler(
         val content = request.content()
         val bbu = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
         val jsonString = bbu.toString(0,content.capacity(),CharsetUtil.UTF_8)
-        println(jsonString)
         sc.collect(jsonString)
-
-
       case req:  HttpRequest =>
         if (HttpUtil.is100ContinueExpected(req)) {
           ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE))
