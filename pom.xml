@@ -67,12 +67,6 @@ under the License.
 			<scope>provided</scope>
 		</dependency>
 
-	<!--	<dependency>
-			<groupId>com.typesafe.play</groupId>
-			<artifactId>play_2.11</artifactId>
-			<version>${play2.version}</version>
-		</dependency>-->
-
 		<!-- Scala Library, provided by Flink as well. -->
 		<dependency>
 			<groupId>org.scala-lang</groupId>
@@ -129,7 +123,11 @@ under the License.
 			<version>${flink.version}</version>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+		</dependency>
 		<!-- Example:
 
 		<dependency>

@@ -23,16 +23,16 @@ import io.netty.handler.codec.http.HttpVersion._
 import io.netty.handler.codec.http._
 import io.netty.util.{AsciiString, CharsetUtil}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
-import org.slf4j.LoggerFactory
 import org.json4s._
-import org.json4s.jackson.JsonMethods._
+import org.slf4j.LoggerFactory
+
 /**
  * http server handler, process http request
  *
  * @param sc       Flink source context for collect received message
  */
-class HttpHandler(
-  sc: SourceContext[HttpServerMessage]
+class HttpHandlerBackUp(
+  sc: SourceContext[String]
 ) extends ChannelInboundHandlerAdapter {
 
   private lazy val logger = LoggerFactory.getLogger(getClass)
@@ -43,19 +43,29 @@ class HttpHandler(
   implicit val formats = DefaultFormats
 
   override def channelRead(ctx: ChannelHandlerContext, msg: AnyRef): Unit = {
+    var jsonString2 = ""
+    println("Nuevo mensaje", msg)
     msg match {
-      case req : FullHttpRequest =>
-        val content = req.content()
+      case reqq : FullHttpRequest =>
+        println(reqq, reqq.headers(), reqq.content())
+      case request: DefaultLastHttpContent =>
+        val content = request.content()
         val bbu = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
         val jsonString = bbu.toString(0,content.capacity(),CharsetUtil.UTF_8)
-        /* val header = scala.collection.mutable.Map[String, String]()
-          while(req.headers().entries().listIterator().hasNext()) {
-          val n = req.headers().entries().listIterator().next()
-          header.put(n.getKey, n.getValue)
-        }*/
-        val event = new HttpServerMessage(req.headers.entries() , jsonString)
-        sc.collect(event)
+        jsonString2 = jsonString
+        //  val body =   parse(jsonString).extract[BodyObject]
+        //  println(headers.getAll("Content-Length"))
+//        sc.collect(jsonString)
 
+      case req:  HttpRequest =>
+        val j = new DefaultLastHttpContent()
+        val content = j.touch(req).content()
+        val bbu = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
+        val jsonString = bbu.toString(0, content.capacity(), CharsetUtil.UTF_8)
+//        println("HERE!!!!!!!!!!!!!", jsonString, req.headers().get("Content-Length"))
+        println(jsonString2)
+        jsonString2 += req.headers().get("Content-Length")
+        println(jsonString2)
         if (HttpUtil.is100ContinueExpected(req)) {
           ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE))
         }
@@ -88,9 +98,6 @@ class HttpHandler(
     ctx.close
   }
 
-}
-
-
-case class HttpServerMessage(header:java.util.List[java.util.Map.Entry[String, String]], body: String) extends Serializable {
-
+  case class BodyObject(subscriptionId:Long, data: Seq[Any])
+  case class HttpServerMessage(body: String, service: String, agent: String, servicePath: String)
 }

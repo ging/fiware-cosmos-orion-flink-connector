@@ -16,10 +16,10 @@ object TemperatureTest {
     val text = env.addSource(new HttpReceiverSource(9001)) // HTTP server not register on any third party
 
     val windowCounts = text
-      .map { w => parse(w).extract[TemperatureTestObj] }
-      .keyBy("room")
-      .timeWindow(Time.seconds(5), Time.seconds(1))
-      .min("temp")
+//      .map { w => parse(w).extract[TemperatureTestObj] }
+//      .keyBy("room")
+//      .timeWindow(Time.seconds(5), Time.seconds(1))
+//      .min("temp")
 
     // print the results with a single thread, rather than in parallel
     windowCounts.print().setParallelism(1)

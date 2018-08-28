@@ -24,8 +24,7 @@ import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.channel.{Channel, ChannelInitializer, ChannelOption}
-import io.netty.handler.codec.http.HttpServerCodec
-import io.netty.handler.codec.http.HttpObjectAggregator
+import io.netty.handler.codec.http.{FullHttpRequest, HttpObjectAggregator, HttpServerCodec}
 import io.netty.handler.logging.{LogLevel, LoggingHandler}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.slf4j.LoggerFactory
@@ -38,7 +37,7 @@ import org.slf4j.LoggerFactory
  * @param logLevel  netty log level
  */
 class HttpServer(
-  ctx: SourceContext[String],
+  ctx: SourceContext[HttpServerMessage],
   threadNum: Int = Runtime.getRuntime.availableProcessors(),
   logLevel: LogLevel = LogLevel.INFO
 ) extends ServerTrait {

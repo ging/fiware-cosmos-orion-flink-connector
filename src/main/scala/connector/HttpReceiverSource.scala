@@ -16,6 +16,7 @@
  */
 package connector
 
+import io.netty.handler.codec.http.FullHttpRequest
 import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunction
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 
@@ -37,12 +38,12 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceCont
 final class HttpReceiverSource(
   tryPort: Int,
   callbackUrl: Option[String] = None
-) extends RichParallelSourceFunction[String] {
+) extends RichParallelSourceFunction[HttpServerMessage] {
   private var server: HttpServer = _
 
   override def cancel(): Unit = server.close()
 
-  override def run(ctx: SourceContext[String]): Unit = {
+  override def run(ctx: SourceContext[HttpServerMessage]): Unit = {
     server = new HttpServer(ctx)
     server.start(tryPort, callbackUrl)
   }

@@ -4,6 +4,9 @@ const port = 3000
 
 const requestHandler = (request, response) => {
   console.log(request.url)
+  console.log(request)
+  console.log(request.body)
+  console.log("**********************")
   response.end("msg")
 }
 

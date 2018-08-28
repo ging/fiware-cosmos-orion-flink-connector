@@ -16,11 +16,11 @@ object WordCount {
     val text = env.addSource(new HttpReceiverSource(  9001)) // HTTP server not register on any third party
 
     val windowCounts = text
-      .flatMap { w => w.split("\\s") }
-      .map { w => WordWithCount(w, 1) }
-      .keyBy("word")
-      .timeWindow(Time.seconds(5), Time.seconds(1))
-      .sum("count")
+//      .flatMap { w => w.split("\\s") }
+//      .map { w => WordWithCount(w, 1) }
+//      .keyBy("word")
+//      .timeWindow(Time.seconds(5), Time.seconds(1))
+//      .sum("count")
 
     // print the results with a single thread, rather than in parallel
     windowCounts.print().setParallelism(1)

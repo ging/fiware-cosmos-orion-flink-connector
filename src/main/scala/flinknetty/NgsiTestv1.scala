@@ -14,11 +14,11 @@ object NgsiTestv1 {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     val text = env.addSource(new HttpReceiverSource(9001))
     val windowCounts = text
-      .map { jsonStr => parse(jsonStr).extract[NgsiEvent]}
-      .flatMap(event => event.attrs)
-      .keyBy("name")
-      .timeWindow(Time.seconds(5), Time.seconds(1))
-      .min("value")
+//      .map { jsonStr => parse(jsonStr).extract[NgsiEvent]}
+//      .flatMap(event => event.attrs)
+//      .keyBy("name")
+//      .timeWindow(Time.seconds(5), Time.seconds(1))
+//      .min("value")
 
     // print the results with a single thread, rather than in parallel
     windowCounts.print().setParallelism(1)
