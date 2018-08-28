@@ -1,3 +1,4 @@
+/*
 package flinknetty
 import org.apache.flink.streaming.api.scala._
 
@@ -26,17 +27,17 @@ object JsonExample {
                         count:Int
                       )
 
-  /*
-    [{ creationTime: 228930314431312345,
-    fiwareService:"rooms",
-    fiwareServicePath:"unknown",
-    timestamp:228930314431312345,
-    entityType:"room",
-    entityPattern:"1",
-    entityId:"1",
-    attrs: [{name: "room1", attType: "temperature", value: 22},{name: "room2", attType: "temperature", value: 14}],
-    count:2 }]
-  */
+
+//    [{ creationTime: 228930314431312345,
+//    fiwareService:"rooms",
+//    fiwareServicePath:"unknown",
+//    timestamp:228930314431312345,
+//    entityType:"room",
+//    entityPattern:"1",
+//    entityId:"1",
+//    attrs: [{name: "room1", attType: "temperature", value: 22},{name: "room2", attType: "temperature", value: 14}],
+//    count:2 }]
+
 
   // %7B+%22creationTime%22%3A+228930314431312345%2C%0D%0A++%22fiwareService%22%3A%22rooms%22%2C%0D%0A++%22fiwareServicePath%22%3A%22unknown%22%2C%0D%0A++%22timestamp%22%3A228930314431312345%2C%0D%0A++%22entityType%22%3A%22room%22%2C%0D%0A++%22entityPattern%22%3A%221%22%2C%0D%0A++%22entityId%22%3A%221%22%2C%0D%0A++%22attrs%22%3A+%5B%7B%22name%22%3A+%22room1%22%2C+%22attType%22%3A+%22temperature%22%2C+%22value%22%3A+22%7D%2C%7B%22name%22%3A+%22room2%22%2C+%22attType%22%3A+%22temperature%22%2C+%22value%22%3A+14%7D%5D%2C%0D%0A++%22count%22%3A2+%7D
   case class Attributes(
@@ -71,3 +72,4 @@ object JsonExample {
     env.execute("Socket Window WordCount")
   }
 }
+*/

@@ -25,6 +25,7 @@ import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.channel.{Channel, ChannelInitializer, ChannelOption}
 import io.netty.handler.codec.http.HttpServerCodec
+import io.netty.handler.codec.http.HttpObjectAggregator
 import io.netty.handler.logging.{LogLevel, LoggingHandler}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.slf4j.LoggerFactory
@@ -70,6 +71,7 @@ class HttpServer(
           override def initChannel(ch: SocketChannel): Unit = {
             val p = ch.pipeline()
             p.addLast(new HttpServerCodec)
+            p.addLast(new HttpObjectAggregator(1048576))
             p.addLast(new HttpHandler(ctx))
           }
         })

@@ -24,6 +24,8 @@ import io.netty.handler.codec.http._
 import io.netty.util.{AsciiString, CharsetUtil}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.slf4j.LoggerFactory
+import org.json4s._
+import org.json4s.jackson.JsonMethods._
 /**
  * http server handler, process http request
  *
@@ -38,15 +40,32 @@ class HttpHandler(
   private lazy val CONTENT_LENGTH  = new AsciiString("Content-Length")
 
   override def channelReadComplete(ctx: ChannelHandlerContext): Unit = ctx.flush
+  implicit val formats = DefaultFormats
 
   override def channelRead(ctx: ChannelHandlerContext, msg: AnyRef): Unit = {
+    var jsonString2 = ""
+    println("Nuevo mensaje", msg)
     msg match {
+      case reqq : FullHttpRequest =>
+        println(reqq, reqq.headers(), reqq.content())
       case request: DefaultLastHttpContent =>
         val content = request.content()
         val bbu = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
         val jsonString = bbu.toString(0,content.capacity(),CharsetUtil.UTF_8)
-        sc.collect(jsonString)
+        jsonString2 = jsonString
+        //  val body =   parse(jsonString).extract[BodyObject]
+        //  println(headers.getAll("Content-Length"))
+//        sc.collect(jsonString)
+
       case req:  HttpRequest =>
+        val j = new DefaultLastHttpContent()
+        val content = j.touch(req).content()
+        val bbu = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
+        val jsonString = bbu.toString(0, content.capacity(), CharsetUtil.UTF_8)
+//        println("HERE!!!!!!!!!!!!!", jsonString, req.headers().get("Content-Length"))
+        println(jsonString2)
+        jsonString2 += req.headers().get("Content-Length")
+        println(jsonString2)
         if (HttpUtil.is100ContinueExpected(req)) {
           ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE))
         }
@@ -56,10 +75,8 @@ class HttpHandler(
         if (!keepAlive) {
           ctx.writeAndFlush(buildResponse()).addListener(ChannelFutureListener.CLOSE)
         } else {
-
           val decoder = new QueryStringDecoder(req.uri)
           val param: java.util.Map[String, java.util.List[String]] = decoder.parameters()
-
           ctx.writeAndFlush(buildResponse())
         }
       case x =>
@@ -80,4 +97,7 @@ class HttpHandler(
     logger.error("channel exception " + ctx.channel().toString, cause)
     ctx.close
   }
+
+  case class BodyObject(subscriptionId:Long, data: Seq[Any])
+  case class SerializationObject(body: String, service: String, agent: String, servicePath: String)
 }
