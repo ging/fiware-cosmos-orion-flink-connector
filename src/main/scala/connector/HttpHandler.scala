@@ -46,14 +46,29 @@ class HttpHandler(
     msg match {
       case req : FullHttpRequest =>
         val content = req.content()
-        val bbu = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
-        val jsonString = bbu.toString(0,content.capacity(),CharsetUtil.UTF_8)
-        /* val header = scala.collection.mutable.Map[String, String]()
-          while(req.headers().entries().listIterator().hasNext()) {
-          val n = req.headers().entries().listIterator().next()
-          header.put(n.getKey, n.getValue)
-        }*/
-        val event = new HttpServerMessage(req.headers.entries() , jsonString)
+        val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
+        val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.UTF_8)
+        val event = new HttpServerMessage(req.headers.entries(), jsonBodyString)
+        val headerEntries = req.headers().entries()
+
+        val dataObj = parse(jsonBodyString).extract[DataObj]
+        val entities = dataObj.data
+        val entity = entities(0)
+        val entityId = entity("id").toString
+        val entityType = entity("type").toString
+        val attrs = entity.filterKeys(x => x != "id" & x!= "type" ).asInstanceOf[Map[String,Attr]]
+        println(attrs.keys)
+
+        val ngsiEvent = new NgsiEvent(
+          System.currentTimeMillis, // creationTime
+          headerEntries.get(4).getValue(), // service
+          headerEntries.get(5).getValue(), // servicePath
+          entityType, // entityType
+          entityId, // entityId
+          attrs // attrs
+        )
+
+        println(ngsiEvent)
         sc.collect(event)
 
         if (HttpUtil.is100ContinueExpected(req)) {
@@ -65,8 +80,8 @@ class HttpHandler(
         if (!keepAlive) {
           ctx.writeAndFlush(buildResponse()).addListener(ChannelFutureListener.CLOSE)
         } else {
-          val decoder = new QueryStringDecoder(req.uri)
-          val param: java.util.Map[String, java.util.List[String]] = decoder.parameters()
+          // val decoder = new QueryStringDecoder(req.uri)
+          // val param: java.util.Map[String, java.util.List[String]] = decoder.parameters()
           ctx.writeAndFlush(buildResponse())
         }
       case x =>
