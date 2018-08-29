@@ -1,13 +1,21 @@
 // content of index.js
 const http = require('http')
 const port = 3000
+const { parse } = require('querystring');
 
-const requestHandler = (request, response) => {
-  console.log(request.url)
-  console.log(request)
-  console.log(request.body)
+const requestHandler = (req , res) => {
   console.log("**********************")
-  response.end("msg")
+  if (req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => {
+          body += chunk.toString();
+      });
+      req.on('end', () => {
+          let obj = JSON.parse(body);
+          console.log( "Node with id " + obj.id + " has temperature " + obj.temperature)
+          res.end('ok');
+      });
+  }
 }
 
 const server = http.createServer(requestHandler)
