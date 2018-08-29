@@ -32,7 +32,7 @@ import org.json4s.jackson.JsonMethods._
  * @param sc       Flink source context for collect received message
  */
 class HttpHandler(
-  sc: SourceContext[HttpServerMessage]
+  sc: SourceContext[NgsiEvent]
 ) extends ChannelInboundHandlerAdapter {
 
   private lazy val logger = LoggerFactory.getLogger(getClass)
@@ -48,7 +48,6 @@ class HttpHandler(
         val content = req.content()
         val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
         val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.UTF_8)
-        val event = new HttpServerMessage(req.headers.entries(), jsonBodyString)
         val headerEntries = req.headers().entries()
 
         val dataObj = parse(jsonBodyString).extract[DataObj]
@@ -56,8 +55,11 @@ class HttpHandler(
         val entity = entities(0)
         val entityId = entity("id").toString
         val entityType = entity("type").toString
-        val attrs = entity.filterKeys(x => x != "id" & x!= "type" ).asInstanceOf[Map[String,Attr]]
-        println(attrs.keys)
+        val attrs2 = entity.filterKeys(x => x != "id" & x!= "type" )//.transform((k,v) => v.asInstanceOf[Attr])
+        println("22222222222222222222222222222222222222222222222222",attrs2)
+//        val attrs = attrs2.mapValues(x=>x.asInstanceOf[Attr])
+        val attrs = attrs2.map{ case (k, v) => println(k,v);(k, v.asInstanceOf[Attr])}
+       println(attrs)
 
         val ngsiEvent = new NgsiEvent(
           System.currentTimeMillis, // creationTime
@@ -69,7 +71,7 @@ class HttpHandler(
         )
 
         println(ngsiEvent)
-        sc.collect(event)
+        sc.collect(ngsiEvent)
 
         if (HttpUtil.is100ContinueExpected(req)) {
           ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE))
@@ -103,9 +105,5 @@ class HttpHandler(
     ctx.close
   }
 
-}
-
-
-case class HttpServerMessage(header:java.util.List[java.util.Map.Entry[String, String]], body: String) extends Serializable {
 
 }

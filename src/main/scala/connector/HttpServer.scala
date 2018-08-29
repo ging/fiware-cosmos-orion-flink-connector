@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory
  * @param logLevel  netty log level
  */
 class HttpServer(
-  ctx: SourceContext[HttpServerMessage],
+  ctx: SourceContext[NgsiEvent],
   threadNum: Int = Runtime.getRuntime.availableProcessors(),
   logLevel: LogLevel = LogLevel.INFO
 ) extends ServerTrait {

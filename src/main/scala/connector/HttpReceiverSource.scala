@@ -38,12 +38,12 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceCont
 final class HttpReceiverSource(
   tryPort: Int,
   callbackUrl: Option[String] = None
-) extends RichParallelSourceFunction[HttpServerMessage] {
+) extends RichParallelSourceFunction[NgsiEvent] {
   private var server: HttpServer = _
 
   override def cancel(): Unit = server.close()
 
-  override def run(ctx: SourceContext[HttpServerMessage]): Unit = {
+  override def run(ctx: SourceContext[NgsiEvent]): Unit = {
     server = new HttpServer(ctx)
     server.start(tryPort, callbackUrl)
   }

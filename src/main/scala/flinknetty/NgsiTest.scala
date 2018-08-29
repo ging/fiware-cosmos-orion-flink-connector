@@ -15,22 +15,23 @@ object NgsiTest {
 
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
-    val text = env.addSource(new HttpReceiverSource(9001))
+    val eventStream = env.addSource(new HttpReceiverSource(9001))
 
-    val windowCounts = text
-      .map( event => parse(event.body).extract[DataClass] )
-      .flatMap(body => body.data)
-      .map(el => new Temp_Node(el.id, el.temperature.value.asInstanceOf[Number].floatValue()))
+    val processedDataStream = eventStream
+//      .map( event => parse(event.body).extract[DataClass] )
+//      .flatMap(body => body.data)
+//      .map(el => new Temp_Node(el.id, el.temperature.value.asInstanceOf[Number].floatValue())
+      .map(event => new Temp_Node(event.entityId,event.attrs("temperature").asInstanceOf[Number].floatValue()))
       .keyBy("id")
       .timeWindow(Time.seconds(5), Time.seconds(1))
       .min("temperature")
       .map(x => HttpSinkObject(x.toString, URL_CB + x.id +"/attrs", CONTENT_TYPE, METHOD))
 
     // URL from header¿¿¿¿???????
-    HttpSink.addSink( windowCounts )
+    HttpSink.addSink( processedDataStream )
 
     // print the results with a single thread, rather than in parallel
-    windowCounts.map(z => z.content).print().setParallelism(1)
+    processedDataStream.map(z => z.content).print().setParallelism(1)
     env.execute("Socket Window NgsiEvent")
   }
 
