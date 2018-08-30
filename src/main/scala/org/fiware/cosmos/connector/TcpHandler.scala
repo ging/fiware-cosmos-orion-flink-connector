@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package connector
+package org.fiware.cosmos.connector
 
 import io.netty.channel.{ChannelHandlerContext, SimpleChannelInboundHandler}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext

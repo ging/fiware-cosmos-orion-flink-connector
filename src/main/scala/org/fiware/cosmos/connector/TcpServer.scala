@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package connector
+package org.fiware.cosmos.connector
 
 import java.net.InetSocketAddress
 import java.util.concurrent.atomic.AtomicBoolean

@@ -13,8 +13,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Modified by @sonsoleslp
  */
-package connector
+package org.fiware.cosmos.connector
 
 import io.netty.buffer.{ByteBufUtil, Unpooled}
 import io.netty.channel.{ChannelFutureListener, ChannelHandlerContext, ChannelInboundHandlerAdapter}
@@ -23,15 +25,15 @@ import io.netty.handler.codec.http.HttpVersion._
 import io.netty.handler.codec.http._
 import io.netty.util.{AsciiString, CharsetUtil}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
-import org.slf4j.LoggerFactory
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
+import org.slf4j.LoggerFactory
 /**
- * http server handler, process http request
+ * HTTP server handler, HTTP http request
  *
  * @param sc       Flink source context for collect received message
  */
-class HttpHandler(
+class OrionHttpHandler(
   sc: SourceContext[NgsiEvent]
 ) extends ChannelInboundHandlerAdapter {
 
@@ -42,35 +44,44 @@ class HttpHandler(
   override def channelReadComplete(ctx: ChannelHandlerContext): Unit = ctx.flush
   implicit val formats = DefaultFormats
 
+  /**
+    * Reads the information comming from the HTTP channel
+    * @param ctx Flink source context for collect received message
+    * @param msg HTTP message
+    */
   override def channelRead(ctx: ChannelHandlerContext, msg: AnyRef): Unit = {
     msg match {
       case req : FullHttpRequest =>
+        // Retrieve headers
+        val headerEntries = req.headers().entries()
+        val service = headerEntries.get(4).getValue()
+        val servicePath = headerEntries.get(5).getValue()
+
+        // Retrieve body content and convert from Byte array to String
         val content = req.content()
         val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
         val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.UTF_8)
-        val headerEntries = req.headers().entries()
 
-        val dataObj = parse(jsonBodyString).extract[DataObj]
-        val entities = dataObj.data
-        val entity = entities(0)
-        val entityId = entity("id").toString
-        val entityType = entity("type").toString
-        val attrs2 = entity.filterKeys(x => x != "id" & x!= "type" )//.transform((k,v) => v.asInstanceOf[Attr])
-        println("22222222222222222222222222222222222222222222222222",attrs2)
-//        val attrs = attrs2.mapValues(x=>x.asInstanceOf[Attr])
-        val attrs = attrs2.map{ case (k, v) => println(k,v);(k, v.asInstanceOf[Attr])}
-       println(attrs)
+        // Parse Body from JSON string to object and retrieve entities
+        val dataObj = parse(jsonBodyString).extract[HttpBody]
+        val parsedEntities = dataObj.data
+        val entities = parsedEntities.map(entity => {
+          // Retrieve entity id
+          val entityId = entity("id").toString
+          // Retrieve entity type
+          val entityType = entity("type").toString
+          // Retrieve attributes
+          val attrs = entity.filterKeys(x => x != "id" & x!= "type" )
+            //Convert attributes to Attribute objects
+            .transform((k,v) => MapToAttributeConverter
+              .unapply(v.asInstanceOf[Map[String,Any]]))
+          new Entity(entityId,entityType,attrs )
+        })
+        // Generate timestamp
+        val creationTime = System.currentTimeMillis
+        // Generate NgsiEvent
+        val ngsiEvent = new NgsiEvent(creationTime, service, servicePath, entities)
 
-        val ngsiEvent = new NgsiEvent(
-          System.currentTimeMillis, // creationTime
-          headerEntries.get(4).getValue(), // service
-          headerEntries.get(5).getValue(), // servicePath
-          entityType, // entityType
-          entityId, // entityId
-          attrs // attrs
-        )
-
-        println(ngsiEvent)
         sc.collect(ngsiEvent)
 
         if (HttpUtil.is100ContinueExpected(req)) {
@@ -79,6 +90,8 @@ class HttpHandler(
 
         val keepAlive: Boolean = HttpUtil.isKeepAlive(req)
 
+
+        // Generate Response
         if (!keepAlive) {
           ctx.writeAndFlush(buildResponse()).addListener(ChannelFutureListener.CLOSE)
         } else {

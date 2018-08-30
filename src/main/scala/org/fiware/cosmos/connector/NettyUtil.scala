@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package connector
+package org.fiware.cosmos.connector
 
 import java.io.{BufferedReader, InputStreamReader}
 import java.net._

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package connector
+package org.fiware.cosmos.connector
 
 import java.net.InetSocketAddress
 import java.util.concurrent.atomic.AtomicBoolean
@@ -24,7 +24,7 @@ import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.channel.{Channel, ChannelInitializer, ChannelOption}
-import io.netty.handler.codec.http.{FullHttpRequest, HttpObjectAggregator, HttpServerCodec}
+import io.netty.handler.codec.http.{HttpObjectAggregator, HttpServerCodec}
 import io.netty.handler.logging.{LogLevel, LoggingHandler}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.slf4j.LoggerFactory
@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory
  * @param threadNum cpu number used by netty epoll
  * @param logLevel  netty log level
  */
-class HttpServer(
+class OrionHttpServer(
   ctx: SourceContext[NgsiEvent],
   threadNum: Int = Runtime.getRuntime.availableProcessors(),
   logLevel: LogLevel = LogLevel.INFO
@@ -71,7 +71,7 @@ class HttpServer(
             val p = ch.pipeline()
             p.addLast(new HttpServerCodec)
             p.addLast(new HttpObjectAggregator(1048576))
-            p.addLast(new HttpHandler(ctx))
+            p.addLast(new OrionHttpHandler(ctx))
           }
         })
       val f = b.bind(portNotInUse)
