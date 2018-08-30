@@ -39,7 +39,7 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceCont
  * @param tryPort     the tcp port to start, if port Collision, retry a new port
  * @param callbackUrl when netty server started, report the ip and port to this url
  */
-final class TcpReceiverSource(
+protected final class TcpReceiverSource(
   tryPort: Int,
   callbackUrl: Option[String] = None
 ) extends RichParallelSourceFunction[String] {

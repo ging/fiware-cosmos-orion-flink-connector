@@ -52,6 +52,10 @@ class OrionHttpHandler(
   override def channelRead(ctx: ChannelHandlerContext, msg: AnyRef): Unit = {
     msg match {
       case req : FullHttpRequest =>
+        if (req.method() != HttpMethod.POST) {
+          throw new Exception("Only POST requests are allowed")
+        }
+
         // Retrieve headers
         val headerEntries = req.headers().entries()
         val service = headerEntries.get(4).getValue()
@@ -99,6 +103,7 @@ class OrionHttpHandler(
           // val param: java.util.Map[String, java.util.List[String]] = decoder.parameters()
           ctx.writeAndFlush(buildResponse())
         }
+
       case x =>
         logger.info("unsupported request format " + x)
     }

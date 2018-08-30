@@ -23,22 +23,17 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceCont
 /**
   *
  * Http receiver source is used for receiving pushed http request.
- * It work for two step:
- * 1. start netty server with an un-used port when Flink get start
- * 2. after started netty, call back [[callbackUrl]] for register current connector to
- * message service, user can push http message to this address.
  * {{{
  *   // for example:
  *   val env = StreamExecutionEnvironment.getExecutionEnvironment
- *   env.addSource(new TcpReceiverSource(7070, Some("http://localhost:9090/cb")))
+ *   env.addSource(new OrionSource(7070))
  * }}}
  * @author @sonsoleslp
  * @param tryPort     try to use this point, if this point is used then try a new port
- * @param callbackUrl register connector's ip and port to a third service
  */
 final class OrionSource(
-  tryPort: Int,
-  callbackUrl: Option[String] = None
+  tryPort: Int/*,
+  callbackUrl: Option[String] = None*/
 ) extends RichParallelSourceFunction[NgsiEvent] {
   private var server: OrionHttpServer = _
 
@@ -46,6 +41,6 @@ final class OrionSource(
 
   override def run(ctx: SourceContext[NgsiEvent]): Unit = {
     server = new OrionHttpServer(ctx)
-    server.start(tryPort, callbackUrl)
+    server.start(tryPort, None)
   }
 }
