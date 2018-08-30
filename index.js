@@ -32,7 +32,7 @@ server.listen(port, (err) => {
 
 var options = {
   host: 'localhost',
-  path: '/',
+  path: '/notify',
   port: '9001',
   method: 'POST',
   headers: {

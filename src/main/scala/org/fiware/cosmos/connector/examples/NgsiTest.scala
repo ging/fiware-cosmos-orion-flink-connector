@@ -10,7 +10,7 @@ import org.json4s._
   * @author @sonsoleslp
   */
 object NgsiTest {
-  final val URL_CB = "http://localhost:3000/v2/entities/"
+  final val URL_CB = "http://localhost:1026/v2/entities/"
   final val CONTENT_TYPE = ContentType.JSON
   final val METHOD = HTTPMethod.POST
 
