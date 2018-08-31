@@ -1,4 +1,4 @@
-# FlinkNetty
+# fiware-cosmos-orion-flink-connector
 
 This is an example for using the Netty Connector with Flink
 It needs an HTTP server to register to. In this example a server implemented with node is provided (index.js). In order to run it do:
