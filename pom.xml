@@ -26,8 +26,8 @@ under the License.
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
-	<name>Fiware Orion</name>
-	<url>http://www.myorganization.org</url>
+	<name>Fiware Orion Flink Connector</name>
+	<url>https://www.fiware.org/</url>
 
 	<repositories>
 		<repository>
