@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.fiware.cosmos.connector
+package org.fiware.cosmos.orion.flink.connector
 
 import java.io.{BufferedReader, InputStreamReader}
 import java.net._

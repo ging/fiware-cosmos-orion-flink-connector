@@ -21,12 +21,12 @@ under the License.
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>flinknetty</groupId>
-	<artifactId>flinknetty</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<groupId>org.fiware.cosmos</groupId>
+	<artifactId>orion.flink.connector</artifactId>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 
-	<name>Flink Quickstart Job</name>
+	<name>Fiware Orion</name>
 	<url>http://www.myorganization.org</url>
 
 	<repositories>
@@ -139,6 +139,9 @@ under the License.
 									<exclude>com.google.code.findbugs:jsr305</exclude>
 									<exclude>org.slf4j:*</exclude>
 									<exclude>log4j:*</exclude>
+									<exclude>org.apache.flink</exclude>
+									<exclude>org.apache.flink</exclude>
+									<exclude>org.scala-lang</exclude>
 								</excludes>
 							</artifactSet>
 							<filters>

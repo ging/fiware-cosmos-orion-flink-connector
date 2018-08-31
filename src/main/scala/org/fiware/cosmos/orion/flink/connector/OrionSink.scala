@@ -1,4 +1,4 @@
-package org.fiware.cosmos.connector
+package org.fiware.cosmos.orion.flink.connector
 
 import org.apache.flink.streaming.api.scala.DataStream
 import org.apache.http.client.methods._

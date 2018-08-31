@@ -1,4 +1,4 @@
-package org.fiware.cosmos.connector
+package org.fiware.cosmos.orion.flink.connector
 
 /**
   * NgsiEvent

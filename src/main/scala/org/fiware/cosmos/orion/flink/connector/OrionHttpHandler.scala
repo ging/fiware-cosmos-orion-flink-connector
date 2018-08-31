@@ -16,7 +16,7 @@
  *
  * Modified by @sonsoleslp
  */
-package org.fiware.cosmos.connector
+package org.fiware.cosmos.orion.flink.connector
 
 import io.netty.buffer.{ByteBufUtil, Unpooled}
 import io.netty.channel.{ChannelFutureListener, ChannelHandlerContext, ChannelInboundHandlerAdapter}
@@ -52,6 +52,10 @@ class OrionHttpHandler(
   override def channelRead(ctx: ChannelHandlerContext, msg: AnyRef): Unit = {
     msg match {
       case req : FullHttpRequest =>
+        if (req.method() != HttpMethod.POST) {
+          throw new Exception("Only POST requests are allowed")
+        }
+
         // Retrieve headers
         val headerEntries = req.headers().entries()
         val service = headerEntries.get(4).getValue()
@@ -99,6 +103,7 @@ class OrionHttpHandler(
           // val param: java.util.Map[String, java.util.List[String]] = decoder.parameters()
           ctx.writeAndFlush(buildResponse())
         }
+
       case x =>
         logger.info("unsupported request format " + x)
     }
@@ -113,9 +118,18 @@ class OrionHttpHandler(
     response
   }
 
+  private def buildBadResponse(content: Array[Byte] = Array.empty[Byte]): FullHttpResponse = {
+    val response: FullHttpResponse = new DefaultFullHttpResponse(
+      HTTP_1_1, OK, Unpooled.wrappedBuffer(content)
+    )
+    response.headers.set(CONTENT_TYPE, "text/plain")
+    response.headers.setInt(CONTENT_LENGTH, response.content.readableBytes)
+    response
+  }
+
   override def exceptionCaught(ctx: ChannelHandlerContext, cause: Throwable): Unit = {
     logger.error("channel exception " + ctx.channel().toString, cause)
-    ctx.close
+    ctx.writeAndFlush(buildBadResponse( (cause.getMessage.toString()+"\n").getBytes()))
   }
 
 

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fiware.cosmos.connector
+package org.fiware.cosmos.orion.flink.connector
 
 import scala.language.higherKinds
 
