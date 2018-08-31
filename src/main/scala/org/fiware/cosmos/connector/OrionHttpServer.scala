@@ -30,7 +30,7 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceCont
 import org.slf4j.LoggerFactory
 
 /**
- * netty http server
+ * Netty HTTP server
  *
  * @param ctx       Flink source context for collect received message
  * @param threadNum cpu number used by netty epoll

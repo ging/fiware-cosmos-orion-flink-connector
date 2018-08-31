@@ -24,8 +24,8 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceCont
   *
  * Http receiver source is used for receiving pushed http request.
  * It work for two step:
- * 1. start netty server with an un-used port when Flink get start
- * 2. after started netty, call back [[callbackUrl]] for register current connector to
+ *   1. start netty server with an un-used port when Flink get start
+ *   2. after started netty, call back [[callbackUrl]] for register current connector to
  * message service, user can push http message to this address.
  * {{{
  *   // for example:
