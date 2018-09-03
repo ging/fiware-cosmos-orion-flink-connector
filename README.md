@@ -32,13 +32,13 @@ Add it to your `pom.xml` file inside the dependencies section
 * Add source to Flink Environment. Indicate what port you want to listen to (e.g. 9001)
     ```
     val env = StreamExecutionEnvironment.getExecutionEnvironment
-    val eventStream = env.addSource(new OrionSource(9001))  
+    val eventStream = env.addSource(new OrionSource(9001))
     ```
 * Parse the received data
     ```
     val processedDataStream = eventStream.
-    .flatMap(event => event.entities)
-    // ...processing
+        .flatMap(event => event.entities)
+        // ...processing
     ```
     The received data is a DataStresm of objects of the class **`NgsiEvent`**. This class has the following attributes:
     * **`creationTime`**: Timestamp of arrival.
@@ -64,10 +64,10 @@ Add it to your `pom.xml` file inside the dependencies section
      // ... processing
      .map(obj =>
         new OrionSinkObject(
-        "{\"temperature_avg\": { \"value\":"+obj.temperature+", \"type\": \"Float\"}}", // Stringified JSON message
-         "http://context-broker-url:8080/v2/entities/Room1", // URL
-          ContentType.JSON, // Content type
-          HTTPMethod.POST) // HTTP method
+            "{\"temperature_avg\": { \"value\":"+obj.temperature+", \"type\": \"Float\"}}", // Stringified JSON message
+            "http://context-broker-url:8080/v2/entities/Room1", // URL
+            ContentType.JSON, // Content type
+            HTTPMethod.POST) // HTTP method
      )
 
     OrionSink.addSink( processedDataStream )
