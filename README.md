@@ -1,8 +1,9 @@
 # fiware-cosmos-orion-flink-connector
 
 This is a Flink connector for the Fiware Orion Context Broker.
-It provides a source for receiving NGSIv2 events in the shape of HTTP messages from subscriptions.
-It also provides a sink for writing back to the Context Broker.
+It has two parts:
+ * **`OrionSource`**: Source for receiving NGSIv2 events in the shape of HTTP messages from subscriptions.
+ * **`OrionSink`**: Sink for writing back to the Context Broker.
 
 ## Installation
 
@@ -28,10 +29,10 @@ Add it to your `pom.xml` file inside the dependencies section
     ```
     import org.fiware.cosmos.orion.flink.connector.{OrionSource}
     ```
-* Add source to Flink Environment
+* Add source to Flink Environment. Indicate what port you want to listen to (e.g. 9001)
     ```
     val env = StreamExecutionEnvironment.getExecutionEnvironment
-    val eventStream = env.addSource(new OrionSource(9001)
+    val eventStream = env.addSource(new OrionSource(9001)) //
     ```
 * Parse the received data
     ```
@@ -62,7 +63,11 @@ Add it to your `pom.xml` file inside the dependencies section
     val processedDataStream = eventStream.
      // ... processing
      .map(obj =>
-        new OrionSinkObject("{\"temperature_avg\": { \"value\":"+obj.temperature+", \"type\": \"Float\"}}"", "http://context-broker-url:8080/v2/entities/Room1", ContentType.JSON, HTTPMethod.POST)
+        new OrionSinkObject(
+        "{\"temperature_avg\": { \"value\":"+obj.temperature+", \"type\": \"Float\"}}", // Stringified JSON message
+         "http://context-broker-url:8080/v2/entities/Room1", // URL
+          ContentType.JSON, // Content type
+          HTTPMethod.POST) // HTTP method
      )
 
     OrionSink.addSink( processedDataStream )
