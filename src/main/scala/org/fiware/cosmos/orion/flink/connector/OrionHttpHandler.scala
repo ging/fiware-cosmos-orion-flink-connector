@@ -65,7 +65,7 @@ class OrionHttpHandler(
         val content = req.content()
         val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
         val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.UTF_8)
-
+        content.release()
         // Parse Body from JSON string to object and retrieve entities
         val dataObj = parse(jsonBodyString).extract[HttpBody]
         val parsedEntities = dataObj.data

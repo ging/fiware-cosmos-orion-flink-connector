@@ -1,23 +1,48 @@
 # fiware-cosmos-orion-flink-connector
 
-This is an example for using the Netty Connector with Flink
-It needs an HTTP server to register to. In this example a server implemented with node is provided (index.js). In order to run it do:
+This is a Flink connector for the Fiware Orion Context Broker.
+It provides a source for receiving NGSIv2 events in the shape of HTTP messages from subscriptions.
+It also provides a sink for writing back to the Context Broker.
 
+## Installation
+
+Download the JAR from the latest release.
+In your project directory run:
 ```
-node index.js
+mvn install:install-file -Dfile=$(PATH_DOWNLOAD)/orion.flink.connector-1.0.jar -DgroupId=org.fiware.cosmos -DartifactId=orion.flink.connector -Dversion=1.0 -Dpackaging=jar
 ```
-## WordCount example with socket
 
-Run the WordCount.scala file in IntelliJ
+Add it to your `pom.xml` file inside the dependencies section
+```
+<dependency>
+    <groupId>org.fiware.cosmos</groupId>
+    <artifactId>orion.flink.connector</artifactId>
+    <version>1.0</version>
+</dependency>
+```
 
-To see the word count in action perform an HTTP request to ```http://localhost:9000?msg=words to be counted``` and check the logs.
+## Usage
+### OrionSource
 
-## HTTP server with msg query param
-The next example is a NgsiEvent serialized received in an HTTP request like the previous one. Example: ```http://localhost:9000?msg=%7B+%22creationTime%22%3A+228930314431312345%2C%0D%0A++%22fiwareService%22%3A%22rooms%22%2C%0D%0A++%22fiwareServicePath%22%3A%22unknown%22%2C%0D%0A++%22timestamp%22%3A228930314431312345%2C%0D%0A++%22entityType%22%3A%22room%22%2C%0D%0A++%22entityPattern%22%3A%221%22%2C%0D%0A++%22entityId%22%3A%221%22%2C%0D%0A++%22attrs%22%3A+%5B%7B%22name%22%3A+%22room1%22%2C+%22attType%22%3A+%22temperature%22%2C+%22value%22%3A+22%7D%2C%7B%22name%22%3A+%22room2%22%2C+%22attType%22%3A+%22temperature%22%2C+%22value%22%3A+14%7D%5D%2C%0D%0A++%22count%22%3A2+%7D```
-Run the JsonExample.scala file in IntelliJ
+* Import dependency
+    ```
+    import org.fiware.cosmos.orion.flink.connector.{OrionSource}
+    ```
+* Add source to Flink Environment
+    ```
+    val env = StreamExecutionEnvironment.getExecutionEnvironment
+    val eventStream = env.addSource(new OrionSource(9001)
+    ```
+* Parse the received data
 
-## TCP server with HTTP message parsing
-*In progress*
+### OrionSink
+* Import dependency
+    ```
+    import org.fiware.cosmos.orion.flink.connector.{OrionSink,OrionSinkObject,ContentType,HTTPMethod}
+    ```
+* Add sink to source
+    ```
+    val processedDataStream = eventStream
+    OrionSink.addSink( processedDataStream )
+    ```
 
-The following approach uses a TCPReceiver from the flink-netty-connector in order to gain access of all the fields in the HTTP Header, and not only to the query params specified. 
-Run the JsonExampleTCP.scala file in IntelliJ
