@@ -32,7 +32,7 @@ Add it to your `pom.xml` file inside the dependencies section
 * Add source to Flink Environment. Indicate what port you want to listen to (e.g. 9001)
     ```
     val env = StreamExecutionEnvironment.getExecutionEnvironment
-    val eventStream = env.addSource(new OrionSource(9001)) //
+    val eventStream = env.addSource(new OrionSource(9001))  
     ```
 * Parse the received data
     ```
