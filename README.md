@@ -40,7 +40,7 @@ Add it to your `pom.xml` file inside the dependencies section
         .flatMap(event => event.entities)
         // ...processing
     ```
-    The received data is a DataStresm of objects of the class **`NgsiEvent`**. This class has the following attributes:
+    The received data is a DataStream of objects of the class **`NgsiEvent`**. This class has the following attributes:
     * **`creationTime`**: Timestamp of arrival.
     * **`service`**: Fiware service extracted from the HTTP headers.
     * **`servicePath`**: Fiware service path extracted from the HTTP headers.
