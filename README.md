@@ -77,3 +77,8 @@ The sink accepts a `DataStream` of objects of the class **`OrionSinkObject`**. T
  - **`url`**: URL to which the message should be sent.
  - **`contentType`**: Type of HTTP content of the message. It can be `ContentType.JSON` or `ContentType.Plain`.
  - **`method`**: HTTP method of the message. It can be `HTTPMethod.POST`, `HTTPMethod.PUT` or `HTTPMethod.PATCH`.
+
+ ## Production
+ 
+CAUTION: **Caution:** 
+When packaging your code in a JAR, it is common to exclude dependencies like Flink and Scala since they are typically provided by the execution environment. Nevertheless, it is necessary to include this connector in your packaged code, since it is not part of the Flink distribution.
