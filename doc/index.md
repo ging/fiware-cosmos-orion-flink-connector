@@ -43,15 +43,25 @@ val processedDataStream = eventStream.
 ```
 
 The received data is a DataStream of objects of the class **`NgsiEvent`**. This class has the following attributes:
+
 * **`creationTime`**: Timestamp of arrival.
+
 * **`service`**: Fiware service extracted from the HTTP headers.
+
 * **`servicePath`**: Fiware service path extracted from the HTTP headers.
+
 * **`entities`**: Sequence of entites included in the message. Each entity has the following attributes:
+
   * **`id`**: Identifier of the entity.
+
   * **`type`**: Node type.
+
   * **`attrs`**: Map of attributes in which the key is the attribute name and the value is an object with the following properties:
+
     * **`type`**: Type of value (Float, Int,...).
+
     * **`value`**: Value of the attribute.
+
     * **`metadata`**: Additional metadata.
 
 
@@ -75,9 +85,13 @@ val processedDataStream = eventStream.
 OrionSink.addSink( processedDataStream )
 ```
 The sink accepts a `DataStream` of objects of the class **`OrionSinkObject`**. This class has 4 attributes:
+
 - **`content`**: Message content in String format. If it is a JSON, you need to make sure to stringify it before sending it.
+
 - **`url`**: URL to which the message should be sent.
+
 - **`contentType`**: Type of HTTP content of the message. It can be `ContentType.JSON` or `ContentType.Plain`.
+
 - **`method`**: HTTP method of the message. It can be `HTTPMethod.POST`, `HTTPMethod.PUT` or `HTTPMethod.PATCH`.
 
 ## Production
