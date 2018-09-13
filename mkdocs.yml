@@ -1,0 +1,8 @@
+site_name:  fiware-cosmos-orion-flink-connector
+repo_url: https://github.com/sonsoleslp/fiware-cosmos-orion-flink-connector/
+markdown_extensions:[toc,fenced_code, admonition]
+site_description: fiware-cosmos-orion-flink-connector Documentation
+docs_dir: doc
+use_directory_urls: false
+theme: readthedocs
+extra_css: ["https://fiware.org/style/fiware_readthedocs.css"]
