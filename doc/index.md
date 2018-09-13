@@ -26,20 +26,20 @@ Add it to your `pom.xml` file inside the dependencies section
 ### OrionSource
 
 * Import dependency
-    ```
-    import org.fiware.cosmos.orion.flink.connector.{OrionSource}
-    ```
+```
+import org.fiware.cosmos.orion.flink.connector.{OrionSource}
+```
 * Add source to Flink Environment. Indicate what port you want to listen to (e.g. 9001)
-    ```
-    val env = StreamExecutionEnvironment.getExecutionEnvironment
-    val eventStream = env.addSource(new OrionSource(9001))
-    ```
+```
+val env = StreamExecutionEnvironment.getExecutionEnvironment
+val eventStream = env.addSource(new OrionSource(9001))
+```
 * Parse the received data
-    ```
-    val processedDataStream = eventStream.
-        .flatMap(event => event.entities)
-        // ...processing
-    ```
+```
+val processedDataStream = eventStream.
+    .flatMap(event => event.entities)
+    // ...processing
+```
     The received data is a DataStream of objects of the class **`NgsiEvent`**. This class has the following attributes:
     * **`creationTime`**: Timestamp of arrival.
     * **`service`**: Fiware service extracted from the HTTP headers.
@@ -55,30 +55,31 @@ Add it to your `pom.xml` file inside the dependencies section
 
 ### OrionSink
 * Import dependency
-    ```
-    import org.fiware.cosmos.orion.flink.connector.{OrionSink,OrionSinkObject,ContentType,HTTPMethod}
-    ```
+```
+import org.fiware.cosmos.orion.flink.connector.{OrionSink,OrionSinkObject,ContentType,HTTPMethod}
+```
 * Add sink to source
-    ```
-    val processedDataStream = eventStream.
-     // ... processing
-     .map(obj =>
-        new OrionSinkObject(
-            "{\"temperature_avg\": { \"value\":"+obj.temperature+", \"type\": \"Float\"}}", // Stringified JSON message
-            "http://context-broker-url:8080/v2/entities/Room1", // URL
-            ContentType.JSON, // Content type
-            HTTPMethod.POST) // HTTP method
-     )
+```
+val processedDataStream = eventStream.
+ // ... processing
+ .map(obj =>
+    new OrionSinkObject(
+        "{\"temperature_avg\": { \"value\":"+obj.temperature+", \"type\": \"Float\"}}", // Stringified JSON message
+        "http://context-broker-url:8080/v2/entities/Room1", // URL
+        ContentType.JSON, // Content type
+        HTTPMethod.POST) // HTTP method
+ )
 
-    OrionSink.addSink( processedDataStream )
-    ```
+OrionSink.addSink( processedDataStream )
+```
 The sink accepts a `DataStream` of objects of the class **`OrionSinkObject`**. This class has 4 attributes:
  - **`content`**: Message content in String format. If it is a JSON, you need to make sure to stringify it before sending it.
  - **`url`**: URL to which the message should be sent.
  - **`contentType`**: Type of HTTP content of the message. It can be `ContentType.JSON` or `ContentType.Plain`.
  - **`method`**: HTTP method of the message. It can be `HTTPMethod.POST`, `HTTPMethod.PUT` or `HTTPMethod.PATCH`.
 
- ## Production
+## Production
+
 >**Warning** :warning:
 >
 >When packaging your code in a JAR, it is common to exclude dependencies like Flink and Scala since they are typically provided by the execution environment. Nevertheless, it is necessary to include this connector in your packaged code, since it is not part of the Flink distribution.
