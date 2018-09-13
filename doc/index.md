@@ -96,12 +96,6 @@ The sink accepts a `DataStream` of objects of the class **`OrionSinkObject`**. T
 
 ## Production
 
->**Warning**  :warning:
->
->When packaging your code in a JAR, it is common to exclude dependencies like Flink and Scala since they are typically provided by the execution environment. Nevertheless, it is necessary to include this connector in your packaged code, since it is not part of the Flink distribution.
 
-!!! note
-    You should note that the title will be automatically capitalized.
+When packaging your code in a JAR, it is common to exclude dependencies like Flink and Scala since they are typically provided by the execution environment. Nevertheless, it is necessary to include this connector in your packaged code, since it is not part of the Flink distribution.
 
-
-.. note ..
