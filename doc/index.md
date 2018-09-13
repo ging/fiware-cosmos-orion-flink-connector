@@ -1,4 +1,4 @@
-# fiware-cosmos-orion-flink-connector
+# Introduction
 
 This is a Flink connector for the Fiware Orion Context Broker.
 It has two parts:
@@ -7,7 +7,7 @@ It has two parts:
 
 * **`OrionSink`**: Sink for writing back to the Context Broker.
 
-## Installation
+# Installation
 
 Download the JAR from the latest release.
 In your project directory run:
@@ -24,8 +24,8 @@ Add it to your `pom.xml` file inside the dependencies section
 </dependency>
 ```
 
-## Usage
-### OrionSource
+# Usage
+## OrionSource
 
 * Import dependency
 ```
@@ -67,7 +67,7 @@ The received data is a DataStream of objects of the class **`NgsiEvent`**. This 
     * **`metadata`**: Additional metadata.
 
 
-### OrionSink
+## OrionSink
 * Import dependency
 ```
 import org.fiware.cosmos.orion.flink.connector.{OrionSink,OrionSinkObject,ContentType,HTTPMethod}
@@ -86,6 +86,7 @@ val processedDataStream = eventStream.
 
 OrionSink.addSink( processedDataStream )
 ```
+
 The sink accepts a `DataStream` of objects of the class **`OrionSinkObject`**. This class has 4 attributes:
 
 - **`content`**: Message content in String format. If it is a JSON, you need to make sure to stringify it before sending it.
@@ -96,6 +97,6 @@ The sink accepts a `DataStream` of objects of the class **`OrionSinkObject`**. T
 
 - **`method`**: HTTP method of the message. It can be `HTTPMethod.POST`, `HTTPMethod.PUT` or `HTTPMethod.PATCH`.
 
-## Production
+# Production
 
 When packaging your code in a JAR, it is common to exclude dependencies like Flink and Scala since they are typically provided by the execution environment. Nevertheless, it is necessary to include this connector in your packaged code, since it is not part of the Flink distribution.
