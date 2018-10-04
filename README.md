@@ -9,12 +9,12 @@ It has two parts:
 
 Download the JAR from the latest release.
 In your project directory run:
-```
+```bash
 mvn install:install-file -Dfile=$(PATH_DOWNLOAD)/orion.flink.connector-1.0.jar -DgroupId=org.fiware.cosmos -DartifactId=orion.flink.connector -Dversion=1.0 -Dpackaging=jar
 ```
 
 Add it to your `pom.xml` file inside the dependencies section
-```
+```xml
 <dependency>
     <groupId>org.fiware.cosmos</groupId>
     <artifactId>orion.flink.connector</artifactId>
@@ -26,16 +26,16 @@ Add it to your `pom.xml` file inside the dependencies section
 ### OrionSource
 
 * Import dependency
-    ```
+    ```scala
     import org.fiware.cosmos.orion.flink.connector.{OrionSource}
     ```
 * Add source to Flink Environment. Indicate what port you want to listen to (e.g. 9001)
-    ```
+    ```scala
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     val eventStream = env.addSource(new OrionSource(9001))
     ```
 * Parse the received data
-    ```
+    ```scala
     val processedDataStream = eventStream.
         .flatMap(event => event.entities)
         // ...processing
@@ -55,11 +55,11 @@ Add it to your `pom.xml` file inside the dependencies section
 
 ### OrionSink
 * Import dependency
-    ```
+    ```scala
     import org.fiware.cosmos.orion.flink.connector.{OrionSink,OrionSinkObject,ContentType,HTTPMethod}
     ```
 * Add sink to source
-    ```
+    ```scala
     val processedDataStream = eventStream.
      // ... processing
      .map(obj =>
