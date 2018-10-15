@@ -10,6 +10,9 @@ It has two parts:
  * **`OrionSource`**: Source for receiving NGSIv2 events in the shape of HTTP messages from subscriptions.
  * **`OrionSink`**: Sink for writing back to the Context Broker.
 
+Several examples are provided to facilitate getting started with the connector. They are hosted in a separate repository: 
+[fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples)
+
 ## Installation
 
 Download the JAR from the latest release.
