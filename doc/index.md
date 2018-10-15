@@ -11,7 +11,7 @@ It has two parts:
 * **`OrionSink`**: Sink for writing back to the Context Broker.
 
 Several examples are provided to facilitate getting started with the connector. They are hosted in a separate repository: 
-[fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples)
+[fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
 
 ## Installation
 
@@ -21,7 +21,7 @@ In your project directory run:
 mvn install:install-file -Dfile=$(PATH_DOWNLOAD)/orion.flink.connector-1.0.jar -DgroupId=org.fiware.cosmos -DartifactId=orion.flink.connector -Dversion=1.0 -Dpackaging=jar
 ```
 
-Add it to your `pom.xml` file inside the dependencies section
+Add it to your `pom.xml` file inside the dependencies section.
 ```xml
 <dependency>
     <groupId>org.fiware.cosmos</groupId>
@@ -33,16 +33,16 @@ Add it to your `pom.xml` file inside the dependencies section
 ## Usage
 ### OrionSource
 
-* Import dependency
+* Import dependency.
 ```scala
 import org.fiware.cosmos.orion.flink.connector.{OrionSource}
 ```
-* Add source to Flink Environment. Indicate what port you want to listen to (e.g. 9001)
+* Add source to Flink Environment. Indicate what port you want to listen to (e.g. 9001).
 ```scala
 val env = StreamExecutionEnvironment.getExecutionEnvironment
 val eventStream = env.addSource(new OrionSource(9001))
 ```
-* Parse the received data
+* Parse the received data.
 
 ```scala
 val processedDataStream = eventStream.
@@ -74,11 +74,11 @@ The received data is a DataStream of objects of the class **`NgsiEvent`**. This 
 
 
 ### OrionSink
-* Import dependency
+* Import dependency.
 ```scala
 import org.fiware.cosmos.orion.flink.connector.{OrionSink,OrionSinkObject,ContentType,HTTPMethod}
 ```
-* Add sink to source
+* Add sink to source.
 ```scala
 val processedDataStream = eventStream.
  // ... processing
