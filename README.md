@@ -5,6 +5,29 @@
 [![Documentation badge](https://readthedocs.org/projects/fiware-cosmos-flink/badge/?version=latest)](http://fiware-cosmos-flink.rtfd.io)
 [![](https://img.shields.io/badge/tag-fiware--cosmos-orange.svg?logo=stackoverflow)](http://stackoverflow.com/questions/tagged/fiware-cosmos) 
 
+
+The Cosmos Generic Enabler enables an easier BigData analysis over context integrated with some of the most popular BigData platforms.
+
+### WHAT IS COSMOS?
+
+The Cosmos BigData Analysis GE is a set of tools that help achieving the tasks
+of Streaming and Batch processing over context data. These tools are:
+
+* Orion-Flink Connector (Source and Sink)
+* Apache Flink Processing Engine
+* Apache Spark Processing Engine (work in progress)
+* Streaming processing examples using Orion Context Broker
+
+### WHY USE COSMOS?
+
+As the state of the real world changes, the entities representing your
+IoT devices are constantly changing. Big data analysis allows for the
+study of datasets coming from your context data which are too large
+for traditional data-processing software. You can apply predictive
+analysis or user behaviour analytics to extract meaningful conclusions
+as to the state of your smart solution and bring value to your
+solution. 
+
 This is a Flink connector for the Fiware Orion Context Broker.
 It has two parts:
  * **`OrionSource`**: Source for receiving NGSIv2 events in the shape of HTTP messages from subscriptions.
