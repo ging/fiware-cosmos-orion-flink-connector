@@ -2,8 +2,9 @@
 
 [![](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg )](https://www.fiware.org/developers/catalogue/)
 ![License](https://img.shields.io/github/license/ging/fiware-cosmos-orion-flink-connector.svg)
+[![](https://img.shields.io/badge/tag-fiware--cosmos-orange.svg?logo=stackoverflow)](http://stackoverflow.com/questions/tagged/fiware-cosmos)
+<br/>
 [![Documentation badge](https://readthedocs.org/projects/fiware-cosmos-flink/badge/?version=latest)](http://fiware-cosmos-flink.rtfd.io)
-[![](https://img.shields.io/badge/tag-fiware--cosmos-orange.svg?logo=stackoverflow)](http://stackoverflow.com/questions/tagged/fiware-cosmos) 
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/cosmos.svg)
 
 
