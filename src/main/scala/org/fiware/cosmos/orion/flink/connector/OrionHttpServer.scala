@@ -17,7 +17,9 @@
 package org.fiware.cosmos.orion.flink.connector
 
 import java.net.InetSocketAddress
+import java.util.Properties
 import java.util.concurrent.atomic.AtomicBoolean
+import org.apache.flink.streaming.api.scala._
 
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.nio.NioEventLoopGroup
@@ -26,7 +28,11 @@ import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.channel.{Channel, ChannelInitializer, ChannelOption}
 import io.netty.handler.codec.http.{HttpObjectAggregator, HttpServerCodec}
 import io.netty.handler.logging.{LogLevel, LoggingHandler}
+import org.apache.flink.api.common.serialization.SimpleStringSchema
+import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
+import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011
 import org.slf4j.LoggerFactory
 
 /**

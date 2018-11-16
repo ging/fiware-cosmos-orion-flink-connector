@@ -85,7 +85,7 @@ class OrionHttpHandler(
         val creationTime = System.currentTimeMillis
         // Generate NgsiEvent
         val ngsiEvent = new NgsiEvent(creationTime, service, servicePath, entities)
-        logger.info(ngsiEvent.toString())
+        logger.info(jsonBodyString.toString().split('\n').map(_.trim.filter(_ >= ' ')).mkString)
         sc.collect(ngsiEvent)
 
         if (HttpUtil.is100ContinueExpected(req)) {

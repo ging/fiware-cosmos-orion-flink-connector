@@ -87,7 +87,11 @@ under the License.
 			<artifactId>netty-all</artifactId>
 			<version>4.1.5.Final</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-kafka-0.11_2.11</artifactId>
+			<version>1.5.4</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -111,6 +115,7 @@ under the License.
 			<version>1.2.17</version>
 			<scope>runtime</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -133,7 +138,7 @@ under the License.
 								<excludes>
 									<exclude>org.apache.flink:force-shading</exclude>
 									<exclude>com.google.code.findbugs:jsr305</exclude>
-									<exclude>org.apache.flink:*</exclude>
+									<!--<exclude>org.apache.flink:*</exclude>-->
 									<exclude>org.scala-lang:*</exclude>
 									<exclude>log4j:*</exclude>
 									<exclude>org.slf4j:*</exclude>
@@ -160,6 +165,45 @@ under the License.
 					</execution>
 				</executions>
 			</plugin>
+			<!--<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.9</version>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						&lt;!&ndash; executed just before the package phase &ndash;&gt;
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								&lt;!&ndash; For Flink connector classes &ndash;&gt;
+								<artifactItem>
+									<groupId>org.apache.flink</groupId>
+									<artifactId>flink-connector-kafka-0.11_2.11</artifactId>
+									<version>1.5.4</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/classes</outputDirectory>
+									<includes>org/apache/flink/**</includes>
+								</artifactItem>
+								&lt;!&ndash; For Kafka API classes &ndash;&gt;
+								<artifactItem>
+									<groupId>org.apache.kafka</groupId>
+									<artifactId>kafka_${scala.version}</artifactId>
+									<version>0.11</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/classes</outputDirectory>
+									<includes>kafka/**</includes>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>-->
 
 			<!-- Java Compiler -->
 			<plugin>

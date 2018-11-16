@@ -19,7 +19,14 @@ package org.fiware.cosmos.orion.flink.connector
 import io.netty.handler.codec.http.FullHttpRequest
 import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunction
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
+import org.apache.flink.streaming.connectors.kafka.{FlinkKafkaConsumer011}
+import java.util.Properties
 
+import org.apache.flink.streaming.api.scala._
+import org.apache.flink.api.common.serialization
+import org.apache.flink.api.common.serialization.SimpleStringSchema
+import org.apache.flink.streaming.api.TimeCharacteristic
+import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
 /**
   *
  * Http receiver source is used for receiving pushed http request.
@@ -32,14 +39,18 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceCont
  * @param tryPort     try to use this point, if this point is used then try a new port
  */
 final class OrionSource(
-  tryPort: Int/*,
-  callbackUrl: Option[String] = None*/
+  tryPort: Int,
+  topic: String = "flink"
+//  env: StreamExecutionEnvironment
 ) extends RichParallelSourceFunction[NgsiEvent] {
   private var server: OrionHttpServer = _
 
   override def cancel(): Unit = server.close()
 
   override def run(ctx: SourceContext[NgsiEvent]): Unit = {
+
+//    env.execute("flink-kafka")
+    // Initialize Usage Control
     server = new OrionHttpServer(ctx)
     server.start(tryPort, None)
   }
