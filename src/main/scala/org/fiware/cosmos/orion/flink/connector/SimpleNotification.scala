@@ -23,7 +23,7 @@ object SimpleNotification{
         new Temp_Node( entity.id, temp)
       })
       .keyBy("id")
-      .timeWindow(Time.seconds(5), Time.seconds(2))
+      .timeWindow(Time.seconds(10))
       .min("temperature")
 
     // print the results with a single thread, rather than in parallel

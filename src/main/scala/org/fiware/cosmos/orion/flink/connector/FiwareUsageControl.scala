@@ -34,10 +34,10 @@ object FiwareUsageControl {
         case _ => {
         }
       }
-    })
+    }).name("Usage Control Signals")
 
 
-     orionStream.print()
-    orionStream
+//    orionStream.print()
+    orionStream.name("Orion Source Notifications")
   }
 }
