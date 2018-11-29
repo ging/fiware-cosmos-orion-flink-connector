@@ -10,7 +10,8 @@
 
 The Cosmos Generic Enabler enables an easier BigData analysis over context integrated with some of the most popular BigData platforms.
 
-### WHAT IS COSMOS?
+
+## What is Cosmos?
 
 The Cosmos BigData Analysis GE is a set of tools that help achieving the tasks
 of Streaming and Batch processing over context data. These tools are:
@@ -20,7 +21,7 @@ of Streaming and Batch processing over context data. These tools are:
 * Apache Spark Processing Engine (work in progress)
 * Streaming processing examples using Orion Context Broker
 
-### WHY USE COSMOS?
+## Why use Cosmos?
 
 As the state of the real world changes, the entities representing your
 IoT devices are constantly changing. Big data analysis allows for the
@@ -30,7 +31,7 @@ analysis or user behaviour analytics to extract meaningful conclusions
 as to the state of your smart solution and bring value to your
 solution. 
 
-### Orion Flink Connector
+## Orion Flink Connector
 
 This is a Flink connector for the Fiware Orion Context Broker.
 It has two parts:
@@ -42,7 +43,7 @@ It has two parts:
 Several examples are provided to facilitate getting started with the connector. They are hosted in a separate repository: 
 [fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
 
-## Installation
+### Installation
 
 Download the JAR from the latest release.
 In your project directory run:
@@ -59,8 +60,8 @@ Add it to your `pom.xml` file inside the dependencies section.
 </dependency>
 ```
 
-## Usage
-### OrionSource
+### Usage
+#### OrionSource
 
 * Import dependency.
 ```scala
@@ -102,7 +103,7 @@ The received data is a DataStream of objects of the class **`NgsiEvent`**. This 
     * **`metadata`**: Additional metadata.
 
 
-### OrionSink
+#### OrionSink
 * Import dependency.
 ```scala
 import org.fiware.cosmos.orion.flink.connector.{OrionSink,OrionSinkObject,ContentType,HTTPMethod}
@@ -132,6 +133,32 @@ The sink accepts a `DataStream` of objects of the class **`OrionSinkObject`**. T
 
 - **`method`**: HTTP method of the message. It can be `HTTPMethod.POST`, `HTTPMethod.PUT` or `HTTPMethod.PATCH`.
 
-## Production
+### Production
 
 When packaging your code in a JAR, it is common to exclude dependencies like Flink and Scala since they are typically provided by the execution environment. Nevertheless, it is necessary to include this connector in your packaged code, since it is not part of the Flink distribution.
+
+## Quality Assurance
+
+This project is part of [FIWARE](https://fiware.org/) and has been rated as
+follows:
+
+-   **Version Tested:**
+    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Version&url=https://fiware.github.io/catalogue/json/cosmos.json&query=$.version&colorB=blue)
+-   **Documentation:**
+    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Completeness&url=https://fiware.github.io/catalogue/json/cosmos.json&query=$.docCompleteness&colorB=blue)
+    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Usability&url=https://fiware.github.io/catalogue/json/cosmos.json&query=$.docSoundness&colorB=blue)
+-   **Responsiveness:**
+    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Time%20to%20Respond&url=https://fiware.github.io/catalogue/json/cosmos.json&query=$.timeToCharge&colorB=blue)
+    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Time%20to%20Fix&url=https://fiware.github.io/catalogue/json/cosmos.json&query=$.timeToFix&colorB=blue)
+-   **FIWARE Testing:**
+    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Tests%20Passed&url=https://fiware.github.io/catalogue/json/cosmos.json&query=$.failureRate&colorB=blue)
+    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Scalability&url=https://fiware.github.io/catalogue/json/cosmos.json&query=$.scalability&colorB=blue)
+    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Performance&url=https://fiware.github.io/catalogue/json/cosmos.json&query=$.performance&colorB=blue)
+    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Stability&url=https://fiware.github.io/catalogue/json/cosmos.json&query=$.stability&colorB=blue)
+
+---
+
+## License
+
+Cosmos is licensed under Affero General Public License (GPL) version 3.
+
