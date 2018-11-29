@@ -10,7 +10,20 @@
 The Cosmos Generic Enabler enables an easier BigData analysis over context
 integrated with some of the most popular BigData platforms.
 
-### WHAT IS COSMOS?
+
+## Content
+
+-   [WHAT IS COSMOS?](#what-is-cosmos)
+-   [WHY USE COSMOS?](#why-use-cosmos)
+-   [Orion Flink Connector](#orion-flink-connector)
+    -   [Installation](#installation)
+    -   [Usage](#usage)
+    -   [Production](#production)
+-   [Quality Assurance](#quality-assurance)
+-   [License](#license)
+
+
+## WHAT IS COSMOS?
 
 The Cosmos BigData Analysis GE is a set of tools that help achieving the tasks
 of Streaming and Batch processing over context data. These tools are:
@@ -20,7 +33,7 @@ of Streaming and Batch processing over context data. These tools are:
 -   Apache Spark Processing Engine (work in progress)
 -   Streaming processing examples using Orion Context Broker
 
-### WHY USE COSMOS?
+## WHY USE COSMOS?
 
 As the state of the real world changes, the entities representing your IoT
 devices are constantly changing. Big data analysis allows for the study of
@@ -29,7 +42,7 @@ data-processing software. You can apply predictive analysis or user behaviour
 analytics to extract meaningful conclusions as to the state of your smart
 solution and bring value to your solution.
 
-### Orion Flink Connector
+## Orion Flink Connector
 
 This is a Flink connector for the Fiware Orion Context Broker. It has two parts:
 
@@ -41,7 +54,7 @@ Several examples are provided to facilitate getting started with the connector.
 They are hosted in a separate repository:
 [fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
 
-## Installation
+### Installation
 
 Download the JAR from the latest release. In your project directory run:
 
@@ -59,9 +72,9 @@ Add it to your `pom.xml` file inside the dependencies section.
 </dependency>
 ```
 
-## Usage
+### Usage
 
-### OrionSource
+#### OrionSource
 
 -   Import dependency.
 
@@ -100,7 +113,7 @@ Add it to your `pom.xml` file inside the dependencies section.
             -   **`value`**: Value of the attribute.
             -   **`metadata`**: Additional metadata.
 
-### OrionSink
+#### OrionSink
 
 -   Import dependency.
 
@@ -131,7 +144,7 @@ val processedDataStream = eventStream. // ...
 -   **`method`**: HTTP method of the message. It can be `HTTPMethod.POST`,
     `HTTPMethod.PUT` or `HTTPMethod.PATCH`.
 
-## Production
+### Production
 
 > **Warning** :warning:
 >
