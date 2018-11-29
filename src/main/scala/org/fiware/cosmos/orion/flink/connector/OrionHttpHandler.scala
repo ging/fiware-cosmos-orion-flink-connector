@@ -56,6 +56,8 @@ class OrionHttpHandler(
           throw new Exception("Only POST requests are allowed")
         }
 
+        println("Something received")
+
         // Retrieve headers
         val headerEntries = req.headers().entries()
         val service = headerEntries.get(4).getValue()
