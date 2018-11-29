@@ -13,8 +13,8 @@ integrated with some of the most popular BigData platforms.
 
 ## Content
 
--   [WHAT IS COSMOS?](#what-is-cosmos)
--   [WHY USE COSMOS?](#why-use-cosmos)
+-   [What is Cosmos?](#what-is-cosmos)
+-   [Why use Cosmos?](#why-use-cosmos)
 -   [Orion Flink Connector](#orion-flink-connector)
     -   [Installation](#installation)
     -   [Usage](#usage)
@@ -22,8 +22,9 @@ integrated with some of the most popular BigData platforms.
 -   [Quality Assurance](#quality-assurance)
 -   [License](#license)
 
+---
 
-## WHAT IS COSMOS?
+## What is Cosmos?
 
 The Cosmos BigData Analysis GE is a set of tools that help achieving the tasks
 of Streaming and Batch processing over context data. These tools are:
@@ -33,7 +34,7 @@ of Streaming and Batch processing over context data. These tools are:
 -   Apache Spark Processing Engine (work in progress)
 -   Streaming processing examples using Orion Context Broker
 
-## WHY USE COSMOS?
+## Why use Cosmos?
 
 As the state of the real world changes, the entities representing your IoT
 devices are constantly changing. Big data analysis allows for the study of
