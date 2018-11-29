@@ -5,6 +5,7 @@
 [![](https://img.shields.io/badge/tag-fiware--cosmos-orange.svg?logo=stackoverflow)](http://stackoverflow.com/questions/tagged/fiware-cosmos)
 <br/>
 [![Documentation badge](https://readthedocs.org/projects/fiware-cosmos-flink/badge/?version=latest)](http://fiware-cosmos-flink.rtfd.io)
+[![Build Status](https://travis-ci.com/ging/fiware-cosmos-orion-flink-connector.svg?branch=master)](https://travis-ci.com/ging/fiware-cosmos-orion-flink-connector)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/cosmos.svg)
 
 The Cosmos Generic Enabler enables an easier BigData analysis over context
