@@ -45,7 +45,8 @@ class OrionHttpServer(
   private lazy val bossGroup = new NioEventLoopGroup(threadNum)
   private lazy val workerGroup = new NioEventLoopGroup
   private lazy val isRunning = new AtomicBoolean(false)
-
+  private final val CHANNEL_OPTION = 1024
+  private final val HOA = 1048576
   private var currentAddr: InetSocketAddress = _
 
   override def close(): Unit = {
@@ -62,7 +63,7 @@ class OrionHttpServer(
     if (!isRunning.get()) {
       val b: ServerBootstrap = new ServerBootstrap
       b
-        .option[java.lang.Integer](ChannelOption.SO_BACKLOG, 1024)
+        .option[java.lang.Integer](ChannelOption.SO_BACKLOG, CHANNEL_OPTION)
         .group(bossGroup, workerGroup)
         .channel(classOf[NioServerSocketChannel])
         .handler(new LoggingHandler(logLevel))
@@ -70,7 +71,7 @@ class OrionHttpServer(
           override def initChannel(ch: SocketChannel): Unit = {
             val p = ch.pipeline()
             p.addLast(new HttpServerCodec)
-            p.addLast(new HttpObjectAggregator(1048576))
+            p.addLast(new HttpObjectAggregator(HOA))
             p.addLast(new OrionHttpHandler(ctx))
           }
         })

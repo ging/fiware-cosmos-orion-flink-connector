@@ -21,6 +21,7 @@ import java.util.concurrent.{LinkedBlockingQueue, TimeUnit}
 
 import com.alibaba.fastjson.JSONObject
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.junit.Test
 
 import scala.util.Random
 
@@ -28,7 +29,7 @@ import scala.util.Random
  * http client
  */
 object HttpSourceExample extends BaseTest {
-
+  @Test
   def main(args: Array[String]): Unit = {
     val queue = new LinkedBlockingQueue[JSONObject]()
 

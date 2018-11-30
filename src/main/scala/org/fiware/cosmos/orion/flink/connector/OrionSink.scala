@@ -1,9 +1,8 @@
 package org.fiware.cosmos.orion.flink.connector
 
 import org.apache.flink.streaming.api.scala.DataStream
-import org.apache.http.client.methods._
+import org.apache.http.client.methods.{HttpPost, HttpPatch, HttpPut, HttpEntityEnclosingRequestBase}
 import org.apache.http.entity.StringEntity
-import org.apache.http.client.HttpClient
 import org.apache.http.impl.client.HttpClientBuilder
 import org.slf4j.LoggerFactory
 
@@ -39,8 +38,7 @@ object HTTPMethod extends Enumeration {
 /**
   * Sink for sending Flink processed data to the Orion Context Broker
   */
-class OrionSink () {
-}
+class OrionSink
 
 /**
   * Singleton instance of OrionSink
@@ -78,7 +76,7 @@ object OrionSink {
 
        try {
          val response = client.execute(httpEntity)
-          logger.info("POST to "+ msg.url)
+          logger.info("POST to " + msg.url)
        } catch {
          case e: Exception => {
            logger.error(e.toString)

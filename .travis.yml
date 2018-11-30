@@ -3,4 +3,9 @@ jdk:
 - oraclejdk8
 
 install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Padd-dependencies-for-IDEA
-script: mvn test
+jobs:
+  include:
+    - stage: test
+      script: $ mvn test  -Padd-dependencies-for-IDEA -Dtest=org.fiware.cosmos.orion.flink.connector.tests.MainTest
+    - stage: lint
+      script: mvn vevrify  -Padd-dependencies-for-IDEA

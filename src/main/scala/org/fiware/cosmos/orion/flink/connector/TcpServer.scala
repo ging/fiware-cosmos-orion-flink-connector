@@ -16,7 +16,10 @@
  */
 
 package org.fiware.cosmos.orion.flink.connector
+package object const {
+  final val MAX_FRAME_DEFAULT = 8192
 
+}
 import java.net.InetSocketAddress
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -29,6 +32,7 @@ import io.netty.handler.codec.string.{StringDecoder, StringEncoder}
 import io.netty.handler.codec.{DelimiterBasedFrameDecoder, Delimiters}
 import io.netty.handler.logging.{LogLevel, LoggingHandler}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
+import org.fiware.cosmos.orion.flink.connector
 import org.slf4j.LoggerFactory
 
 /**
@@ -43,19 +47,20 @@ import org.slf4j.LoggerFactory
  * @param maxFrameLen max netty frame length
  * @param logLevel    netty log level
  */
-class TcpServer(
-  tryPort: Int,
-  ctx: SourceContext[String],
-  tcpOpts: ServerBootstrap => Unit,
-  threadNum: Int = Runtime.getRuntime.availableProcessors(),
-  maxFrameLen: Int = 8192,
-  logLevel: LogLevel = LogLevel.INFO
-) extends ServerTrait {
 
+class TcpServer(
+                 tryPort: Int,
+                 ctx: SourceContext[String],
+                 tcpOpts: ServerBootstrap => Unit,
+                 threadNum: Int = Runtime.getRuntime.availableProcessors(),
+                 maxFrameLen: Int = const.MAX_FRAME_DEFAULT,
+                 logLevel: LogLevel = LogLevel.INFO
+) extends ServerTrait {
   private lazy val logger = LoggerFactory.getLogger(getClass)
   private lazy val bossGroup = new NioEventLoopGroup(threadNum)
   private lazy val workerGroup = new NioEventLoopGroup
   private lazy val isRunning = new AtomicBoolean(false)
+  final val MAX_FRAME_DEFAULT = 8192
 
   private var currentAddr: InetSocketAddress = _
 
@@ -111,11 +116,11 @@ class TcpServer(
 object TcpServer {
 
   def apply(
-    tryPort: Int,
-    ctx: SourceContext[String],
-    threadNum: Int = Runtime.getRuntime.availableProcessors(),
-    maxFrameLen: Int = 8192,
-    logLevel: LogLevel = LogLevel.INFO
+             tryPort: Int,
+             ctx: SourceContext[String],
+             threadNum: Int = Runtime.getRuntime.availableProcessors(),
+             maxFrameLen: Int = connector.const.MAX_FRAME_DEFAULT,
+             logLevel: LogLevel = LogLevel.INFO
   ): TcpServer = {
     val tcpOptions = (bootstrap: ServerBootstrap) => {}
     new TcpServer(tryPort, ctx, tcpOptions, threadNum, maxFrameLen, logLevel)

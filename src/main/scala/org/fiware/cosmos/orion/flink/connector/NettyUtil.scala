@@ -1,3 +1,4 @@
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,7 +19,7 @@
 package org.fiware.cosmos.orion.flink.connector
 
 import java.io.{BufferedReader, InputStreamReader}
-import java.net._
+import java.net.{InetAddress, NetworkInterface, Inet4Address, BindException, HttpURLConnection, URL}
 
 import org.apache.commons.lang3.SystemUtils
 import org.slf4j.LoggerFactory
@@ -30,7 +31,9 @@ import scala.collection.JavaConverters._
  */
 object NettyUtil {
   private lazy val logger = LoggerFactory.getLogger(getClass)
-
+  final val TIMES_RETRY = 128
+  final val START_PORT = 1024
+  final val END_PORT = 65536
   /** find local inet addresses */
   def findLocalInetAddress(): InetAddress = {
 
@@ -75,10 +78,10 @@ object NettyUtil {
   def startServiceOnPort[T](
     startPort: Int,
     startService: Int => T,
-    maxRetries: Int = 128,
+    maxRetries: Int = TIMES_RETRY,
     serviceName: String = ""): T = {
 
-    if (startPort != 0 && (startPort < 1024 || startPort > 65536)) {
+    if (startPort != 0 && (startPort < START_PORT || startPort > END_PORT)) {
       throw new Exception("startPort should be between 1024 and 65535 (inclusive), " +
         "or 0 for a random free port.")
     }
@@ -90,7 +93,7 @@ object NettyUtil {
         startPort
       } else {
         // If the new port wraps around, do not try a privilege port
-        ((startPort + offset - 1024) % (65536 - 1024)) + 1024
+        ((startPort + offset - START_PORT) % (END_PORT - START_PORT)) + START_PORT
       }
 
       try {

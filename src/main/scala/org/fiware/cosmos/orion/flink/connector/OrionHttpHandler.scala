@@ -20,13 +20,13 @@ package org.fiware.cosmos.orion.flink.connector
 
 import io.netty.buffer.{ByteBufUtil, Unpooled}
 import io.netty.channel.{ChannelFutureListener, ChannelHandlerContext, ChannelInboundHandlerAdapter}
-import io.netty.handler.codec.http.HttpResponseStatus._
-import io.netty.handler.codec.http.HttpVersion._
-import io.netty.handler.codec.http._
+import io.netty.handler.codec.http.HttpResponseStatus.{OK, CONTINUE}
+import io.netty.handler.codec.http.HttpVersion.HTTP_1_1
+import io.netty.handler.codec.http.{DefaultFullHttpResponse, HttpUtil, FullHttpResponse, FullHttpRequest, HttpMethod }
 import io.netty.util.{AsciiString, CharsetUtil}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
-import org.json4s._
-import org.json4s.jackson.JsonMethods._
+import org.json4s.DefaultFormats
+import org.json4s.jackson.JsonMethods.parse
 import org.slf4j.LoggerFactory
 /**
  * HTTP server handler, HTTP http request
@@ -55,38 +55,7 @@ class OrionHttpHandler(
         if (req.method() != HttpMethod.POST) {
           throw new Exception("Only POST requests are allowed")
         }
-
-        println("Something received")
-
-        // Retrieve headers
-        val headerEntries = req.headers().entries()
-        val service = headerEntries.get(4).getValue()
-        val servicePath = headerEntries.get(5).getValue()
-
-        // Retrieve body content and convert from Byte array to String
-        val content = req.content()
-        val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
-        val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.UTF_8)
-        content.release()
-        // Parse Body from JSON string to object and retrieve entities
-        val dataObj = parse(jsonBodyString).extract[HttpBody]
-        val parsedEntities = dataObj.data
-        val entities = parsedEntities.map(entity => {
-          // Retrieve entity id
-          val entityId = entity("id").toString
-          // Retrieve entity type
-          val entityType = entity("type").toString
-          // Retrieve attributes
-          val attrs = entity.filterKeys(x => x != "id" & x!= "type" )
-            //Convert attributes to Attribute objects
-            .transform((k,v) => MapToAttributeConverter
-              .unapply(v.asInstanceOf[Map[String,Any]]))
-          new Entity(entityId,entityType,attrs )
-        })
-        // Generate timestamp
-        val creationTime = System.currentTimeMillis
-        // Generate NgsiEvent
-        val ngsiEvent = new NgsiEvent(creationTime, service, servicePath, entities)
+       val ngsiEvent = parseMessage(req)
 
         sc.collect(ngsiEvent)
 
@@ -110,7 +79,39 @@ class OrionHttpHandler(
         logger.info("unsupported request format " + x)
     }
   }
+  def parseMessage(req : FullHttpRequest) : NgsiEvent =  {
+    // Retrieve headers
+    val headerEntries = req.headers().entries()
+    val SERVICE_HEADER = 4
+    val SERVICE_PATH_HEADER = 5
+    val service = headerEntries.get(SERVICE_HEADER).getValue()
+    val servicePath = headerEntries.get(SERVICE_PATH_HEADER).getValue()
 
+    // Retrieve body content and convert from Byte array to String
+    val content = req.content()
+    val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
+    val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.UTF_8)
+    content.release()
+    // Parse Body from JSON string to object and retrieve entities
+    val dataObj = parse(jsonBodyString).extract[HttpBody]
+    val parsedEntities = dataObj.data
+    val entities = parsedEntities.map(entity => {
+      // Retrieve entity id
+      val entityId = entity("id").toString
+      // Retrieve entity type
+      val entityType = entity("type").toString
+      // Retrieve attributes
+      val attrs = entity.filterKeys(x => x != "id" & x!= "type" )
+        //Convert attributes to Attribute objects
+        .transform((k,v) => MapToAttributeConverter
+        .unapply(v.asInstanceOf[Map[String,Any]]))
+      new Entity(entityId,entityType,attrs )
+    })
+    // Generate timestamp
+    val creationTime = System.currentTimeMillis
+    // Generate NgsiEvent
+    new NgsiEvent(creationTime, service, servicePath, entities)
+  }
   private def buildResponse(content: Array[Byte] = Array.empty[Byte]): FullHttpResponse = {
     val response: FullHttpResponse = new DefaultFullHttpResponse(
       HTTP_1_1, OK, Unpooled.wrappedBuffer(content)
@@ -131,8 +132,6 @@ class OrionHttpHandler(
 
   override def exceptionCaught(ctx: ChannelHandlerContext, cause: Throwable): Unit = {
     logger.error("channel exception " + ctx.channel().toString, cause)
-    ctx.writeAndFlush(buildBadResponse( (cause.getMessage.toString()+"\n").getBytes()))
+    ctx.writeAndFlush(buildBadResponse( (cause.getMessage.toString() + "\n").getBytes()))
   }
-
-
 }
