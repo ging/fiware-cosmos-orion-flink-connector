@@ -8,4 +8,4 @@ jobs:
     - stage: test
       script: mvn test  -Padd-dependencies-for-IDEA -Dtest=org.fiware.cosmos.orion.flink.connector.tests.MainTest
     - stage: lint
-      script: mvn vevrify  -Padd-dependencies-for-IDEA
+      script: mvn verify  -Padd-dependencies-for-IDEA
