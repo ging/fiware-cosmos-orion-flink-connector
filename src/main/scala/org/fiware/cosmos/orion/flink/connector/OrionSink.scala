@@ -1,7 +1,7 @@
 package org.fiware.cosmos.orion.flink.connector
 
 import org.apache.flink.streaming.api.scala.DataStream
-import org.apache.http.client.methods.{HttpPost, HttpPatch, HttpPut, HttpEntityEnclosingRequestBase}
+import org.apache.http.client.methods._
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClientBuilder
 import org.slf4j.LoggerFactory
@@ -68,9 +68,7 @@ object OrionSink {
 
      stream.addSink( msg => {
 
-       val httpEntity = getMethod(msg.method, msg.url)
-       httpEntity.setHeader("Content-type", msg.contentType.toString)
-       httpEntity.setEntity(new StringEntity((msg.content)))
+       val httpEntity : HttpEntityEnclosingRequestBase= createHttpMsg(msg)
 
        val client = HttpClientBuilder.create.build
 
@@ -87,5 +85,16 @@ object OrionSink {
 
    }
 
+  /**
+    * Create the HTTP message from the specified params
+    * @param msg OrionSinkObject
+    * @return Built Http Entity
+    */
+  def createHttpMsg(msg: OrionSinkObject) : HttpEntityEnclosingRequestBase= {
+    val httpEntity = getMethod(msg.method, msg.url)
+    httpEntity.setHeader("Content-type", msg.contentType.toString)
+    httpEntity.setEntity(new StringEntity((msg.content)))
+    httpEntity
+  }
 }
 

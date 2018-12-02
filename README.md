@@ -11,6 +11,11 @@
 The Cosmos Generic Enabler enables an easier BigData analysis over context
 integrated with some of the most popular BigData platforms.
 
+Cosmos is a FIWARE Generic Enabler. Therefore, it can be integrated as part of any platform “Powered by FIWARE”. FIWARE is a curated framework of open source platform components which can be assembled together with other third-party platform components to accelerate the development of Smart Solutions.
+
+You can find more info at the [FIWARE developers](https://developers.fiware.org/) website and the [FIWARE](https://fiware.org/) website.
+
+The complete list of FIWARE GEs and Incubated FIWARE GEs can be found at the [FIWARE Catalogue](https://catalogue.fiware.org/)
 
 ## Content
 
@@ -20,6 +25,7 @@ integrated with some of the most popular BigData platforms.
     -   [Installation](#installation)
     -   [Usage](#usage)
     -   [Production](#production)
+-   [Training Courses](#training-courses)
 -   [Quality Assurance](#quality-assurance)
 -   [License](#license)
 
@@ -52,9 +58,6 @@ This is a Flink connector for the Fiware Orion Context Broker. It has two parts:
     messages from subscriptions.
 -   **`OrionSink`**: Sink for writing back to the Context Broker.
 
-Several examples are provided to facilitate getting started with the connector.
-They are hosted in a separate repository:
-[fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
 
 ### Installation
 
@@ -154,6 +157,15 @@ val processedDataStream = eventStream. // ...
 > Flink and Scala since they are typically provided by the execution
 > environment. Nevertheless, it is necessary to include this connector in your
 > packaged code, since it is not part of the Flink distribution.
+
+
+
+## Training courses
+
+There are no training courses available for this GE. However several examples are provided to facilitate getting started with the connector. They are hosted in a separate repository:   [fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
+
+### Presentations
+-  [FIWARE Real-time Processing of Historic Context Information using Apache Flink](https://www.slideshare.net/sonsoleslp/fiware-realtime-processing-of-historic-context-information-using-apache-flink-fiware-global-summit-mlaga-2018-upm-team) (Málaga 2018)
 
 ## Quality Assurance
 

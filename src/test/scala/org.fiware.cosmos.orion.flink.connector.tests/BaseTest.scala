@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSONObject
 import org.apache.http.NameValuePair
 import org.apache.http.client.entity.UrlEncodedFormEntity
 import org.apache.http.client.methods.{HttpGet, HttpPost}
+import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClients
 import org.apache.http.message.BasicNameValuePair
 import org.apache.http.util.EntityUtils
@@ -64,13 +65,10 @@ class BaseTest {
     }
   }
 
-  def sendPostRequest(url: String, map: Map[String, String]): String = {
+  def sendPostRequest(url: String, content: String): String = {
     val httpPost = new HttpPost(url)
-    val nvps = new util.ArrayList[NameValuePair]()
-    map.foreach { kv =>
-      nvps.add(new BasicNameValuePair(kv._1, kv._2))
-    }
-    httpPost.setEntity(new UrlEncodedFormEntity(nvps))
+
+    httpPost.setEntity(new StringEntity(content))
     val response = httpclient.execute(httpPost)
     try {
       logger.info("response status line:" + response.getStatusLine)

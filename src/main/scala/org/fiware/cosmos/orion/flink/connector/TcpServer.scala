@@ -16,10 +16,7 @@
  */
 
 package org.fiware.cosmos.orion.flink.connector
-package object const {
-  final val MAX_FRAME_DEFAULT = 8192
 
-}
 import java.net.InetSocketAddress
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -53,7 +50,7 @@ class TcpServer(
                  ctx: SourceContext[String],
                  tcpOpts: ServerBootstrap => Unit,
                  threadNum: Int = Runtime.getRuntime.availableProcessors(),
-                 maxFrameLen: Int = const.MAX_FRAME_DEFAULT,
+                 maxFrameLen: Int = 8192,
                  logLevel: LogLevel = LogLevel.INFO
 ) extends ServerTrait {
   private lazy val logger = LoggerFactory.getLogger(getClass)
@@ -119,7 +116,7 @@ object TcpServer {
              tryPort: Int,
              ctx: SourceContext[String],
              threadNum: Int = Runtime.getRuntime.availableProcessors(),
-             maxFrameLen: Int = connector.const.MAX_FRAME_DEFAULT,
+             maxFrameLen: Int = 8192,
              logLevel: LogLevel = LogLevel.INFO
   ): TcpServer = {
     val tcpOptions = (bootstrap: ServerBootstrap) => {}

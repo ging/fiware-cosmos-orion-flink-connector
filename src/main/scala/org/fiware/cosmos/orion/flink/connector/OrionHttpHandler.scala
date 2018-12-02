@@ -55,9 +55,10 @@ class OrionHttpHandler(
         if (req.method() != HttpMethod.POST) {
           throw new Exception("Only POST requests are allowed")
         }
-       val ngsiEvent = parseMessage(req)
-
-        sc.collect(ngsiEvent)
+        val ngsiEvent = parseMessage(req)
+        if (sc != null) {
+          sc.collect(ngsiEvent)
+        }
 
         if (HttpUtil.is100ContinueExpected(req)) {
           ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE))
@@ -110,7 +111,8 @@ class OrionHttpHandler(
     // Generate timestamp
     val creationTime = System.currentTimeMillis
     // Generate NgsiEvent
-    new NgsiEvent(creationTime, service, servicePath, entities)
+    val ngsiEvent = new NgsiEvent(creationTime, service, servicePath, entities)
+    ngsiEvent
   }
   private def buildResponse(content: Array[Byte] = Array.empty[Byte]): FullHttpResponse = {
     val response: FullHttpResponse = new DefaultFullHttpResponse(
