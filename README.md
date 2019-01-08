@@ -161,10 +161,9 @@ val processedDataStream = eventStream. // ...
 > packaged code, since it is not part of the Flink distribution.
 
 
-
 ## Training courses
 
-There are no training courses available for this GE. However several examples are provided to facilitate getting started with the connector. They are hosted in a separate repository:   [fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
+There are no training courses available for this GE. However, several examples are provided to facilitate getting started with the connector. They are hosted in a separate repository:   [fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
 
 ### Presentations
 -  [FIWARE Real-time Processing of Historic Context Information using Apache Flink](https://www.slideshare.net/sonsoleslp/fiware-realtime-processing-of-historic-context-information-using-apache-flink-fiware-global-summit-mlaga-2018-upm-team) (Málaga 2018)

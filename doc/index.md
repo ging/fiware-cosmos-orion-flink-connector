@@ -18,7 +18,7 @@ Cosmos is a FIWARE Generic Enabler. Therefore, it can be integrated as part of a
 
 You can find more info at the [FIWARE developers](https://developers.fiware.org/) website and the [FIWARE](https://fiware.org/) website.
 
-**The complete list of FIWARE GEs and Incubated FIWARE GEs can be found at the [FIWARE Catalogue](https://catalogue.fiware.org/)
+The complete list of FIWARE GEs and Incubated FIWARE GEs can be found at the [FIWARE Catalogue](https://catalogue.fiware.org/)
 
 ## What is Cosmos?
 
@@ -146,7 +146,7 @@ When packaging your code in a JAR, it is common to exclude dependencies like Fli
 
 ## Training courses
 
-There are no training courses available for this GE. However several examples are provided to facilitate getting started with the connector. They are hosted in a separate repository:   [fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
+There are no training courses available for this GE. However, several examples are provided to facilitate getting started with the connector. They are hosted in a separate repository:   [fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
 
 ### Presentations
 -  [FIWARE Real-time Processing of Historic Context Information using Apache Flink](https://www.slideshare.net/sonsoleslp/fiware-realtime-processing-of-historic-context-information-using-apache-flink-fiware-global-summit-mlaga-2018-upm-team) (Málaga 2018)
