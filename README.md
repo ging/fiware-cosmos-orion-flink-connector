@@ -13,7 +13,10 @@
 The Cosmos Generic Enabler simplifies Big Data analysis of context data and
 integrates with some of the many popular Big Data platforms.
 
-Cosmos is a FIWARE Generic Enabler. Therefore, it can be integrated as part of any platform “Powered by FIWARE”. FIWARE is a curated framework of open source platform components which can be assembled together with other third-party platform components to accelerate the development of Smart Solutions.
+Cosmos is a FIWARE Generic Enabler. Therefore, it can be integrated as part of any
+platform “Powered by FIWARE”. FIWARE is a curated framework of open source platform
+components which can be assembled together with other third-party platform components
+to accelerate the development of Smart Solutions.
 
 This project is part of [FIWARE](https://www.fiware.org/). For more information
 check the FIWARE Catalogue entry for
@@ -22,7 +25,7 @@ check the FIWARE Catalogue entry for
 | :books: [Documentation](https://fiware-cosmos-flink.readthedocs.io) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/processing/cosmos) |
 | --- | ---|
 
-## Content
+## Table of Contents
 
 -   [What is Cosmos?](#what-is-cosmos)
 -   [Why use Cosmos?](#why-use-cosmos)
@@ -64,7 +67,7 @@ This is a Flink connector for the Fiware Orion Context Broker. It has two parts:
 -   **`OrionSink`**: Sink for writing back to the Context Broker.
 
 
-### Installation
+### Install
 
 Download the JAR from the latest release. In your project directory run:
 
@@ -82,7 +85,7 @@ Add it to your `pom.xml` file inside the dependencies section.
 </dependency>
 ```
 
-### Usage
+### Usage: API Overview
 
 #### OrionSource
 
@@ -154,7 +157,7 @@ val processedDataStream = eventStream. // ...
 -   **`method`**: HTTP method of the message. It can be `HTTPMethod.POST`,
     `HTTPMethod.PUT` or `HTTPMethod.PATCH`.
 
-### Production
+#### Production
 
 > **Warning** :warning:
 >
@@ -165,10 +168,13 @@ val processedDataStream = eventStream. // ...
 
 
 ## Training courses
+### Academy Courses
+Some lessons on Big Data Fundamentals are offered in the [FIWARE Academy](https://fiware-academy.readthedocs.io/en/latest/processing/cosmos/) .
 
-There are no training courses available for this GE. However, several examples are provided to facilitate getting started with the connector. They are hosted in a separate repository:   [fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
+### Code Examples
+Several examples are provided to facilitate getting started with the connector. They are hosted in a separate repository:   [fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
 
-### Presentations
+### Other Presentations
 -  [FIWARE Real-time Processing of Historic Context Information using Apache Flink](https://www.slideshare.net/mobile/FI-WARE/fiware-global-summit-fiware-orion-flink-connector) (Málaga 2018)
 
 ## Quality Assurance
@@ -191,6 +197,22 @@ follows:
     ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Stability&url=https://fiware.github.io/catalogue/json/cosmos.json&query=$.stability&colorB=blue)
 
 ---
+
+## Maintainers
+
+[@sonsoleslp](https://github.com/sonsoleslp).
+
+## Contributing
+
+Contribution guidelines are detailed in the [CONTRIBUTIONS](https://github.com/ging/fiware-cosmos-orion-flink-connector/blob/master/CONTRIBUTIONS.md) file.
+
+## Testing
+
+In order to test the code run:
+```
+mvn clean test -Dtest=*Test cobertura:cobertura coveralls:report -Padd-dependencies-for-IDEA
+```
+
 
 ## License
 
