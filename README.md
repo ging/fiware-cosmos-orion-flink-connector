@@ -30,11 +30,13 @@ check the FIWARE Catalogue entry for
 -   [What is Cosmos?](#what-is-cosmos)
 -   [Why use Cosmos?](#why-use-cosmos)
 -   [Orion Flink Connector](#orion-flink-connector)
-    -   [Installation](#installation)
-    -   [Usage](#usage)
-    -   [Production](#production)
+-   [Installation](#installation)
+-   [Usage: API Overview](#usage-api-overview)
 -   [Training Courses](#training-courses)
 -   [Quality Assurance](#quality-assurance)
+-   [Maintainers](#maintainers)
+-   [Contributing](#contributing)
+-   [Testing](#testing)
 -   [License](#license)
 
 ---
@@ -67,7 +69,7 @@ This is a Flink connector for the Fiware Orion Context Broker. It has two parts:
 -   **`OrionSink`**: Sink for writing back to the Context Broker.
 
 
-### Install
+### Installation
 
 Download the JAR from the latest release. In your project directory run:
 
