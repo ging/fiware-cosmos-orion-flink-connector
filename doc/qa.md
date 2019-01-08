@@ -1,5 +1,3 @@
-## Quality Assurance
-
 This project is part of [FIWARE](https://fiware.org/) and has been rated as
 follows:
 

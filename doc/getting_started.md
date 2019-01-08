@@ -1,7 +1,3 @@
-## Getting started
-
-### Orion Flink Connector
-
 This is a Flink connector for the Fiware Orion Context Broker.
 It has two parts:
 

@@ -1,4 +1,3 @@
-## Training courses
 ### Academy Courses
 Some lessons on Big Data Fundamentals are offered in the [FIWARE Academy](https://fiware-academy.readthedocs.io/en/latest/processing/cosmos/) .
 

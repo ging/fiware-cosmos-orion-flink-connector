@@ -1,4 +1,3 @@
-## User/Programmer guide
 ### OrionSource
 
 * Import dependency.
