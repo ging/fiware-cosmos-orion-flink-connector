@@ -10,14 +10,17 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector-examples/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector-examples?targetFile=pom.xml)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/cosmos.svg)
 
-The Cosmos Generic Enabler enables an easier BigData analysis over context
-integrated with some of the most popular BigData platforms.
+The Cosmos Generic Enabler simplifies Big Data analysis of context data and
+integrates with some of the many popular Big Data platforms.
 
 Cosmos is a FIWARE Generic Enabler. Therefore, it can be integrated as part of any platform “Powered by FIWARE”. FIWARE is a curated framework of open source platform components which can be assembled together with other third-party platform components to accelerate the development of Smart Solutions.
 
-You can find more info at the [FIWARE developers](https://developers.fiware.org/) website and the [FIWARE](https://fiware.org/) website.
+This project is part of [FIWARE](https://www.fiware.org/). For more information
+check the FIWARE Catalogue entry for
+[Context Processing, Analysis and Visualization](https://github.com/Fiware/catalogue/tree/master/processing).
 
-The complete list of FIWARE GEs and Incubated FIWARE GEs can be found at the [FIWARE Catalogue](https://catalogue.fiware.org/)
+| :books: [Documentation](https://fiware-cosmos-flink.readthedocs.io) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/processing/cosmos) |
+| --- | ---|
 
 ## Content
 
@@ -35,7 +38,7 @@ The complete list of FIWARE GEs and Incubated FIWARE GEs can be found at the [FI
 
 ## What is Cosmos?
 
-The Cosmos BigData Analysis GE is a set of tools that help achieving the tasks
+The Cosmos Big Data Analysis GE is a set of tools that help achieving the tasks
 of Streaming and Batch processing over context data. These tools are:
 
 -   Orion-Flink Connector (Source and Sink)
@@ -166,7 +169,7 @@ val processedDataStream = eventStream. // ...
 There are no training courses available for this GE. However, several examples are provided to facilitate getting started with the connector. They are hosted in a separate repository:   [fiware-cosmos-orion-flink-connector-examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples).
 
 ### Presentations
--  [FIWARE Real-time Processing of Historic Context Information using Apache Flink](https://www.slideshare.net/sonsoleslp/fiware-realtime-processing-of-historic-context-information-using-apache-flink-fiware-global-summit-mlaga-2018-upm-team) (Málaga 2018)
+-  [FIWARE Real-time Processing of Historic Context Information using Apache Flink](https://www.slideshare.net/mobile/FI-WARE/fiware-global-summit-fiware-orion-flink-connector) (Málaga 2018)
 
 ## Quality Assurance
 
