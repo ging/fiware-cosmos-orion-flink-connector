@@ -12,6 +12,7 @@ pages:
   - 'User/Programmer Guide': usage.md
   - 'Training courses': training.md
   - 'Quality Assurance': qa.md
+  - 'Roadmap': roadmap.md
   - 'Contribution guidelines': contributing.md
   - 'Testing': testing.md
   - 'License': license.md
