@@ -35,6 +35,7 @@ check the FIWARE Catalogue entry for
 -   [Training Courses](#training-courses)
 -   [Quality Assurance](#quality-assurance)
 -   [Maintainers](#maintainers)
+-   [Roadmap](#roadmap)
 -   [Contributing](#contributing)
 -   [Testing](#testing)
 -   [License](#license)
@@ -203,6 +204,10 @@ follows:
 ## Maintainers
 
 [@sonsoleslp](https://github.com/sonsoleslp).
+
+## Roadmap
+
+The list of features that are planned for the subsequent release are available in the [ROADMAP](https://github.com/ging/fiware-cosmos-orion-flink-connector/blob/master/ROADMAP.md) file.
 
 ## Contributing
 
