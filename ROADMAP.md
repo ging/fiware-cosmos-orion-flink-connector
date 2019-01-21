@@ -13,6 +13,7 @@ The following list of features are planned to be addressed in the short term, an
 ## Medium term
 The following list of features are planned to be addressed in the medium term, typically within the subsequent release(s) generated in the next 9 months after next planned release:
  * **Support for Apache Spark**: Right now, the only streaming engine supported by Cosmos is Flink. It is intended to provide an HTTP Orion Connector for Spark as well.
+ * **Docker images**: Provide Docker images to facilitate the deployment of a complete big data processing scenario.
 
 ## Long term
 
