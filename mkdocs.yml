@@ -16,4 +16,4 @@ pages:
   - 'Contribution guidelines': contributing.md
   - 'Testing': testing.md
   - 'License': license.md
-  - 'Deprecated functionalities': deprecated_functionality.md
+  - 'Deprecated functionalities': deprecated_functionalities.md
