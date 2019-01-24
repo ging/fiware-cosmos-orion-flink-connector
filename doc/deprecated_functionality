@@ -5,3 +5,5 @@ The following functionalities are no longer maintained:
 * Cosmos Proxy
 * Cosmos GUI
 * OAuth2 Hive Authentication Provider
+* Auth server
+
