@@ -1,4 +1,5 @@
 The following functionalities are no longer maintained:
+
 - TIDOOP
 - Apache Hive
 - MapReduce
