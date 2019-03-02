@@ -1,4 +1,4 @@
-# fiware-cosmos-orion-flink-connector
+# FIWARE Cosmos Orion-Flink Connector
 
 [![](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 ![License](https://img.shields.io/github/license/ging/fiware-cosmos-orion-flink-connector.svg)

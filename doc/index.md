@@ -1,4 +1,4 @@
-# fiware-cosmos-orion-flink-connector
+# FIWARE Cosmos Orion-Flink Connector
 
 [![](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 [![License](https://img.shields.io/github/license/ging/fiware-cosmos-orion-flink-connector.svg)](#)
@@ -10,18 +10,18 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector-examples/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector-examples?targetFile=pom.xml)
 [![Status](https://nexus.lab.fiware.org/static/badges/statuses/cosmos.svg)](#)
 
-The Cosmos Generic Enabler enables an easier BigData analysis over context integrated with some of the most popular
+The Cosmos Generic Enabler enables easier BigData analysis over context, integrated with some of the most popular
 BigData platforms.
 
 Cosmos is a FIWARE Generic Enabler. Therefore, it can be integrated as part of any platform “Powered by FIWARE”. FIWARE
 is a curated framework of open source platform components which can be assembled together with other third-party
 platform components to accelerate the development of Smart Solutions.
 
-You can find more info at the [FIWARE developers](https://developers.fiware.org/) website and the
-[FIWARE](https://fiware.org/) website.
+You can find more info at the [FIWARE developers site](https://developers.fiware.org/)and the main
+[FIWARE site](https://fiware.org/).
 
 The complete list of FIWARE GEs and Incubated FIWARE GEs can be found at the
-[FIWARE Catalogue](https://catalogue.fiware.org/)
+[FIWARE Catalogue](https://github.com/fiware/catalogue)
 
 ## What is Cosmos?
 

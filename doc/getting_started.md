@@ -1,4 +1,4 @@
-This is a Flink connector for the Fiware Orion Context Broker. It has two parts:
+This is a Flink connector for the FIWARE Orion Context Broker. It has two parts:
 
 -   **`OrionSource`**: Source for receiving NGSIv2 events in the shape of HTTP messages from subscriptions.
 

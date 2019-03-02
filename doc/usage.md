@@ -25,9 +25,9 @@ The received data is a DataStream of objects of the class **`NgsiEvent`**. This 
 
 -   **`creationTime`**: Timestamp of arrival.
 
--   **`service`**: Fiware service extracted from the HTTP headers.
+-   **`service`**: FIWARE service extracted from the HTTP headers.
 
--   **`servicePath`**: Fiware service path extracted from the HTTP headers.
+-   **`servicePath`**: FIWARE service path extracted from the HTTP headers.
 
 -   **`entities`**: Sequence of entites included in the message. Each entity has the following attributes:
 
