@@ -2,3 +2,5 @@
 target/
 *.iml
 scalastyle-output.xml
+/node_modules/
+package-lock.json
