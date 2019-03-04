@@ -1,5 +1,6 @@
 # FIWARE Cosmos Orion-Flink Connector
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b24f2867c66346aa8919726524ccc5f7)](https://app.codacy.com/app/sonsoleslp/fiware-cosmos-orion-flink-connector?utm_source=github.com&utm_medium=referral&utm_content=ging/fiware-cosmos-orion-flink-connector&utm_campaign=Badge_Grade_Dashboard)
 [![](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 ![License](https://img.shields.io/github/license/ging/fiware-cosmos-orion-flink-connector.svg)
 [![](https://img.shields.io/badge/tag-fiware--cosmos-orange.svg?logo=stackoverflow)](http://stackoverflow.com/questions/tagged/fiware-cosmos)
