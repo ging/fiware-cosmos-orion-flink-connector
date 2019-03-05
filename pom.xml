@@ -27,21 +27,32 @@ under the License.
 	<packaging>jar</packaging>
 
 	<name>Fiware Orion Flink Connector</name>
+	<description>The Cosmos Generic Enabler simplifies Big Data analysis of context data and integrates with some of the many popular Big Data platforms.</description>
 	<url>https://www.fiware.org/</url>
+	<licenses>
+		<license>
+			<name>GNU Affero General Public License, Version 3.0</name>
+			<url>https://www.gnu.org/licenses/agpl-3.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-	<repositories>
-		<repository>
-			<id>apache.snapshots</id>
-			<name>Apache Development Snapshot Repository</name>
-			<url>https://repository.apache.org/content/repositories/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
+	<scm>
+		<url>https://github.com/ging/fiware-cosmos-orion-flink-connector</url>
+	</scm>
+	<!--<repositories>-->
+		<!--<repository>-->
+			<!--<id>apache.snapshots</id>-->
+			<!--<name>Apache Development Snapshot Repository</name>-->
+			<!--<url>https://repository.apache.org/content/repositories/snapshots/</url>-->
+			<!--<releases>-->
+				<!--<enabled>false</enabled>-->
+			<!--</releases>-->
+			<!--<snapshots>-->
+				<!--<enabled>true</enabled>-->
+			<!--</snapshots>-->
+		<!--</repository>-->
+	<!--</repositories>-->
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
