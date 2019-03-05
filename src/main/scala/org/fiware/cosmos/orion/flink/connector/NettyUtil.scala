@@ -31,9 +31,9 @@ import scala.collection.JavaConverters._
  */
 object NettyUtil {
   private lazy val logger = LoggerFactory.getLogger(getClass)
-  final val TIMES_RETRY = 128
-  final val START_PORT = 1024
-  final val END_PORT = 65536
+  final val TimesRetry = 128
+  final val StartPort = 1024
+  final val EndPort = 65536
   /** find local inet addresses */
   def findLocalInetAddress(): InetAddress = {
 
@@ -78,10 +78,10 @@ object NettyUtil {
   def startServiceOnPort[T](
     startPort: Int,
     startService: Int => T,
-    maxRetries: Int = TIMES_RETRY,
+    maxRetries: Int = TimesRetry,
     serviceName: String = ""): T = {
 
-    if (startPort != 0 && (startPort < START_PORT || startPort > END_PORT)) {
+    if (startPort != 0 && (startPort < StartPort || startPort > EndPort)) {
       throw new Exception("startPort should be between 1024 and 65535 (inclusive), " +
         "or 0 for a random free port.")
     }
@@ -93,13 +93,12 @@ object NettyUtil {
         startPort
       } else {
         // If the new port wraps around, do not try a privilege port
-        ((startPort + offset - START_PORT) % (END_PORT - START_PORT)) + START_PORT
+        ((startPort + offset - StartPort) % (EndPort - StartPort)) + StartPort
       }
 
       try {
         val result = startService(tryPort)
         logger.info(s"Successfully started service$serviceString, result:$result.")
-        return result
       } catch {
         case e: Exception if isBindCollision(e) =>
           if (offset >= maxRetries) {
@@ -146,7 +145,7 @@ object NettyUtil {
           case throwable: Exception =>
         }
         response.toString
-      case x => throw new Exception("GET request not worked of url: " + url)
+      case _ => throw new Exception("GET request not worked of url: " + url)
     }
   }
 

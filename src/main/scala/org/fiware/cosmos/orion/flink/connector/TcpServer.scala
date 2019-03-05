@@ -44,20 +44,22 @@ import org.slf4j.LoggerFactory
  * @param maxFrameLen max netty frame length
  * @param logLevel    netty log level
  */
-
+object Utils {
+  final val MaxFrameLen = 8192;
+}
 class TcpServer(
                  tryPort: Int,
                  ctx: SourceContext[String],
                  tcpOpts: ServerBootstrap => Unit,
                  threadNum: Int = Runtime.getRuntime.availableProcessors(),
-                 maxFrameLen: Int = 8192,
+                 maxFrameLen: Int = Utils.MaxFrameLen,
                  logLevel: LogLevel = LogLevel.INFO
 ) extends ServerTrait {
   private lazy val logger = LoggerFactory.getLogger(getClass)
   private lazy val bossGroup = new NioEventLoopGroup(threadNum)
   private lazy val workerGroup = new NioEventLoopGroup
   private lazy val isRunning = new AtomicBoolean(false)
-  final val MAX_FRAME_DEFAULT = 8192
+
 
   private var currentAddr: InetSocketAddress = _
 
@@ -81,7 +83,7 @@ class TcpServer(
         .childHandler(new ChannelInitializer[SocketChannel]() {
           def initChannel(ch: SocketChannel) {
             val p: ChannelPipeline = ch.pipeline
-            p.addLast(new DelimiterBasedFrameDecoder(maxFrameLen, Delimiters.lineDelimiter(): _*))
+            p.addLast(new DelimiterBasedFrameDecoder(Utils.MaxFrameLen, Delimiters.lineDelimiter(): _*))
             p.addLast(new StringEncoder())
             p.addLast(new StringDecoder())
             p.addLast(new TcpHandler(ctx))
@@ -116,7 +118,7 @@ object TcpServer {
              tryPort: Int,
              ctx: SourceContext[String],
              threadNum: Int = Runtime.getRuntime.availableProcessors(),
-             maxFrameLen: Int = 8192,
+             maxFrameLen: Int = Utils.MaxFrameLen,
              logLevel: LogLevel = LogLevel.INFO
   ): TcpServer = {
     val tcpOptions = (bootstrap: ServerBootstrap) => {}

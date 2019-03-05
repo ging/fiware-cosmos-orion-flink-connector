@@ -29,11 +29,16 @@ import org.apache.http.message.BasicNameValuePair
 import org.apache.http.util.EntityUtils
 import org.slf4j.{Logger, LoggerFactory}
 
+object Constants {
+  val CorePoolSize = 20
+  val Period = 3
+}
+
 /** base test util */
 class BaseTest {
   lazy val logger: Logger = LoggerFactory.getLogger(getClass)
   private lazy val httpclient = HttpClients.createDefault()
-  private lazy val schedule = Executors.newScheduledThreadPool(20)
+  private lazy val schedule = Executors.newScheduledThreadPool(Constants.CorePoolSize)
   private lazy val pool = Executors.newCachedThreadPool()
 
 
@@ -42,7 +47,7 @@ class BaseTest {
       override def run(): Unit = {
         f.apply()
       }
-    }, 3, period, TimeUnit.SECONDS)
+    }, Constants.Period, period, TimeUnit.SECONDS)
   }
 
   def run(f: () => Unit): Unit = {

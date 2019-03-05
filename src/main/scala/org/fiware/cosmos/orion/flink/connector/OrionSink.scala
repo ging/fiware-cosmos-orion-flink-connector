@@ -1,7 +1,11 @@
 package org.fiware.cosmos.orion.flink.connector
 
 import org.apache.flink.streaming.api.scala.DataStream
-import org.apache.http.client.methods._
+import org.apache.http.client.methods.HttpPatch
+import org.apache.http.client.methods.HttpPut
+import org.apache.http.client.methods.HttpPost
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase
+
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClientBuilder
 import org.slf4j.LoggerFactory

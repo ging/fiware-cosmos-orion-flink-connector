@@ -76,7 +76,7 @@ class OrionHttpHandler(
           ctx.writeAndFlush(buildResponse())
         }
 
-      case x =>
+      case x : Any =>
         logger.info("unsupported request format " + x)
     }
   }
