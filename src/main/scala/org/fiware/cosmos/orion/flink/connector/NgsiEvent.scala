@@ -49,3 +49,8 @@ object MapToAttributeConverter{
        values.get("metadata").orNull)
   }
 }
+
+/**
+  * Log4j JSON Log
+  */
+case class Log(date: Float, pri: String, time: String, host: String, ident: String, message: String) extends Serializable

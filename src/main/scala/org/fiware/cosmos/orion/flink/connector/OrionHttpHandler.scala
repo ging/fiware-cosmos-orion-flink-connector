@@ -56,8 +56,11 @@ class OrionHttpHandler(
           throw new Exception("Only POST requests are allowed")
         }
         val ngsiEvent = parseMessage(req)
-        if (sc != null) {
+        if (sc != null && ngsiEvent != null) {
           sc.collect(ngsiEvent)
+        } else {
+          val genericHttpMsg = parseGenericMessage(req)
+          print(genericHttpMsg)
         }
 
         if (HttpUtil.is100ContinueExpected(req)) {
@@ -80,39 +83,54 @@ class OrionHttpHandler(
         logger.info("unsupported request format " + x)
     }
   }
-  def parseMessage(req : FullHttpRequest) : NgsiEvent =  {
-    // Retrieve headers
-    val headerEntries = req.headers().entries()
-    val SERVICE_HEADER = 4
-    val SERVICE_PATH_HEADER = 5
-    val service = headerEntries.get(SERVICE_HEADER).getValue()
-    val servicePath = headerEntries.get(SERVICE_PATH_HEADER).getValue()
 
+  def parseGenericMessage(req : FullHttpRequest) : Any = {
+    val headerEntries = req.headers().entries()
     // Retrieve body content and convert from Byte array to String
     val content = req.content()
     val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
-    val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.UTF_8)
+    val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.US_ASCII)
     content.release()
-    // Parse Body from JSON string to object and retrieve entities
-    val dataObj = parse(jsonBodyString).extract[HttpBody]
-    val parsedEntities = dataObj.data
-    val entities = parsedEntities.map(entity => {
-      // Retrieve entity id
-      val entityId = entity("id").toString
-      // Retrieve entity type
-      val entityType = entity("type").toString
-      // Retrieve attributes
-      val attrs = entity.filterKeys(x => x != "id" & x!= "type" )
-        //Convert attributes to Attribute objects
-        .transform((k,v) => MapToAttributeConverter
-        .unapply(v.asInstanceOf[Map[String,Any]]))
-      new Entity(entityId,entityType,attrs )
-    })
-    // Generate timestamp
-    val creationTime = System.currentTimeMillis
-    // Generate NgsiEvent
-    val ngsiEvent = new NgsiEvent(creationTime, service, servicePath, entities)
-    ngsiEvent
+    parse(jsonBodyString).extract[Seq[Log]]
+  }
+  def parseMessage(req : FullHttpRequest) : NgsiEvent =  {
+    try {
+      // Retrieve headers
+      val headerEntries = req.headers().entries()
+      val SERVICE_HEADER = 4
+      val SERVICE_PATH_HEADER = 5
+      val service = headerEntries.get(SERVICE_HEADER).getValue()
+      val servicePath = headerEntries.get(SERVICE_PATH_HEADER).getValue()
+
+      // Retrieve body content and convert from Byte array to String
+      val content = req.content()
+      val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
+      val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.UTF_8)
+      content.release()
+      // Parse Body from JSON string to object and retrieve entities
+      val dataObj = parse(jsonBodyString).extract[HttpBody]
+      val parsedEntities = dataObj.data
+      val entities = parsedEntities.map(entity => {
+        // Retrieve entity id
+        val entityId = entity("id").toString
+        // Retrieve entity type
+        val entityType = entity("type").toString
+        // Retrieve attributes
+        val attrs = entity.filterKeys(x => x != "id" & x!= "type" )
+          //Convert attributes to Attribute objects
+          .transform((k,v) => MapToAttributeConverter
+          .unapply(v.asInstanceOf[Map[String,Any]]))
+        new Entity(entityId,entityType,attrs)
+      })
+      // Generate timestamp
+      val creationTime = System.currentTimeMillis
+      // Generate NgsiEvent
+      val ngsiEvent = new NgsiEvent(creationTime, service, servicePath, entities)
+      ngsiEvent
+    } catch {
+      case e: Exception => null
+      case e: Error => null
+    }
   }
   private def buildResponse(content: Array[Byte] = Array.empty[Byte]): FullHttpResponse = {
     val response: FullHttpResponse = new DefaultFullHttpResponse(
