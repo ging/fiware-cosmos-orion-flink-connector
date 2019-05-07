@@ -111,6 +111,7 @@ class OrionConnectorTest extends  BaseTest{
    Assert.assertTrue(OrionSink.getMethod(HTTPMethod.PUT,"").isInstanceOf[HttpPut])
    Assert.assertTrue(OrionSink.getMethod(HTTPMethod.PATCH,"").isInstanceOf[HttpPatch])
   }
+
   @Test (expected=classOf[java.lang.Exception]) def nettyServerCallbackUrl : Unit = {
     val sc  =  new DummySourceContext()
     val os = new OrionHttpServer(sc)
@@ -128,9 +129,32 @@ class OrionConnectorTest extends  BaseTest{
 
 
     var  currentAddr : InetSocketAddress = os.startNettyServer(9001,None)
+    Assert.assertTrue(currentAddr.isInstanceOf[InetSocketAddress])
     Assert.assertEquals(currentAddr.getPort(),9001)
   }
 
+  @Test (expected= classOf[java.util.concurrent.RejectedExecutionException]) def nettyServerCollide : Unit = {
+    val sc  =  new DummySourceContext()
+    val sc2  =  new DummySourceContext()
+    val os : OrionHttpServer = new OrionHttpServer(sc)
+    val os2 : OrionHttpServer = new OrionHttpServer(sc)
+    new Thread(new Runnable {
+      def run() {
+        Thread.sleep(10000)
+        os.close()
+      }
+    }).run()
+    new Thread(new Runnable {
+      def run() {
+        Thread.sleep(10000)
+        os2.close()
+      }
+    }).run()
+
+    Assert.assertTrue(true)
+    var  currentAddr : InetSocketAddress = os.startNettyServer(9001,None)
+    var  currentAddr2 : InetSocketAddress = os2.startNettyServer(9001,None)
+  }
   @Test def orionSource() : Unit = {
     run(() =>FlinkJobTest.main(Array()))
     Thread.sleep(10000)

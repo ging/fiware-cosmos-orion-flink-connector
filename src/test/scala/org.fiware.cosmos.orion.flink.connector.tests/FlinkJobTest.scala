@@ -3,7 +3,7 @@ package org.fiware.cosmos.orion.flink.connector.test
 
 import org.apache.flink.streaming.api.scala.{StreamExecutionEnvironment, _}
 import org.apache.flink.streaming.api.windowing.time.Time
-import org.fiware.cosmos.orion.flink.connector.OrionSource
+import org.fiware.cosmos.orion.flink.connector._
 import org.junit.Assert._
 
 import scala.concurrent.Await
@@ -35,6 +35,10 @@ object FlinkJobTest{
     processedDataStream .max("pressure").map(max=> {
       SimulatedNotification.maxPresVal = max.pressure})
 
+    val sinkStream = processedDataStream.max("temperature").map(el=>new OrionSinkObject(el.toString,"http://localhost",
+      ContentType.JSON,HTTPMethod.POST))
+
+    OrionSink.addSink(sinkStream)
     env.execute("Socket Window NgsiEvent")
   }
 
