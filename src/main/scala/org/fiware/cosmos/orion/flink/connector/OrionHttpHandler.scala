@@ -27,6 +27,7 @@ import io.netty.util.{AsciiString, CharsetUtil}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.json4s.DefaultFormats
 import org.json4s.jackson.JsonMethods.parse
+import org.json4s.jackson.Serialization.write
 import org.slf4j.LoggerFactory
 /**
  * HTTP server handler, HTTP http request
@@ -57,12 +58,9 @@ class OrionHttpHandler(
         }
         val ngsiEvent = parseMessage(req)
         if (sc != null && ngsiEvent != null) {
+          logger.info(write(ngsiEvent))
           sc.collect(ngsiEvent)
-        } else {
-          val genericHttpMsg = parseGenericMessage(req)
-          print(genericHttpMsg)
         }
-
         if (HttpUtil.is100ContinueExpected(req)) {
           ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE))
         }
@@ -80,19 +78,10 @@ class OrionHttpHandler(
         }
 
       case x : Any =>
-        logger.info("unsupported request format " + x)
+        logger.info("Unsupported request format " + x)
     }
   }
 
-  def parseGenericMessage(req : FullHttpRequest) : Any = {
-    val headerEntries = req.headers().entries()
-    // Retrieve body content and convert from Byte array to String
-    val content = req.content()
-    val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
-    val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.US_ASCII)
-    content.release()
-    parse(jsonBodyString).extract[Seq[Log]]
-  }
   def parseMessage(req : FullHttpRequest) : NgsiEvent =  {
     try {
       // Retrieve headers
@@ -110,6 +99,7 @@ class OrionHttpHandler(
       // Parse Body from JSON string to object and retrieve entities
       val dataObj = parse(jsonBodyString).extract[HttpBody]
       val parsedEntities = dataObj.data
+      val subscriptionId = dataObj.subscriptionId
       val entities = parsedEntities.map(entity => {
         // Retrieve entity id
         val entityId = entity("id").toString
@@ -125,7 +115,7 @@ class OrionHttpHandler(
       // Generate timestamp
       val creationTime = System.currentTimeMillis
       // Generate NgsiEvent
-      val ngsiEvent = new NgsiEvent(creationTime, service, servicePath, entities)
+      val ngsiEvent = new NgsiEvent(creationTime, service, servicePath, entities, subscriptionId)
       ngsiEvent
     } catch {
       case e: Exception => null
