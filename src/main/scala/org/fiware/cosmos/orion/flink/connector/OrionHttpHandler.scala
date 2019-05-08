@@ -27,6 +27,7 @@ import io.netty.util.{AsciiString, CharsetUtil}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.json4s.DefaultFormats
 import org.json4s.jackson.JsonMethods.parse
+import org.json4s.jackson.Serialization.write
 import org.slf4j.LoggerFactory
 /**
  * HTTP server handler, HTTP http request
@@ -56,10 +57,10 @@ class OrionHttpHandler(
           throw new Exception("Only POST requests are allowed")
         }
         val ngsiEvent = parseMessage(req)
-        if (sc != null) {
+        if (sc != null && ngsiEvent != null) {
+          logger.info(write(ngsiEvent))
           sc.collect(ngsiEvent)
         }
-
         if (HttpUtil.is100ContinueExpected(req)) {
           ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE))
         }
@@ -80,39 +81,46 @@ class OrionHttpHandler(
         logger.info("Unsupported request format " + x)
     }
   }
-  def parseMessage(req : FullHttpRequest) : NgsiEvent =  {
-    // Retrieve headers
-    val headerEntries = req.headers().entries()
-    val SERVICE_HEADER = 4
-    val SERVICE_PATH_HEADER = 5
-    val service = headerEntries.get(SERVICE_HEADER).getValue()
-    val servicePath = headerEntries.get(SERVICE_PATH_HEADER).getValue()
 
-    // Retrieve body content and convert from Byte array to String
-    val content = req.content()
-    val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
-    val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.UTF_8)
-    content.release()
-    // Parse Body from JSON string to object and retrieve entities
-    val dataObj = parse(jsonBodyString).extract[HttpBody]
-    val parsedEntities = dataObj.data
-    val entities = parsedEntities.map(entity => {
-      // Retrieve entity id
-      val entityId = entity("id").toString
-      // Retrieve entity type
-      val entityType = entity("type").toString
-      // Retrieve attributes
-      val attrs = entity.filterKeys(x => x != "id" & x!= "type" )
-        //Convert attributes to Attribute objects
-        .transform((k,v) => MapToAttributeConverter
-        .unapply(v.asInstanceOf[Map[String,Any]]))
-      new Entity(entityId,entityType,attrs )
-    })
-    // Generate timestamp
-    val creationTime = System.currentTimeMillis
-    // Generate NgsiEvent
-    val ngsiEvent = new NgsiEvent(creationTime, service, servicePath, entities)
-    ngsiEvent
+  def parseMessage(req : FullHttpRequest) : NgsiEvent =  {
+    try {
+      // Retrieve headers
+      val headerEntries = req.headers().entries()
+      val SERVICE_HEADER = 4
+      val SERVICE_PATH_HEADER = 5
+      val service = headerEntries.get(SERVICE_HEADER).getValue()
+      val servicePath = headerEntries.get(SERVICE_PATH_HEADER).getValue()
+
+      // Retrieve body content and convert from Byte array to String
+      val content = req.content()
+      val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
+      val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.UTF_8)
+      content.release()
+      // Parse Body from JSON string to object and retrieve entities
+      val dataObj = parse(jsonBodyString).extract[HttpBody]
+      val parsedEntities = dataObj.data
+      val subscriptionId = dataObj.subscriptionId
+      val entities = parsedEntities.map(entity => {
+        // Retrieve entity id
+        val entityId = entity("id").toString
+        // Retrieve entity type
+        val entityType = entity("type").toString
+        // Retrieve attributes
+        val attrs = entity.filterKeys(x => x != "id" & x!= "type" )
+          //Convert attributes to Attribute objects
+          .transform((k,v) => MapToAttributeConverter
+          .unapply(v.asInstanceOf[Map[String,Any]]))
+        new Entity(entityId,entityType,attrs)
+      })
+      // Generate timestamp
+      val creationTime = System.currentTimeMillis
+      // Generate NgsiEvent
+      val ngsiEvent = new NgsiEvent(creationTime, service, servicePath, entities, subscriptionId)
+      ngsiEvent
+    } catch {
+      case e: Exception => null
+      case e: Error => null
+    }
   }
   private def buildResponse(content: Array[Byte] = Array.empty[Byte]): FullHttpResponse = {
     val response: FullHttpResponse = new DefaultFullHttpResponse(

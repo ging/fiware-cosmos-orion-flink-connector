@@ -6,8 +6,9 @@ package org.fiware.cosmos.orion.flink.connector
   * @param fiwareService Fiware service header
   * @param fiwareServicePath Fiware service path header
   * @param entities List of entities
+  * @param subscriptionId Subscription id to the Context Broker
   */
-case class NgsiEvent(creationTime: Long, fiwareService: String ,fiwareServicePath: String, entities: Seq[Entity] ) extends Serializable
+case class NgsiEvent(creationTime: Long, fiwareService: String ,fiwareServicePath: String, entities: Seq[Entity], subscriptionId: String) extends Serializable
 
 /**
   * Entity
@@ -31,6 +32,7 @@ case class HttpBody( data: Seq[Map[String,Any]], subscriptionId: String ) extend
   * @param metadata Metadata map
   */
 case class Attribute(`type`: Any, value: Any, metadata:Any ) extends Serializable
+
 
 /**
   * Helper for converting a map to an attribute object

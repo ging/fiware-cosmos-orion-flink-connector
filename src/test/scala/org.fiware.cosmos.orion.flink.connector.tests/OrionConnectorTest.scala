@@ -72,7 +72,7 @@ class OrionConnectorTest extends  BaseTest{
 
   }
 
-  @Test(expected=classOf[org.json4s.MappingException])
+  @Test
   def incorrectNotification: Unit = {
     val sc  =  new DummySourceContext()
     val ohh = new OrionHttpHandler(sc)
@@ -80,6 +80,7 @@ class OrionConnectorTest extends  BaseTest{
     val mockCtx = mock(classOf[ChannelHandlerContext])
     //  ohh.channelRead(mockCtx, req)
     var res = ohh.parseMessage(req)
+    Assert.assertNull(res)
   }
 
   @Test(expected=classOf[java.lang.Exception])
