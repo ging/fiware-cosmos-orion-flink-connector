@@ -78,7 +78,7 @@ object OrionSink {
 
        try {
          val response = client.execute(httpEntity)
-          logger.info("POST to " + msg.url)
+          logger.info("Sent to " + msg.url)
        } catch {
          case e: Exception => {
            logger.error(e.toString)

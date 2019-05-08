@@ -1,10 +1,11 @@
 package org.fiware.cosmos.orion.flink.connector.test
 
 import org.apache.flink.streaming.api.scala._
-
-import org.apache.flink.streaming.api.scala.{StreamExecutionEnvironment}
+import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.windowing.time.Time
-import org.fiware.cosmos.orion.flink.connector.OrionSource
+import org.fiware.cosmos.orion.flink.connector._
+import org.json4s.DefaultFormats
+import org.json4s.jackson.Serialization.write
 
 
 object Constants {
@@ -18,6 +19,7 @@ object Constants {
   * @author @sonsoleslp
   */
 object FlinkJobTest{
+  implicit val formats = DefaultFormats
 
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
@@ -29,15 +31,18 @@ object FlinkJobTest{
       .map(entity => {
         val temp = entity.attrs("temperature").value.asInstanceOf[Number].floatValue()
         val pres = entity.attrs("pressure").value.asInstanceOf[Number].floatValue()
-        new EntityNode( entity.id, temp, pres)
+        EntityNode(entity.id, temp, pres)
       })
       .keyBy("id")
       .timeWindow(Time.seconds(Constants.MaxWindow), Time.seconds(Constants.MinWindow))
 
-    processedDataStream.max("temperature").map(max=> {
-      simulatedNotification.maxTempVal = max.temperature})
-    processedDataStream .max("pressure").map(max=> {
-      simulatedNotification.maxPresVal = max.pressure})
+      processedDataStream.max("temperature").map(max=> {
+          simulatedNotification.maxTempVal = max.temperature})
+      val sinkStream = processedDataStream .max("pressure").map(max=> {
+        simulatedNotification.maxPresVal = max.pressure
+        OrionSinkObject(write(max),"http://localhost:3000",ContentType.JSON,HTTPMethod.POST)
+      })
+    OrionSink.addSink(sinkStream)
 
     env.execute("Socket Window NgsiEvent")
   }

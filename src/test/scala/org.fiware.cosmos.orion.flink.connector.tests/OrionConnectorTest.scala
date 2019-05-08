@@ -102,7 +102,7 @@ class OrionConnectorTest extends  BaseTest{
   }
 
   @Test def buildHttpPostSinkEntity : Unit = {
-    val os = new OrionSinkObject(Utils.Content, Utils.OrionAddress,  ContentType.Plain, HTTPMethod.POST)
+    val os = OrionSinkObject(Utils.Content, Utils.OrionAddress, ContentType.Plain, HTTPMethod.POST)
     val httpMsg = OrionSink.createHttpMsg(os)
     val content = scala.io.Source.fromInputStream(httpMsg.getEntity.getContent).mkString
 
@@ -112,7 +112,7 @@ class OrionConnectorTest extends  BaseTest{
   }
 
   @Test def buildHttpPutSinkEntity : Unit = {
-    val os = new OrionSinkObject(Utils.Content, Utils.OrionAddress,  ContentType.JSON, HTTPMethod.PUT)
+    val os = OrionSinkObject(Utils.Content, Utils.OrionAddress, ContentType.JSON, HTTPMethod.PUT)
     val httpMsg = OrionSink.createHttpMsg(os)
     val content = scala.io.Source.fromInputStream(httpMsg.getEntity.getContent).mkString
 
@@ -122,7 +122,7 @@ class OrionConnectorTest extends  BaseTest{
   }
 
   @Test def buildHttpPatchSinkEntity : Unit = {
-    val os = new OrionSinkObject(Utils.Content, Utils.OrionAddress,  ContentType.JSON, HTTPMethod.PATCH)
+    val os = OrionSinkObject(Utils.Content, Utils.OrionAddress, ContentType.JSON, HTTPMethod.PATCH)
     val httpMsg = OrionSink.createHttpMsg(os)
     val content = scala.io.Source.fromInputStream(httpMsg.getEntity.getContent).mkString
 
@@ -180,7 +180,6 @@ class OrionConnectorTest extends  BaseTest{
     }
     Thread.sleep(Utils.SleepTimeShort)
     Assert.assertEquals(simulatedNotification.maxTempVal,originalValue,0)
-
 
   }
 }

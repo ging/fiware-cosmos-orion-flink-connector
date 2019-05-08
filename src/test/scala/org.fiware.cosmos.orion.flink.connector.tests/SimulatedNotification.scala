@@ -15,9 +15,10 @@ final val notificationVal =
        ],
        "subscriptionId": "57458eb60962ef754e7c0998"
      }""".stripMargin
-final val defaultTemperature = 20;
-final val defaultPressure = 40;
-def notification(temperature: Float = defaultTemperature, pressure: Float = defaultPressure) : String = {
+final val defaultTemperature = 20
+  final val defaultPressure = 40
+
+  def notification(temperature: Float = defaultTemperature, pressure: Float = defaultPressure) : String = {
   s"""{
         "data": [
            {

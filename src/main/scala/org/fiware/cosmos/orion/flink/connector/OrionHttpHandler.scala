@@ -53,6 +53,7 @@ class OrionHttpHandler(
   override def channelRead(ctx: ChannelHandlerContext, msg: AnyRef): Unit = {
     msg match {
       case req : FullHttpRequest =>
+
         if (req.method() != HttpMethod.POST) {
           throw new Exception("Only POST requests are allowed")
         }
@@ -60,6 +61,8 @@ class OrionHttpHandler(
         if (sc != null && ngsiEvent != null) {
           logger.info(write(ngsiEvent))
           sc.collect(ngsiEvent)
+        } else {
+          exceptionCaught(ctx, new Exception("Request body is not an NgsiEvent"))
         }
         if (HttpUtil.is100ContinueExpected(req)) {
           ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE))
@@ -110,12 +113,12 @@ class OrionHttpHandler(
           //Convert attributes to Attribute objects
           .transform((k,v) => MapToAttributeConverter
           .unapply(v.asInstanceOf[Map[String,Any]]))
-        new Entity(entityId,entityType,attrs)
+        Entity(entityId, entityType, attrs)
       })
       // Generate timestamp
       val creationTime = System.currentTimeMillis
       // Generate NgsiEvent
-      val ngsiEvent = new NgsiEvent(creationTime, service, servicePath, entities, subscriptionId)
+      val ngsiEvent = NgsiEvent(creationTime, service, servicePath, entities, subscriptionId)
       ngsiEvent
     } catch {
       case e: Exception => null
