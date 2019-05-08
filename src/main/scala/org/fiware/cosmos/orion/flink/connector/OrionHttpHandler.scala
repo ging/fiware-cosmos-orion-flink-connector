@@ -77,7 +77,7 @@ class OrionHttpHandler(
         }
 
       case x : Any =>
-        logger.info("unsupported request format " + x)
+        logger.info("Unsupported request format " + x)
     }
   }
   def parseMessage(req : FullHttpRequest) : NgsiEvent =  {
