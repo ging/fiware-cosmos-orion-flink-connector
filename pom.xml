@@ -205,7 +205,7 @@ under the License.
 							</filters>
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>flinknetty.StreamingJob</mainClass>
+									<mainClass>org.fiware.cosmos.orion.flink.connector.OrionSource</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
