@@ -9,7 +9,7 @@ In order to install the connector, first you must download the JAR from the late
 In your project directory run:
 
 ```bash
-mvn install:install-file -Dfile=$(PATH_DOWNLOAD)/orion.flink.connector-1.0.jar -DgroupId=org.fiware.cosmos -DartifactId=orion.flink.connector -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=$(PATH_DOWNLOAD)/orion.flink.connector-1.1.0.jar -DgroupId=org.fiware.cosmos -DartifactId=orion.flink.connector -Dversion=1.1.0 -Dpackaging=jar
 ```
 
 Add it to your `pom.xml` file inside the dependencies section.
@@ -18,6 +18,6 @@ Add it to your `pom.xml` file inside the dependencies section.
 <dependency>
     <groupId>org.fiware.cosmos</groupId>
     <artifactId>orion.flink.connector</artifactId>
-    <version>1.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```

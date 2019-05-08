@@ -1,7 +1,7 @@
 {
 	"name": "fiware-cosmos-orion-flink-connector",
 	"version": "7.6.0",
-	"description": "enables easier BigData analysis over context integrated with some of the most popular BigData platforms",
+	"description": "Enables easier BigData analysis over context integrated with some of the most popular BigData platforms",
 	"keywords": [
 		"big-data",
 		"fiware",
