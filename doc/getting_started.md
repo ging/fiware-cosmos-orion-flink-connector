@@ -1,8 +1,8 @@
 This is a Flink connector for the FIWARE Orion Context Broker. It has two parts:
 
--   **`OrionSource`**: Source for receiving NGSIv2 events in the shape of HTTP messages from subscriptions.
+-   **`OrionSource`**: Source for receiving NGSI v2 events from subscriptions via HTTP.
 
--   **`OrionSink`**: Sink for writing back to the Context Broker.
+-   **`OrionSink`**: Sink for writing the processed data in Orion.
 
 In order to install the connector, first you must download the JAR from the latest release.
 

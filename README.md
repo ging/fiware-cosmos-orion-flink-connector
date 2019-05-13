@@ -63,8 +63,8 @@ conclusions as to the state of your smart solution and bring value to your solut
 
 This is a Flink connector for the FIWARE Orion Context Broker. It has two parts:
 
--   **`OrionSource`**: Source for receiving NGSI v2 events in the shape of HTTP messages from subscriptions.
--   **`OrionSink`**: Sink for writing back to the Context Broker.
+-   **`OrionSource`**: Source for receiving NGSI v2 events from subscriptions via HTTP.
+-   **`OrionSink`**: Sink for writing the processed data in Orion.
 
 ### Installation
 
@@ -109,7 +109,7 @@ Add it to your `pom.xml` file inside the dependencies section.
         // ...processing
 ```
 
-    The received data is a DataStream of objects of the class **`NgsiEvent`**.
+The received data is a DataStream of objects of the class **`NgsiEvent`**.
     This class has the following attributes:
     -   **`creationTime`**: Timestamp of arrival.
     -   **`service`**: Fiware service extracted from the HTTP headers.
@@ -135,17 +135,20 @@ Add it to your `pom.xml` file inside the dependencies section.
 -   Add sink to source.
 
 ```scala
-val processedDataStream = eventStream. // ...
-    processing .map(obj => new OrionSinkObject( "{\"temperature_avg\": {
-    \"value\":"+obj.temperature+", \"type\": \"Float\"}}", // Stringified JSON
-    message "http://context-broker-url:8080/v2/entities/Room1", // URL
-    ContentType.JSON, // Content type HTTPMethod.POST) // HTTP method )
+val processedDataStream = eventStream.
+ // ... processing
+ .map(obj =>
+    new OrionSinkObject(
+        "{\"temperature_avg\": { \"value\":"+obj.temperature+", \"type\": \"Float\"}}", // Stringified JSON message
+        "http://context-broker-url:8080/v2/entities/Room1", // URL
+        ContentType.JSON, // Content type
+        HTTPMethod.POST) // HTTP method
+ )
 
-        OrionSink.addSink( processedDataStream )
+OrionSink.addSink( processedDataStream )
 ```
 
-    The sink accepts a `DataStream` of objects of the class
-    **`OrionSinkObject`**. This class has 4 attributes:
+The sink accepts a `DataStream` of objects of the class **`OrionSinkObject`**. This class has 4 attributes:
 
 -   **`content`**: Message content in String format. If it is a JSON, you need to make sure to stringify it before
     sending it.
