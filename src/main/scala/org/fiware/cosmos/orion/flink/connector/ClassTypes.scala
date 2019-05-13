@@ -3,8 +3,8 @@ package org.fiware.cosmos.orion.flink.connector
 /**
   * NgsiEvent
   * @param creationTime Time the event was received (milliseconds since 1970)
-  * @param fiwareService Fiware service header
-  * @param fiwareServicePath Fiware service path header
+  * @param fiwareService FIWARE service header
+  * @param fiwareServicePath FIWARE service path header
   * @param entities List of entities
   * @param subscriptionId Subscription id to the Context Broker
   */
