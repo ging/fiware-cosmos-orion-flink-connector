@@ -109,13 +109,19 @@ Add it to your `pom.xml` file inside the dependencies section.
         // ...processing
 ```
 
-The received data is a DataStream of objects of the class **`NgsiEvent`**. This class has the following attributes: -
-**`creationTime`**: Timestamp of arrival. - **`service`**: FIWARE service extracted from the HTTP headers. -
-**`servicePath`**: FIWARE service path extracted from the HTTP headers. - **`entities`**: Sequence of entites included
-in the message. Each entity has the following attributes: - **`id`**: Identifier of the entity. - **`type`**: Node
-type. - **`attrs`**: Map of attributes in which the key is the attribute name and the value is an object with the
-following properties: - **`type`**: Type of value (Float, Int,...). - **`value`**: Value of the attribute. -
-**`metadata`**: Additional metadata.
+The received data is a DataStream of objects of the class **`NgsiEvent`**. This class has the following attributes:
+
+-   **`creationTime`**: Timestamp of arrival.
+-   **`service`**: FIWARE service extracted from the HTTP headers.
+-   **`servicePath`**: FIWARE service path extracted from the HTTP headers.
+-   **`entities`**: Sequence of entites included in the message. Each entity has the following attributes:
+    -   **`id`**: Identifier of the entity.
+    -   **`type`**: Node type.
+    -   **`attrs`**: Map of attributes in which the key is the attribute name and the value is an object with the
+        following properties:
+        -   **`type`**: Type of value (Float, Int,...).
+        -   **`value`**: Value of the attribute.
+        -   **`metadata`**: Additional metadata.
 
 #### OrionSink
 
