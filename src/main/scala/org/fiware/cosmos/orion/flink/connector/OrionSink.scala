@@ -97,7 +97,7 @@ object OrionSink {
   def createHttpMsg(msg: OrionSinkObject) : HttpEntityEnclosingRequestBase= {
     val httpEntity = getMethod(msg.method, msg.url)
     httpEntity.setHeader("Content-type", msg.contentType.toString)
-    httpEntity.setEntity(new StringEntity((msg.content)))
+    httpEntity.setEntity(new StringEntity(msg.content))
     httpEntity
   }
 }
