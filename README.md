@@ -11,7 +11,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector?targetFile=pom.xml)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/cosmos.svg)
 
-The Cosmos Generic Enabler simplifies Big Data analysis of context data and integrates with some of the many popular Big
+The [Cosmos Generic Enabler](https://github.com/ging/fiware-cosmos) simplifies Big Data analysis of context data and integrates with some of the many popular Big
 Data platforms.
 
 Cosmos is a FIWARE Generic Enabler. Therefore, it can be integrated as part of any platform “Powered by FIWARE”. FIWARE
