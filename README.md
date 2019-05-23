@@ -11,8 +11,8 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector?targetFile=pom.xml)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/cosmos.svg)
 
-The Cosmos Generic Enabler simplifies Big Data analysis of context data and integrates with some of the many popular Big
-Data platforms.
+The [Cosmos Generic Enabler](https://github.com/ging/fiware-cosmos) simplifies Big Data analysis of context data and
+integrates with some of the many popular Big Data platforms.
 
 Cosmos is a FIWARE Generic Enabler. Therefore, it can be integrated as part of any platform “Powered by FIWARE”. FIWARE
 is a curated framework of open source platform components which can be assembled together with other third-party
@@ -47,10 +47,12 @@ This project is part of [FIWARE](https://www.fiware.org/). For more information 
 The Cosmos Big Data Analysis GE is a set of tools that help achieving the tasks of Streaming and Batch processing over
 context data. These tools are:
 
--   Orion-Flink Connector (Source and Sink)
--   Apache Flink Processing Engine
--   Apache Spark Processing Engine (work in progress)
--   Streaming processing examples using Orion Context Broker
+-   [Orion-Flink Connector (Source and Sink)](https://github.com/ging/fiware-cosmos-orion-flink-connector)
+-   [Orion-Flink Connector Streaming Examples](https://github.com/ging/fiware-cosmos-orion-flink-connector-examples)
+-   [Apache Flink Processing Engine](https://flink.apache.org/)
+-   [Orion-Spark Connector (Source and Sink)](https://github.com/ging/fiware-cosmos-orion-spark-connector)
+-   [Orion-Spark Connector Streaming Examples (work in progress)](https://github.com/ging/fiware-cosmos-orion-spark-connector)
+-   [Apache Spark Processing Engine](https://spark.apache.org/)
 
 ## Why use Cosmos?
 
@@ -119,7 +121,6 @@ The received data is a DataStream of objects of the class **`NgsiEvent`**. This 
     -   **`type`**: Node type.
     -   **`attrs`**: Map of attributes in which the key is the attribute name and the value is an object with the
         following properties:
-
         -   **`type`**: Type of value (Float, Int,...).
         -   **`value`**: Value of the attribute.
         -   **`metadata`**: Additional metadata.
