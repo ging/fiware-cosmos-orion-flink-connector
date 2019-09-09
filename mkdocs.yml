@@ -5,7 +5,7 @@ site_description: fiware-cosmos-orion-flink-connector Documentation
 docs_dir: doc
 use_directory_urls: false
 theme: readthedocs
-extra_css: ["https://fiware.org/style/fiware_readthedocs.css", "https://fiware.org/style/fiware_readthedocs_processing.css"]
+extra_css: ["https://www.fiware.org/style/fiware_readthedocs.css", "https://www.fiware.org/style/fiware_readthedocs_processing.css"]
 pages:
   - Home: index.md
   - 'Getting started': getting_started.md
