@@ -41,7 +41,6 @@ class BaseTest {
   private lazy val schedule = Executors.newScheduledThreadPool(Constants.CorePoolSize)
   private lazy val pool = Executors.newCachedThreadPool()
 
-
   def schedule(period: Int, f: () => Unit): Unit = {
     schedule.scheduleAtFixedRate(new Runnable {
       override def run(): Unit = {
