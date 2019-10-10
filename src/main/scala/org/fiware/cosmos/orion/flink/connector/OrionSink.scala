@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory
   * @param contentType Type of content. It can be: ContentType.JSON or ContentType.Plain
   * @param method HTTP Method. It can be: HTTPMethod.POST, HTTPMethod.PUT, HTTPMethod.PATCH
   */
-case class OrionSinkObject(content: String, url: String, contentType: ContentType.Value, method: HTTPMethod.Value)
+case class OrionSinkObject(content: String, url: String, contentType: ContentType.Value, method: HTTPMethod.Value, headers: Option[[Map[String,String]]])
 
 /**
   * Content type of the HTTP message
@@ -97,6 +97,9 @@ object OrionSink {
   def createHttpMsg(msg: OrionSinkObject) : HttpEntityEnclosingRequestBase= {
     val httpEntity = getMethod(msg.method, msg.url)
     httpEntity.setHeader("Content-type", msg.contentType.toString)
+    if(headers.size>0){
+      for((k,v)<-headers) httpEntity.setHeader(k,v)
+    }
     httpEntity.setEntity(new StringEntity(msg.content))
     httpEntity
   }
