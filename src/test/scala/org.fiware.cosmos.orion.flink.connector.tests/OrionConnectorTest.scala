@@ -158,11 +158,11 @@ class OrionConnectorTest extends  BaseTest{
 
   @Test def orionSource() : Unit = {
     run(() =>FlinkJobTest.main(Array()))
-    Thread.sleep(Utils.SleepTime)
+    Thread.sleep(Utils.SleepTime*2)
     for ( x <- 0 to 10){
       val json = simulatedNotification.notification(10*x,x).toString
       sendPostRequest(Utils.OtherUrl,json)
-      Thread.sleep(Utils.SleepTimeShort)
+      Thread.sleep(Utils.SleepTimeShort*2)
     }
     Thread.sleep(Utils.SleepTimeShort)
     Assert.assertEquals(simulatedNotification.maxTempVal,100*1,0)
