@@ -1,21 +1,21 @@
 package org.fiware.cosmos.orion.flink.connector.tests
 
-import java.net.{InetAddress, InetSocketAddress}
+import java.net.InetSocketAddress
 
-import io.netty.handler.codec.http.{DefaultFullHttpRequest, HttpMethod, HttpVersion}
-import org.fiware.cosmos.orion.flink.connector.{NgsiEvent, OrionSink, OrionHttpHandler, OrionSinkObject, OrionHttpServer, ContentType, HTTPMethod}
-import org.junit.{Assert, Test}
 import io.netty.buffer.Unpooled
 import io.netty.channel.ChannelHandlerContext
+import io.netty.handler.codec.http.{DefaultFullHttpRequest, HttpMethod, HttpVersion}
 import io.netty.util.CharsetUtil
 import org.apache.http.client.methods.{HttpPatch, HttpPost, HttpPut}
 import org.fiware.cosmos.orion.flink.connector.test.FlinkJobTest
+import org.fiware.cosmos.orion.flink.connector._
+import org.junit.{Assert, Test}
 import org.mockito.Mockito.mock
 
 object Utils {
   final val Port = 9001
-  final val SleepTime = 10000
-  final val SleepTimeShort = 3000
+  final val SleepTime = 20000
+  final val SleepTimeShort = 6000
   final val ServerAddress = "http://localhost:9001"
   final val OrionAddress = "http://localhost:2026"
   final val ContentType = "Content-Type"
