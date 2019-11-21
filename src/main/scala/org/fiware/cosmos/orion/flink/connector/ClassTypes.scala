@@ -8,7 +8,17 @@ package org.fiware.cosmos.orion.flink.connector
   * @param entities List of entities
   * @param subscriptionId Subscription id to the Context Broker
   */
-case class NgsiEvent(creationTime: Long, fiwareService: String ,fiwareServicePath: String, entities: Seq[Entity], subscriptionId: String) extends Serializable
+case class NgsiEvent(creationTime: Long, fiwareService: String ,fiwareServicePath: String, entities: Seq[Entity], subscriptionId: String) extends scala.Serializable
+
+/**
+  * NgsiEventLD
+  * @param creationTime Time the event was received (milliseconds since 1970)
+  * @param fiwareService FIWARE service header
+  * @param fiwareServicePath FIWARE service path header
+  * @param entities List of entities
+  * @param subscriptionId Subscription id to the Context Broker
+  */
+case class NgsiEventLD(creationTime: Long, fiwareService: String ,fiwareServicePath: String, entities: Seq[Entity], subscriptionId: String) extends scala.Serializable
 
 /**
   * Entity
@@ -16,14 +26,14 @@ case class NgsiEvent(creationTime: Long, fiwareService: String ,fiwareServicePat
   * @param `type` Entity type
   * @param attrs List of attributes
   */
-case class Entity(id: String,  `type`: String, attrs: Map[String, Attribute]) extends Serializable
+case class Entity(id: String,  `type`: String, attrs: Map[String, Attribute]) extends scala.Serializable
 
 /**
   * HttpBody
   * @param data Data array
   * @param subscriptionId Subscription id
   */
-case class HttpBody( data: Seq[Map[String,Any]], subscriptionId: String ) extends Serializable
+case class HttpBody( data: Seq[Map[String,Any]], subscriptionId: String ) extends scala.Serializable
 
 /**
   * Attribute of an entity
@@ -31,7 +41,7 @@ case class HttpBody( data: Seq[Map[String,Any]], subscriptionId: String ) extend
   * @param value Value of the attribute
   * @param metadata Metadata map
   */
-case class Attribute(`type`: Any, value: Any, metadata:Any ) extends Serializable
+case class Attribute(`type`: Any, value: Any, metadata:Any ) extends scala.Serializable
 
 
 /**
@@ -51,3 +61,4 @@ object MapToAttributeConverter{
        values.get("metadata").orNull)
   }
 }
+

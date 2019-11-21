@@ -22,25 +22,75 @@ import io.netty.buffer.{ByteBufUtil, Unpooled}
 import io.netty.channel.{ChannelFutureListener, ChannelHandlerContext, ChannelInboundHandlerAdapter}
 import io.netty.handler.codec.http.HttpResponseStatus.{CONTINUE, OK}
 import io.netty.handler.codec.http.HttpVersion.HTTP_1_1
-import io.netty.handler.codec.http.{DefaultFullHttpResponse, FullHttpRequest, FullHttpResponse, HttpMethod, HttpUtil}
+import io.netty.handler.codec.http._
 import io.netty.util.{AsciiString, CharsetUtil}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.json4s.DefaultFormats
 import org.json4s.jackson.JsonMethods.parse
 import org.json4s.jackson.Serialization.write
 import org.slf4j.LoggerFactory
+
 /**
  * HTTP server handler, HTTP http request
  *
  * @param sc       Flink source context for collect received message
  */
-class OrionHttpHandler(
-  sc: SourceContext[NgsiEvent]
-) extends OrionHttpHandlerInterface (sc: SourceContext[NgsiEvent],NgsiEvent.getClass) {
+abstract class OrionHttpHandlerInterface(
+  sc: SourceContext[_],
+  version: Class[_]
+) extends ChannelInboundHandlerAdapter {
 
   private lazy val logger = LoggerFactory.getLogger(getClass)
+  private lazy val CONTENT_TYPE = new AsciiString("Content-Type")
+  private lazy val CONTENT_LENGTH  = new AsciiString("Content-Length")
 
-  override def parseMessage(req : FullHttpRequest) : NgsiEvent =  {
+  override def channelReadComplete(ctx: ChannelHandlerContext): Unit = ctx.flush
+  implicit val formats = DefaultFormats
+
+  /**
+    * Reads the information comming from the HTTP channel
+    * @param ctx Flink source context for collect received message
+    * @param msg HTTP message
+    */
+  override def channelRead(ctx: ChannelHandlerContext, msg: AnyRef): Unit = {
+    msg match {
+      case req : FullHttpRequest =>
+
+        if (req.method() != HttpMethod.POST) {
+          throw new Exception("Only POST requests are allowed")
+        }
+        val ngsiEvent = parseMessage(req)
+        if (sc != null && ngsiEvent.isInstanceOf[scala.Serializable ]) {
+          sendMessage(ngsiEvent)
+        } else {
+          exceptionCaught(ctx, new Exception("Request body is not an NgsiEvent"))
+        }
+        if (HttpUtil.is100ContinueExpected(req)) {
+          ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE))
+        }
+
+        val keepAlive: Boolean = HttpUtil.isKeepAlive(req)
+
+
+        // Generate Response
+        if (!keepAlive) {
+          ctx.writeAndFlush(buildResponse()).addListener(ChannelFutureListener.CLOSE)
+        } else {
+          // val decoder = new QueryStringDecoder(req.uri)
+          // val param: java.util.Map[String, java.util.List[String]] = decoder.parameters()
+          ctx.writeAndFlush(buildResponse())
+        }
+
+      case x : Any =>
+        logger.info("Unsupported request format " + x)
+    }
+  }
+
+  def sendMessage(msg: scala.Serializable  ) : Unit  = {
+
+  }
+
+  def parseMessage(req : FullHttpRequest) : scala.Serializable =  {
     try {
       // Retrieve headers
       val headerEntries = req.headers().entries()
@@ -80,10 +130,26 @@ class OrionHttpHandler(
       case e: Error => null
     }
   }
-  override def sendMessage(msg: scala.Serializable) : Unit = {
-    val ngsiEvent = msg.asInstanceOf[NgsiEvent]
-    logger.info(write(ngsiEvent))
-    sc.collect(ngsiEvent)
+  private def buildResponse(content: Array[Byte] = Array.empty[Byte]): FullHttpResponse = {
+    val response: FullHttpResponse = new DefaultFullHttpResponse(
+      HTTP_1_1, OK, Unpooled.wrappedBuffer(content)
+    )
+    response.headers.set(CONTENT_TYPE, "text/plain")
+    response.headers.setInt(CONTENT_LENGTH, response.content.readableBytes)
+    response
   }
 
+  private def buildBadResponse(content: Array[Byte] = Array.empty[Byte]): FullHttpResponse = {
+    val response: FullHttpResponse = new DefaultFullHttpResponse(
+      HTTP_1_1, OK, Unpooled.wrappedBuffer(content)
+    )
+    response.headers.set(CONTENT_TYPE, "text/plain")
+    response.headers.setInt(CONTENT_LENGTH, response.content.readableBytes)
+    response
+  }
+
+  override def exceptionCaught(ctx: ChannelHandlerContext, cause: Throwable): Unit = {
+    logger.error("channel exception " + ctx.channel().toString, cause)
+    ctx.writeAndFlush(buildBadResponse( (cause.getMessage.toString() + "\n").getBytes()))
+  }
 }

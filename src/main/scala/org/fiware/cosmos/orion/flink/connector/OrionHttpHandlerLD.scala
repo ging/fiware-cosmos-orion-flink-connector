@@ -1,46 +1,22 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * Modified by @sonsoleslp
- */
 package org.fiware.cosmos.orion.flink.connector
-
 import io.netty.buffer.{ByteBufUtil, Unpooled}
 import io.netty.channel.{ChannelFutureListener, ChannelHandlerContext, ChannelInboundHandlerAdapter}
 import io.netty.handler.codec.http.HttpResponseStatus.{CONTINUE, OK}
 import io.netty.handler.codec.http.HttpVersion.HTTP_1_1
-import io.netty.handler.codec.http.{DefaultFullHttpResponse, FullHttpRequest, FullHttpResponse, HttpMethod, HttpUtil}
+import io.netty.handler.codec.http._
 import io.netty.util.{AsciiString, CharsetUtil}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.json4s.DefaultFormats
 import org.json4s.jackson.JsonMethods.parse
 import org.json4s.jackson.Serialization.write
 import org.slf4j.LoggerFactory
-/**
- * HTTP server handler, HTTP http request
- *
- * @param sc       Flink source context for collect received message
- */
-class OrionHttpHandler(
-  sc: SourceContext[NgsiEvent]
-) extends OrionHttpHandlerInterface (sc: SourceContext[NgsiEvent],NgsiEvent.getClass) {
+
+class OrionHttpHandlerLD(sc: SourceContext[NgsiEventLD])
+  extends OrionHttpHandlerInterface(sc: SourceContext[NgsiEventLD], NgsiEventLD.getClass) {
 
   private lazy val logger = LoggerFactory.getLogger(getClass)
 
-  override def parseMessage(req : FullHttpRequest) : NgsiEvent =  {
+  override def parseMessage(req : FullHttpRequest) : NgsiEventLD =  {
     try {
       // Retrieve headers
       val headerEntries = req.headers().entries()
@@ -73,7 +49,7 @@ class OrionHttpHandler(
       // Generate timestamp
       val creationTime = System.currentTimeMillis
       // Generate NgsiEvent
-      val ngsiEvent = NgsiEvent(creationTime, service, servicePath, entities, subscriptionId)
+      val ngsiEvent = NgsiEventLD(creationTime, service, servicePath, entities, subscriptionId)
       ngsiEvent
     } catch {
       case e: Exception => null
@@ -81,9 +57,8 @@ class OrionHttpHandler(
     }
   }
   override def sendMessage(msg: scala.Serializable) : Unit = {
-    val ngsiEvent = msg.asInstanceOf[NgsiEvent]
+    val ngsiEvent = msg.asInstanceOf[NgsiEventLD]
     logger.info(write(ngsiEvent))
     sc.collect(ngsiEvent)
   }
-
 }
