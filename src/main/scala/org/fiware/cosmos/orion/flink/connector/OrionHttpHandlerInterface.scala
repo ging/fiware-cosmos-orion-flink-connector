@@ -27,7 +27,6 @@ import io.netty.util.{AsciiString, CharsetUtil}
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
 import org.json4s.DefaultFormats
 import org.json4s.jackson.JsonMethods.parse
-import org.json4s.jackson.Serialization.write
 import org.slf4j.LoggerFactory
 
 /**
@@ -60,6 +59,8 @@ abstract class OrionHttpHandlerInterface(
           throw new Exception("Only POST requests are allowed")
         }
         val ngsiEvent = parseMessage(req)
+        println(ngsiEvent)
+
         if (sc != null && ngsiEvent.isInstanceOf[scala.Serializable ]) {
           sendMessage(ngsiEvent)
         } else {

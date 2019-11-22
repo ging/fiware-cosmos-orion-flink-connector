@@ -1,12 +1,8 @@
 package org.fiware.cosmos.orion.flink.connector
-import io.netty.buffer.{ByteBufUtil, Unpooled}
-import io.netty.channel.{ChannelFutureListener, ChannelHandlerContext, ChannelInboundHandlerAdapter}
-import io.netty.handler.codec.http.HttpResponseStatus.{CONTINUE, OK}
-import io.netty.handler.codec.http.HttpVersion.HTTP_1_1
+import io.netty.buffer.ByteBufUtil
 import io.netty.handler.codec.http._
-import io.netty.util.{AsciiString, CharsetUtil}
+import io.netty.util.CharsetUtil
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
-import org.json4s.DefaultFormats
 import org.json4s.jackson.JsonMethods.parse
 import org.json4s.jackson.Serialization.write
 import org.slf4j.LoggerFactory
@@ -27,6 +23,7 @@ class OrionHttpHandlerLD(sc: SourceContext[NgsiEventLD])
 
       // Retrieve body content and convert from Byte array to String
       val content = req.content()
+
       val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
       val jsonBodyString = byteBufUtil.toString(0,content.capacity(),CharsetUtil.UTF_8)
       content.release()
@@ -37,14 +34,21 @@ class OrionHttpHandlerLD(sc: SourceContext[NgsiEventLD])
       val entities = parsedEntities.map(entity => {
         // Retrieve entity id
         val entityId = entity("id").toString
+
+
         // Retrieve entity type
         val entityType = entity("type").toString
+
+
+        //Retrieve entity context
+        val entityContext = entity("@context")
+        println(entityType)
         // Retrieve attributes
-        val attrs = entity.filterKeys(x => x != "id" & x!= "type" )
+        val attrs = entity.filterKeys(x => x != "id" & x!= "type" & x!= "@context" )
           //Convert attributes to Attribute objects
           .transform((k,v) => MapToAttributeConverter
-          .unapply(v.asInstanceOf[Map[String,Any]]))
-        Entity(entityId, entityType, attrs)
+          .unapplyLD(v.asInstanceOf[Map[String,Any]]))
+        EntityLD(entityId, entityType,entityContext, attrs)
       })
       // Generate timestamp
       val creationTime = System.currentTimeMillis

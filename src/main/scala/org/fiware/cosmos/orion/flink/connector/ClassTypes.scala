@@ -18,7 +18,7 @@ case class NgsiEvent(creationTime: Long, fiwareService: String ,fiwareServicePat
   * @param entities List of entities
   * @param subscriptionId Subscription id to the Context Broker
   */
-case class NgsiEventLD(creationTime: Long, fiwareService: String ,fiwareServicePath: String, entities: Seq[Entity], subscriptionId: String) extends scala.Serializable
+case class NgsiEventLD(creationTime: Long, fiwareService: String ,fiwareServicePath: String, entities: Seq[EntityLD], subscriptionId: String) extends scala.Serializable
 
 /**
   * Entity
@@ -27,6 +27,16 @@ case class NgsiEventLD(creationTime: Long, fiwareService: String ,fiwareServiceP
   * @param attrs List of attributes
   */
 case class Entity(id: String,  `type`: String, attrs: Map[String, Attribute]) extends scala.Serializable
+
+/**
+  * Entity
+  *
+  * @param id     Identification of the entity
+  * @param `type` Entity type
+  * @param context Entity type
+  * @param attrs  List of attributes
+  */
+case class EntityLD(id: String,  `type`: String,context: Any, attrs: Map[String, AttributeLD]) extends scala.Serializable
 
 /**
   * HttpBody
@@ -42,6 +52,14 @@ case class HttpBody( data: Seq[Map[String,Any]], subscriptionId: String ) extend
   * @param metadata Metadata map
   */
 case class Attribute(`type`: Any, value: Any, metadata:Any ) extends scala.Serializable
+
+/**
+  * Attribute of an entity
+  * @param `type` Type of attribute
+  * @param value Value of the attribute
+  * @param metadata Metadata map
+  */
+case class AttributeLD(`type`: Any, value: Any, metadata: Map[String,Any] ) extends scala.Serializable
 
 
 /**
@@ -60,5 +78,16 @@ object MapToAttributeConverter{
        values.get("value").orNull,
        values.get("metadata").orNull)
   }
+  def unapplyLD(values: Map[String,Any]) : AttributeLD =  {
+    val metadata = values.filterKeys(x => x != "value" & x!= "type")
+
+
+    AttributeLD(
+      values.get("type").orNull,
+      values.get("value").orNull,
+      metadata
+    )
+  }
+
 }
 

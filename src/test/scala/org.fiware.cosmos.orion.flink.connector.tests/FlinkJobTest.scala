@@ -24,7 +24,7 @@ object FlinkJobTest{
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     // Create Orion Source. Receive notifications on port 9001
-    val eventStream = env.addSource(new OrionSource(Constants.Port))
+    val eventStream = env.addSource(new OrionSourceLD(Constants.Port))
     // Process event stream
     val processedDataStream = eventStream
       .flatMap(event => event.entities)

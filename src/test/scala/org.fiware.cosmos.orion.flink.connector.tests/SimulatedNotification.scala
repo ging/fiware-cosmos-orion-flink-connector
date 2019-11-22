@@ -19,7 +19,7 @@ final val defaultTemperature = 20
   final val defaultPressure = 40
 
   def notification(temperature: Float = defaultTemperature, pressure: Float = defaultPressure) : String = {
-  s"""{
+    """{
         "data": [
            {
             "id": "R1",
@@ -34,8 +34,28 @@ final val defaultTemperature = 20
         ],
         "subscriptionId": "57458eb60962ef754e7c0998"
         }""".stripMargin
+  }
+    def notificationLD(temperature: Float = defaultTemperature, pressure: Float = defaultPressure) : String = {
+      """{
+        "data": [
+           {
+            "id": "R1",
+            "type": "Node",
+            "co": {"type": "Propert","value": 0,"metadata": {}},
+            "co2": {"type": "Property","value": 0,"metadata": {}},
+            "humidity": {"type": "Property","value": 40,"metadata": {}},
+            "pressure": {"type": "Property","value": ${pressure},"metadata": {}},
+            "temperature": {"type": "Property","value": ${temperature},"metadata": {}},
+            "wind_speed": {"type": "Property","value": 1.06,"metadata": {}},
+            "@context": ["https://schema.lab.fiware.org/ld/context","https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"]
+            }
+        ],
+        "subscriptionId": "57458eb60962ef754e7c0998"
+        }""".stripMargin
 
-}
+    }
+
 var maxTempVal = 0.0
 var maxPresVal = 0.0
-}
+};
+
