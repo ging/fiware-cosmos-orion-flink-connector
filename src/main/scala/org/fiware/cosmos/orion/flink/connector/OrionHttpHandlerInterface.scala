@@ -59,8 +59,6 @@ abstract class OrionHttpHandlerInterface(
           throw new Exception("Only POST requests are allowed")
         }
         val ngsiEvent = parseMessage(req)
-        println(ngsiEvent)
-
         if (sc != null && ngsiEvent.isInstanceOf[scala.Serializable ]) {
           sendMessage(ngsiEvent)
         } else {

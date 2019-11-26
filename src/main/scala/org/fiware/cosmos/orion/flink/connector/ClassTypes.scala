@@ -57,9 +57,9 @@ case class Attribute(`type`: Any, value: Any, metadata:Any ) extends scala.Seria
   * Attribute of an entity
   * @param `type` Type of attribute
   * @param value Value of the attribute
-  * @param metadata Metadata map
+  * @param unitCode Metadata map
   */
-case class AttributeLD(`type`: Any, value: Any, metadata: Map[String,Any] ) extends scala.Serializable
+case class AttributeLD(`type`: Any, value: Any, unitCode: Any ) extends scala.Serializable
 
 
 /**
@@ -78,14 +78,13 @@ object MapToAttributeConverter{
        values.get("value").orNull,
        values.get("metadata").orNull)
   }
-  def unapplyLD(values: Map[String,Any]) : AttributeLD =  {
-    val metadata = values.filterKeys(x => x != "value" & x!= "type")
 
+  def unapplyLD(values: Map[String,Any]) : AttributeLD =  {
 
     AttributeLD(
       values.get("type").orNull,
       values.get("value").orNull,
-      metadata
+      values.get("unitCode").orNull
     )
   }
 
