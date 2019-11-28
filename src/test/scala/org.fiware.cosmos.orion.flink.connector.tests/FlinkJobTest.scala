@@ -9,7 +9,7 @@ import org.json4s.jackson.Serialization.write
 
 
 object Constants {
-  final val Port = 9102
+  final val Port = 9001
   final val MaxWindow = 5
   final val MinWindow = 2
 }

@@ -13,8 +13,8 @@ import org.mockito.Mockito.mock
 
 object Utils {
   final val Port = 9001
-  final val SleepTime = 20000
-  final val SleepTimeShort = 6000
+  final val SleepTime = 40000
+  final val SleepTimeShort = 12000
   final val ServerAddress = "http://localhost:9001"
   final val OrionAddress = "http://localhost:2026"
   final val ContentType = "Content-Type"

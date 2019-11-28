@@ -12,10 +12,10 @@ import org.junit.{Assert, Test}
 import org.mockito.Mockito.mock
 
 object UtilsLD {
-  final val Port = 9003
+  final val Port = 9002
   final val SleepTime = 20000
   final val SleepTimeShort = 6000
-  final val ServerAddress = "http://localhost:9003"
+  final val ServerAddress = "http://localhost:9002"
   final val OrionAddress = "http://localhost:2026"
   final val ContentType = "Content-Type"
   final val ContentType2 = "Content-Type2"
