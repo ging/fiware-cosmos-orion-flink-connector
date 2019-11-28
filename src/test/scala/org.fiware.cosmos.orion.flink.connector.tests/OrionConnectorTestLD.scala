@@ -11,11 +11,11 @@ import org.fiware.cosmos.orion.flink.connector._
 import org.junit.{Assert, Test}
 import org.mockito.Mockito.mock
 
-object Utils {
-  final val Port = 9001
+object UtilsLD {
+  final val Port = 9003
   final val SleepTime = 20000
   final val SleepTimeShort = 6000
-  final val ServerAddress = "http://localhost:9001"
+  final val ServerAddress = "http://localhost:9003"
   final val OrionAddress = "http://localhost:2026"
   final val ContentType = "Content-Type"
   final val ContentType2 = "Content-Type2"
@@ -30,51 +30,51 @@ object Utils {
   final val Demo = "demo"
   final val Test = "/test"
   final val BadContent = "BAD CONTENT"
-  final val OtherUrl = "http://localhost:9102"
+  final val OtherUrl = "http://localhost:9103"
 
 }
 
-class OrionConnectorTest extends  BaseTest{
-  def createMockFullHttpRequest(str: String = simulatedNotification.notification()): DefaultFullHttpRequest ={
+class OrionConnectorTestLD extends  BaseTest{
+  def createMockFullHttpRequest(str: String = simulatedNotificationLD.notification()): DefaultFullHttpRequest ={
     val bytes = str.getBytes(CharsetUtil.UTF_8)
     val content = Unpooled.copiedBuffer(bytes)
-    val fhr = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.POST, Utils.ServerAddress, content)
-    fhr.headers().set(Utils.ContentType, Utils.UTF8)
-    fhr.headers().set(Utils.ContentType2, Utils.UTF8)
-    fhr.headers().set(Utils.Accept, Utils.Json)
-    fhr.headers().set(Utils.UserAgent, Utils.Orion)
-    fhr.headers().set(Utils.FiwareService, Utils.Demo)
-    fhr.headers().set(Utils.FiwareServicePath, Utils.Test)
+    val fhr = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.POST, UtilsLD.ServerAddress, content)
+    fhr.headers().set(UtilsLD.ContentType, UtilsLD.UTF8)
+    fhr.headers().set(UtilsLD.ContentType2, UtilsLD.UTF8)
+    fhr.headers().set(UtilsLD.Accept, UtilsLD.Json)
+    fhr.headers().set(UtilsLD.UserAgent, UtilsLD.Orion)
+    fhr.headers().set(UtilsLD.FiwareService, UtilsLD.Demo)
+    fhr.headers().set(UtilsLD.FiwareServicePath, UtilsLD.Test)
     fhr
   }
 
   def createMockFullHttpRequestGet(): DefaultFullHttpRequest ={
-    val fhr = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, Utils.ServerAddress)
-    //  val headers = new HttpHeaders(Utils.ContentType, "application/json; charset=utf-8")
-    fhr.headers().set(Utils.ContentType, Utils.Json)
-    fhr.headers().set(Utils.ContentType2, Utils.Json)
-    fhr.headers().set(Utils.Accept, Utils.Json)
-    fhr.headers().set(Utils.UserAgent, Utils.Orion)
-    fhr.headers().set(Utils.FiwareService, Utils.Demo)
-    fhr.headers().set(Utils.FiwareServicePath, Utils.Test)
+    val fhr = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, UtilsLD.ServerAddress)
+    //  val headers = new HttpHeaders(UtilsLD.ContentType, "application/json; charset=utf-8")
+    fhr.headers().set(UtilsLD.ContentType, UtilsLD.Json)
+    fhr.headers().set(UtilsLD.ContentType2, UtilsLD.Json)
+    fhr.headers().set(UtilsLD.Accept, UtilsLD.Json)
+    fhr.headers().set(UtilsLD.UserAgent, UtilsLD.Orion)
+    fhr.headers().set(UtilsLD.FiwareService, UtilsLD.Demo)
+    fhr.headers().set(UtilsLD.FiwareServicePath, UtilsLD.Test)
     fhr
   }
 
   @Test def correctNotification: Unit = {
-    val sc  =  new DummySourceContext()
-    val ohh = new OrionHttpHandler(sc)
+    val sc  =  new DummySourceContextLD()
+    val ohh = new OrionHttpHandlerLD(sc)
     val req = createMockFullHttpRequest()
     val mockCtx = mock(classOf[ChannelHandlerContext])
   //  ohh.channelRead(mockCtx, req)
     var res = ohh.parseMessage(req)
-    Assert.assertTrue(res.isInstanceOf[NgsiEvent])
+    Assert.assertTrue(res.isInstanceOf[NgsiEventLD])
 
   }
 
   @Test
   def incorrectNotification: Unit = {
-    val sc  =  new DummySourceContext()
-    val ohh = new OrionHttpHandler(sc)
+    val sc  =  new DummySourceContextLD()
+    val ohh = new OrionHttpHandlerLD(sc)
     val req = createMockFullHttpRequest("{}")
     val mockCtx = mock(classOf[ChannelHandlerContext])
     //  ohh.channelRead(mockCtx, req)
@@ -84,16 +84,16 @@ class OrionConnectorTest extends  BaseTest{
 
   @Test(expected=classOf[java.lang.Exception])
   def getNotification: Unit = {
-    val sc  =  new DummySourceContext()
-    val ohh = new OrionHttpHandler(sc)
+    val sc  =  new DummySourceContextLD()
+    val ohh = new OrionHttpHandlerLD(sc)
     val req = createMockFullHttpRequestGet()
     val mockCtx = mock(classOf[ChannelHandlerContext])
     ohh.channelRead(mockCtx, req)
   }
 
   @Test def postNotification: Unit = {
-    val sc  =  new DummySourceContext()
-    val ohh = new OrionHttpHandler(sc)
+    val sc  =  new DummySourceContextLD()
+    val ohh = new OrionHttpHandlerLD(sc)
     val req = createMockFullHttpRequest()
     val mockCtx = mock(classOf[ChannelHandlerContext])
     ohh.channelRead(mockCtx, req)
@@ -101,33 +101,33 @@ class OrionConnectorTest extends  BaseTest{
   }
 
   @Test def buildHttpPostSinkEntity : Unit = {
-    val os = OrionSinkObject(Utils.Content, Utils.OrionAddress, ContentType.Plain, HTTPMethod.POST)
+    val os = OrionSinkObject(UtilsLD.Content, UtilsLD.OrionAddress, ContentType.Plain, HTTPMethod.POST)
     val httpMsg = OrionSink.createHttpMsg(os)
     val content = scala.io.Source.fromInputStream(httpMsg.getEntity.getContent).mkString
 
-    Assert.assertEquals(httpMsg.getHeaders(Utils.ContentType)(0).getValue, ContentType.Plain.toString())
+    Assert.assertEquals(httpMsg.getHeaders(UtilsLD.ContentType)(0).getValue, ContentType.Plain.toString())
     Assert.assertEquals(httpMsg.getMethod(), "POST")
-    Assert.assertEquals(content, Utils.Content)
+    Assert.assertEquals(content, UtilsLD.Content)
   }
 
   @Test def buildHttpPutSinkEntity : Unit = {
-    val os = OrionSinkObject(Utils.Content, Utils.OrionAddress, ContentType.JSON, HTTPMethod.PUT)
+    val os = OrionSinkObject(UtilsLD.Content, UtilsLD.OrionAddress, ContentType.JSON, HTTPMethod.PUT)
     val httpMsg = OrionSink.createHttpMsg(os)
     val content = scala.io.Source.fromInputStream(httpMsg.getEntity.getContent).mkString
 
-    Assert.assertEquals(httpMsg.getHeaders(Utils.ContentType)(0).getValue, ContentType.JSON.toString())
+    Assert.assertEquals(httpMsg.getHeaders(UtilsLD.ContentType)(0).getValue, ContentType.JSON.toString())
     Assert.assertEquals(httpMsg.getMethod(), "PUT")
-    Assert.assertEquals(content, Utils.Content)
+    Assert.assertEquals(content, UtilsLD.Content)
   }
 
   @Test def buildHttpPatchSinkEntity : Unit = {
-    val os = OrionSinkObject(Utils.Content, Utils.OrionAddress, ContentType.JSON, HTTPMethod.PATCH)
+    val os = OrionSinkObject(UtilsLD.Content, UtilsLD.OrionAddress, ContentType.JSON, HTTPMethod.PATCH)
     val httpMsg = OrionSink.createHttpMsg(os)
     val content = scala.io.Source.fromInputStream(httpMsg.getEntity.getContent).mkString
 
-    Assert.assertEquals(httpMsg.getHeaders(Utils.ContentType)(0).getValue, ContentType.JSON.toString())
+    Assert.assertEquals(httpMsg.getHeaders(UtilsLD.ContentType)(0).getValue, ContentType.JSON.toString())
     Assert.assertEquals(httpMsg.getMethod(), "PATCH")
-    Assert.assertEquals(content, Utils.Content)
+    Assert.assertEquals(content, UtilsLD.Content)
   }
 
   @Test def getHTTPMethod : Unit = {
@@ -136,49 +136,49 @@ class OrionConnectorTest extends  BaseTest{
    Assert.assertTrue(OrionSink.getMethod(HTTPMethod.PATCH,"").isInstanceOf[HttpPatch])
   }
   @Test (expected=classOf[java.lang.Exception]) def nettyServerCallbackUrl : Unit = {
-    val sc  =  new DummySourceContext()
-    val os = new OrionHttpServer(sc)
-    Assert.assertEquals(os.startNettyServer(Utils.Port,Some("http://callback")).getPort(),Utils.Port)
+    val sc  =  new DummySourceContextLD()
+    val os = new OrionHttpServerLD(sc)
+    Assert.assertEquals(os.startNettyServer(UtilsLD.Port,Some("http://callback")).getPort(),UtilsLD.Port)
   }
   @Test def nettyServerNoCallbackUrl : Unit = {
-    val sc  =  new DummySourceContext()
-    val os : OrionHttpServer = new OrionHttpServer(sc)
+    val sc  =  new DummySourceContextLD()
+    val os : OrionHttpServerLD = new OrionHttpServerLD(sc)
     new Thread(new Runnable {
       def run() {
-        Thread.sleep(Utils.SleepTime)
+        Thread.sleep(UtilsLD.SleepTime)
         os.close()
       }
     }).run()
 
 
-    var  currentAddr : InetSocketAddress = os.startNettyServer(Utils.Port,None)
-    Assert.assertEquals(currentAddr.getPort(), Utils.Port)
+    var  currentAddr : InetSocketAddress = os.startNettyServer(UtilsLD.Port,None)
+    Assert.assertEquals(currentAddr.getPort(), UtilsLD.Port)
   }
 
   @Test def orionSource() : Unit = {
     run(() =>FlinkJobTest.main(Array()))
-    Thread.sleep(Utils.SleepTime*2)
+    Thread.sleep(UtilsLD.SleepTime*2)
     for ( x <- 0 to 10){
-      val json = simulatedNotification.notification(10*x,x).toString
-      sendPostRequest(Utils.OtherUrl,json)
-      Thread.sleep(Utils.SleepTimeShort*2)
+      val json = simulatedNotificationLD.notification(10*x,x).toString
+      sendPostRequest(UtilsLD.OtherUrl,json)
+      Thread.sleep(UtilsLD.SleepTimeShort*2)
     }
-    Thread.sleep(Utils.SleepTimeShort)
-    Assert.assertEquals(simulatedNotification.maxTempVal,100*1,0)
-    Assert.assertEquals(simulatedNotification.maxPresVal,10*1,0)
+    Thread.sleep(UtilsLD.SleepTimeShort)
+    Assert.assertEquals(simulatedNotificationLD.maxTempVal,100*1,0)
+    Assert.assertEquals(simulatedNotificationLD.maxPresVal,10*1,0)
   }
 
   @Test def orionSourceBadRequest() : Unit = {
     run(() =>FlinkJobTest.main(Array()))
-    Thread.sleep(Utils.SleepTime)
-    val originalValue = simulatedNotification.maxTempVal
+    Thread.sleep(UtilsLD.SleepTime)
+    val originalValue = simulatedNotificationLD.maxTempVal
 
     for ( x <- 0 to 10){
-      sendPostRequest(Utils.OtherUrl,Utils.BadContent)
-      Thread.sleep(Utils.SleepTimeShort)
+      sendPostRequest(UtilsLD.OtherUrl,UtilsLD.BadContent)
+      Thread.sleep(UtilsLD.SleepTimeShort)
     }
-    Thread.sleep(Utils.SleepTimeShort)
-    Assert.assertEquals(simulatedNotification.maxTempVal,originalValue,0)
+    Thread.sleep(UtilsLD.SleepTimeShort)
+    Assert.assertEquals(simulatedNotificationLD.maxTempVal,originalValue,0)
 
   }
 }
