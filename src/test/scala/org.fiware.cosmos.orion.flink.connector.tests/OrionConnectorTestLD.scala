@@ -12,10 +12,10 @@ import org.junit.{Assert, Test}
 import org.mockito.Mockito.mock
 
 object UtilsLD {
-  final val Port = 9002
+  final val Port = 9201
   final val SleepTime = 20000
   final val SleepTimeShort = 6000
-  final val ServerAddress = "http://localhost:9002"
+  final val ServerAddress = "http://localhost:" + this.Port
   final val OrionAddress = "http://localhost:2026"
   final val ContentType = "Content-Type"
   final val ContentType2 = "Content-Type2"
@@ -30,7 +30,7 @@ object UtilsLD {
   final val Demo = "demo"
   final val Test = "/test"
   final val BadContent = "BAD CONTENT"
-  final val OtherUrl = "http://localhost:9103"
+  final val OtherUrl = "http://localhost:9302"
 
 }
 
@@ -156,7 +156,7 @@ class OrionConnectorTestLD extends  BaseTest{
   }
 
   @Test def orionSource() : Unit = {
-    run(() =>FlinkJobTest.main(Array()))
+    run(() =>FlinkJobTestLD.main(Array()))
     Thread.sleep(UtilsLD.SleepTime*2)
     for ( x <- 0 to 10){
       val json = simulatedNotificationLD.notification(10*x,x).toString
@@ -169,7 +169,7 @@ class OrionConnectorTestLD extends  BaseTest{
   }
 
   @Test def orionSourceBadRequest() : Unit = {
-    run(() =>FlinkJobTest.main(Array()))
+    run(() =>FlinkJobTestLD.main(Array()))
     Thread.sleep(UtilsLD.SleepTime)
     val originalValue = simulatedNotificationLD.maxTempVal
 

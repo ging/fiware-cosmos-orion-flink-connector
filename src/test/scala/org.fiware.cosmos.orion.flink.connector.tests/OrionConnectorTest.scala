@@ -15,7 +15,7 @@ object Utils {
   final val Port = 9001
   final val SleepTime = 40000
   final val SleepTimeShort = 12000
-  final val ServerAddress = "http://localhost:9001"
+  final val ServerAddress = "http://localhost:" + this.Port
   final val OrionAddress = "http://localhost:2026"
   final val ContentType = "Content-Type"
   final val ContentType2 = "Content-Type2"
@@ -156,7 +156,7 @@ class OrionConnectorTest extends  BaseTest{
   }
 
   @Test def orionSource() : Unit = {
-    run(() =>FlinkJobTest.main(Array()))
+    run(() => FlinkJobTest.main(Array()))
     Thread.sleep(Utils.SleepTime*2)
     for ( x <- 0 to 10){
       val json = simulatedNotification.notification(10*x,x).toString
@@ -169,7 +169,8 @@ class OrionConnectorTest extends  BaseTest{
   }
 
   @Test def orionSourceBadRequest() : Unit = {
-    run(() =>FlinkJobTest.main(Array()))
+    run(() =>FlinkJobTestLD.main(Array()))
+
     Thread.sleep(Utils.SleepTime)
     val originalValue = simulatedNotification.maxTempVal
 

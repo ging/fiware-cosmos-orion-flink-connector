@@ -1,4 +1,4 @@
-package org.fiware.cosmos.orion.flink.connector.test
+package org.fiware.cosmos.orion.flink.connector.tests
 
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
@@ -8,8 +8,8 @@ import org.json4s.DefaultFormats
 import org.json4s.jackson.Serialization.write
 
 
-object Constants {
-  final val Port = 9001
+object ConstantsTest {
+  final val Port = 9102
   final val MaxWindow = 5
   final val MinWindow = 2
 }
@@ -18,13 +18,13 @@ object Constants {
   * Example1 Orion Connector
   * @author @sonsoleslp
   */
-object FlinkJobTest{
+object FlinkJobTest {
   implicit val formats = DefaultFormats
 
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     // Create Orion Source. Receive notifications on port 9001
-    val eventStream = env.addSource(new OrionSource(Constants.Port))
+    val eventStream = env.addSource(new OrionSource(ConstantsTest.Port))
     // Process event stream
     val processedDataStream = eventStream
       .flatMap(event => event.entities)
@@ -34,7 +34,7 @@ object FlinkJobTest{
         EntityNode(entity.id, temp, pres)
       })
       .keyBy("id")
-      .timeWindow(Time.seconds(Constants.MaxWindow), Time.seconds(Constants.MinWindow))
+      .timeWindow(Time.seconds(ConstantsTest.MaxWindow), Time.seconds(ConstantsTest.MinWindow))
 
       processedDataStream.max("temperature").map(max=> {
           simulatedNotification.maxTempVal = max.temperature})

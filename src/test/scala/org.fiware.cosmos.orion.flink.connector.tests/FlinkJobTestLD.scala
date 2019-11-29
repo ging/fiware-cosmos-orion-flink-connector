@@ -8,8 +8,8 @@ import org.json4s.DefaultFormats
 import org.json4s.jackson.Serialization.write
 
 
-object ConstantsLD {
-  final val Port = 9002
+object ConstantsTestLD {
+  final val Port = 9302
   final val MaxWindow = 5
   final val MinWindow = 2
 }
@@ -18,13 +18,13 @@ object ConstantsLD {
   * Example1 Orion Connector
   * @author @sonsoleslp
   */
-object FlinkJobTest{
+object FlinkJobTestLD {
   implicit val formats = DefaultFormats
 
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     // Create Orion Source. Receive notifications on port 9001
-    val eventStream = env.addSource(new OrionSourceLD(ConstantsLD.Port))
+    val eventStream = env.addSource(new OrionSourceLD(ConstantsTestLD.Port))
     // Process event stream
     val processedDataStream = eventStream
       .flatMap(event => event.entities)
@@ -34,7 +34,7 @@ object FlinkJobTest{
         EntityNode(entity.id, temp, pres)
       })
       .keyBy("id")
-      .timeWindow(Time.seconds(ConstantsLD.MaxWindow), Time.seconds(ConstantsLD.MinWindow))
+      .timeWindow(Time.seconds(ConstantsTestLD.MaxWindow), Time.seconds(ConstantsTestLD.MinWindow))
 
       processedDataStream.max("temperature").map(max=> {
           simulatedNotification.maxTempVal = max.temperature})
