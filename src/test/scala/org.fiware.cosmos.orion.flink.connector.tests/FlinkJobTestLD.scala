@@ -24,13 +24,13 @@ object FlinkJobTestLD {
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     // Create Orion Source. Receive notifications on port 9001
-    val eventStream = env.addSource(new OrionSourceLD(ConstantsTestLD.Port))
+    val eventStream = env.addSource(new NGSILDSource(ConstantsTestLD.Port))
     // Process event stream
     val processedDataStream = eventStream
       .flatMap(event => event.entities)
       .map(entity => {
-        val temp = entity.attrs("temperature").value.asInstanceOf[Number].floatValue()
-        val pres = entity.attrs("pressure").value.asInstanceOf[Number].floatValue()
+        val temp = entity.attrs("temperature")("value").asInstanceOf[BigInt].floatValue()
+        val pres = entity.attrs("pressure")("value").asInstanceOf[BigInt].floatValue()
         EntityNode(entity.id, temp, pres)
       })
       .keyBy("id")

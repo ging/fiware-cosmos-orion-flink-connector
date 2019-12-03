@@ -30,7 +30,7 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceCont
  * @author @sonsoleslp
  * @param tryPort     try to use this point, if this point is used then try a new port
  */
-final class OrionSourceLD(
+final class NGSILDSource(
   tryPort: Int/*,
   callbackUrl: Option[String] = None*/
 ) extends RichParallelSourceFunction[NgsiEventLD] {

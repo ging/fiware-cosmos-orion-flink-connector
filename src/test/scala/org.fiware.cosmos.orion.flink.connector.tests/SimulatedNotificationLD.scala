@@ -49,3 +49,4 @@ package object simulatedNotificationLD {
   var maxTempVal = 0.0
   var maxPresVal = 0.0
 }
+

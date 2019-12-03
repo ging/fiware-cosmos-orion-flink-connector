@@ -36,7 +36,7 @@ case class Entity(id: String,  `type`: String, attrs: Map[String, Attribute]) ex
   * @param context Entity type
   * @param attrs  List of attributes
   */
-case class EntityLD(id: String,  `type`: String,context: Any, attrs: Map[String, AttributeLD]) extends scala.Serializable
+case class EntityLD(id: String,  `type`: String, attrs: Map[String, Map[String,Any]],context: Any) extends scala.Serializable
 
 /**
   * HttpBody
@@ -53,13 +53,6 @@ case class HttpBody( data: Seq[Map[String,Any]], subscriptionId: String ) extend
   */
 case class Attribute(`type`: Any, value: Any, metadata:Any ) extends scala.Serializable
 
-/**
-  * Attribute of an entity
-  * @param `type` Type of attribute
-  * @param value Value of the attribute
-  * @param unitCode Metadata map
-  */
-case class AttributeLD(`type`: Any, value: Any, unitCode: Any ) extends scala.Serializable
 
 
 /**
@@ -77,15 +70,6 @@ object MapToAttributeConverter{
        values.get("type").orNull,
        values.get("value").orNull,
        values.get("metadata").orNull)
-  }
-
-  def unapplyLD(values: Map[String,Any]) : AttributeLD =  {
-
-    AttributeLD(
-      values.get("type").orNull,
-      values.get("value").orNull,
-      values.get("unitCode").orNull
-    )
   }
 
 }

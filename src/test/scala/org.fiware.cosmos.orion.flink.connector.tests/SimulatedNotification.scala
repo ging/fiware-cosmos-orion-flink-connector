@@ -39,3 +39,4 @@ package object simulatedNotification {
   var maxTempVal = 0.0
   var maxPresVal = 0.0
 }
+

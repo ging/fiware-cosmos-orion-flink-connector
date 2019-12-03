@@ -13,6 +13,7 @@ class OrionHttpHandlerLD(sc: SourceContext[NgsiEventLD])
   private lazy val logger = LoggerFactory.getLogger(getClass)
 
   override def parseMessage(req : FullHttpRequest) : NgsiEventLD =  {
+
     try {
       // Retrieve headers
       val headerEntries = req.headers().entries()
@@ -30,25 +31,22 @@ class OrionHttpHandlerLD(sc: SourceContext[NgsiEventLD])
       // Parse Body from JSON string to object and retrieve entities
       val dataObj = parse(jsonBodyString).extract[HttpBody]
       val parsedEntities = dataObj.data
+
       val subscriptionId = dataObj.subscriptionId
       val entities = parsedEntities.map(entity => {
         // Retrieve entity id
         val entityId = entity("id").toString
 
-
         // Retrieve entity type
         val entityType = entity("type").toString
 
-
         //Retrieve entity context
-        val entityContext = entity("@context")
-        println(entityType)
+        val entityContext = entity.getOrElse("@context",Array("https://schema.lab.fiware.org/ld/context"))
         // Retrieve attributes
         val attrs = entity.filterKeys(x => x != "id" & x!= "type" & x!= "@context" )
           //Convert attributes to Attribute objects
-          .transform((k,v) => MapToAttributeConverter
-          .unapplyLD(v.asInstanceOf[Map[String,Any]]))
-        EntityLD(entityId, entityType,entityContext, attrs)
+          .transform((k,v) => (v.asInstanceOf[Map[String,Any]]))
+        EntityLD(entityId, entityType, attrs,entityContext)
       })
       // Generate timestamp
       val creationTime = System.currentTimeMillis
@@ -66,3 +64,5 @@ class OrionHttpHandlerLD(sc: SourceContext[NgsiEventLD])
     sc.collect(ngsiEvent)
   }
 }
+
+

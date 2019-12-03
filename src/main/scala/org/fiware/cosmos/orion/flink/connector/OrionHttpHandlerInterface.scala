@@ -98,6 +98,7 @@ abstract class OrionHttpHandlerInterface(
       val service = headerEntries.get(SERVICE_HEADER).getValue()
       val servicePath = headerEntries.get(SERVICE_PATH_HEADER).getValue()
 
+
       // Retrieve body content and convert from Byte array to String
       val content = req.content()
       val byteBufUtil = ByteBufUtil.readBytes(content.alloc, content, content.readableBytes)
