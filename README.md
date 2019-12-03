@@ -66,6 +66,7 @@ conclusions as to the state of your smart solution and bring value to your solut
 This is a Flink connector for the FIWARE Orion Context Broker. It has two parts:
 
 -   **`OrionSource`**: Source for receiving NGSI v2 events from subscriptions via HTTP.
+-   **`NGSILDSource`**: Source for receiving NGSI-LD events from subscriptions via HTTP.
 -   **`OrionSink`**: Sink for writing the processed data in Orion.
 
 ### Installation
