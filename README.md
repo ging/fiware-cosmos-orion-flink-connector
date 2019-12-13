@@ -83,7 +83,7 @@ Add it to your `pom.xml` file inside the dependencies section.
 <dependency>
     <groupId>org.fiware.cosmos</groupId>
     <artifactId>orion.flink.connector</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.3</version>
 </dependency>
 ```
 
