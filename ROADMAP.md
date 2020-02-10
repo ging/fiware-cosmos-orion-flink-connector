@@ -16,8 +16,6 @@ only, and this section may be revised to provide newer information at any time.
 The following list of features are planned to be addressed in the short term, and incorporated in the next release of
 the product:
 
--   **NGSI-LD**: Achieve support for the NGSI Linked data format.
-
 ## Medium term
 
 The following list of features are planned to be addressed in the medium term, typically within the subsequent
