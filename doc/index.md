@@ -37,7 +37,7 @@ context data. These tools are:
 
 -   [Orion-Spark Connector (Source and Sink)](https://github.com/ging/fiware-cosmos-orion-spark-connector)
 
--   [Orion-Spark Connector Streaming Examples (work in progress)](https://github.com/ging/fiware-cosmos-orion-spark-connector)
+-   [Orion-Spark Connector Streaming Examples](https://github.com/ging/fiware-cosmos-orion-spark-connector)
 
 -   [Apache Spark Processing Engine](https://spark.apache.org/)
 

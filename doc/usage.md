@@ -79,6 +79,8 @@ The sink accepts a `DataStream` of objects of the class **`OrionSinkObject`**. T
 
 -   **`method`**: HTTP method of the message. It can be `HTTPMethod.POST`, `HTTPMethod.PUT` or `HTTPMethod.PATCH`.
 
+-   **`headers`** (Optional): String Map including any additional HTTP headers.
+
 ### Production
 
 When packaging your code in a JAR, it is common to exclude dependencies like Flink and Scala since they are typically

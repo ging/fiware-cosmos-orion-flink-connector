@@ -157,6 +157,7 @@ The sink accepts a `DataStream` of objects of the class **`OrionSinkObject`**. T
 -   **`url`**: URL to which the message should be sent.
 -   **`contentType`**: Type of HTTP content of the message. It can be `ContentType.JSON` or `ContentType.Plain`.
 -   **`method`**: HTTP method of the message. It can be `HTTPMethod.POST`, `HTTPMethod.PUT` or `HTTPMethod.PATCH`.
+-   **`headers`** (Optional): String Map including any additional HTTP headers.
 
 #### Production
 
