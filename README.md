@@ -131,14 +131,14 @@ The received data is a DataStream of objects of the class **`NgsiEvent v2`**. Th
 -   Import dependency.
 
 ```scala
-    import org.fiware.cosmos.orion.flink.connector.{OrionSource}
+    import org.fiware.cosmos.orion.flink.connector.{NGSILDSource}
 ```
 
 -   Add source to Flink Environment. Indicate what port you want to listen to (e.g. 9001).
 
 ```scala
     val env = StreamExecutionEnvironment.getExecutionEnvironment
-    val eventStream = env.addSource(new OrionSource(9001))
+    val eventStream = env.addSource(new NGSILDSource(9001))
 ```
 
 -   Parse the received data.
@@ -150,7 +150,7 @@ The received data is a DataStream of objects of the class **`NgsiEvent v2`**. Th
 ```
 
 The received data is a DataStream of objects of the class **`NgsiEvent LD`**. This class has the following attributes:
-attributes in which the key is the attribute name and the value is an object with the
+
 -   **`creationTime`**: Timestamp of arrival.
 -   **`service`**: FIWARE service extracted from the HTTP headers.
 -   **`servicePath`**: FIWARE service path extracted from the HTTP headers.
