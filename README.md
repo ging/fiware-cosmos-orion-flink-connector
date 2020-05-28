@@ -1,6 +1,6 @@
 # FIWARE Cosmos Orion-Flink Connector
 
-[![](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
+[![](https://nexus.lab.fiware.org/static/badges/chapters/core.svg)](https://www.fiware.org/developers/catalogue/)
 ![License](https://img.shields.io/github/license/ging/fiware-cosmos-orion-flink-connector.svg)
 [![](https://img.shields.io/badge/tag-fiware--cosmos-orange.svg?logo=stackoverflow)](http://stackoverflow.com/questions/tagged/fiware-cosmos)
 <br/>
@@ -19,10 +19,10 @@ is a curated framework of open source platform components which can be assembled
 platform components to accelerate the development of Smart Solutions.
 
 This project is part of [FIWARE](https://www.fiware.org/). For more information check the FIWARE Catalogue entry for
-[Context Processing, Analysis and Visualization](https://github.com/Fiware/catalogue/tree/master/processing).
+[Core Context Management](https://github.com/FIWARE/catalogue/tree/master/core).
 
-| :books: [Documentation](https://fiware-cosmos-flink.readthedocs.io) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/processing/cosmos) | :dart: [Roadmap](https://github.com/ging/fiware-cosmos-orion-flink-connector/blob/master/ROADMAP.md) |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| :books: [Documentation](https://fiware-cosmos-flink.readthedocs.io) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/core/cosmos) | :dart: [Roadmap](https://github.com/ging/fiware-cosmos-orion-flink-connector/blob/master/ROADMAP.md) |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 
 
 ## Table of Contents
@@ -162,7 +162,6 @@ The received data is a DataStream of objects of the class **`NgsiEvent LD`**. Th
         -   **`type`**: Type of value (Float, Int,...).
         -   **`value`**: Value of the attribute.
     -   **`@context`**: Map of terms to URIs providing an unambiguous definition.
-
 
 #### OrionSink
 
