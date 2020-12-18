@@ -1,7 +1,7 @@
-# Contributing to <PROJECT NAME>
+# Contributing to FIWARE Cosmos
 
-Thanks for checking out the <PROJECT NAME> Project. We're excited to hear and learn from you. We've put together the following
-guidelines to help you figure out where you can best be helpful.
+Thanks for checking out the FIWARE Cosmos Project. We're excited to hear and learn from you. We've put together the
+following guidelines to help you figure out where you can best be helpful.
 
 ## Ground rules & expectations
 
@@ -22,9 +22,10 @@ Before we get started, here are a few things we expect from you (and that you sh
 
 ## How to contribute
 
-If you'd like to contribute, start by searching through the [issues](https://github.com/<GIT_HUB_PATH>/issues) and
-[pull requests](https://github.com/<GIT_HUB_PATH>/pulls) to see whether someone else has raised a similar idea or
-question.
+If you'd like to contribute, start by searching through the
+[issues](https://github.com/ging/fiware-cosmos-orion-flink-connector/issues) and
+[pull requests](https://github.com/ging/fiware-cosmos-orion-flink-connector/pulls) to see whether someone else has
+raised a similar idea or question.
 
 If you don't see your idea listed, and you think it fits into the goals of this guide, do one of the following:
 
@@ -35,8 +36,9 @@ If you don't see your idea listed, and you think it fits into the goals of this 
 ## Community
 
 Discussions about the Open Source Guides take place on this repository's
-[Issues](https://github.com/<GIT_HUB_PATH>/issues) and [Pull Requests](https://github.com/<GIT_HUB_PATH>/pulls)
-sections. Anybody is welcome to join these conversations.
+[Issues](https://github.com/ging/fiware-cosmos-orion-flink-connector/issues) and
+[Pull Requests](https://github.com/ging/fiware-cosmos-orion-flink-connector/pulls) sections. Anybody is welcome to join
+these conversations.
 
 Wherever possible, do not take these conversations to private channels, including contacting the maintainers directly.
 Keeping communication public means everybody can benefit and learn from the conversation.
