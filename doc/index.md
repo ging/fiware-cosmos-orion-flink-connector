@@ -10,6 +10,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ff824123db8542a3ad34ee3e1be58bd4)](https://www.codacy.com/manual/sonsoleslp/fiware-cosmos-orion-flink-connector?utm_source=github.com&utm_medium=referral&utm_content=ging/fiware-cosmos-orion-flink-connector&utm_campaign=Badge_Grade)
 [![Known Vulnerabilities](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector-examples/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector-examples?targetFile=pom.xml)
 [![Status](https://nexus.lab.fiware.org/static/badges/statuses/cosmos.svg)](#)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4526/badge)](https://bestpractices.coreinfrastructure.org/projects/4526)
 
 The Cosmos Generic Enabler enables easier BigData analysis over context, integrated with some of the most popular
 BigData platforms.
