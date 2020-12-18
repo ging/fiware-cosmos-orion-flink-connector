@@ -80,12 +80,12 @@ under the License.
 		<dependency>
 			<groupId>org.json4s</groupId>
 			<artifactId>json4s-jackson_2.11</artifactId>
-			<version>3.6.7</version>
+			<version>3.6.10</version>
 		</dependency>
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
-			<version>4.1.42.Final</version>
+			<version>4.1.44.Final</version>
 		</dependency>
 
 		<dependency>
@@ -96,7 +96,7 @@ under the License.
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.3</version>
+			<version>4.5.13</version>
 		</dependency>
 
 		<dependency>
