@@ -115,7 +115,7 @@ under the License.
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>19.0</version>
+			<version>24.1.1-jre</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
