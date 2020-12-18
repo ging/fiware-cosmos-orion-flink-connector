@@ -74,7 +74,7 @@ This is a Flink connector for the FIWARE Orion Context Broker. It has two parts:
 Download the JAR from the latest release. In your project directory run:
 
 ```console
-mvn install:install-file -Dfile=$(PATH_DOWNLOAD)/orion.flink.connector-1.2.3.jar -DgroupId=org.fiware.cosmos -DartifactId=orion.flink.connector -Dversion=1.2.3 -Dpackaging=jar
+mvn install:install-file -Dfile=$(PATH_DOWNLOAD)/orion.flink.connector-1.2.4.jar -DgroupId=org.fiware.cosmos -DartifactId=orion.flink.connector -Dversion=1.2.4 -Dpackaging=jar
 ```
 
 Add it to your `pom.xml` file inside the dependencies section.
@@ -83,7 +83,7 @@ Add it to your `pom.xml` file inside the dependencies section.
 <dependency>
     <groupId>org.fiware.cosmos</groupId>
     <artifactId>orion.flink.connector</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
 </dependency>
 ```
 
