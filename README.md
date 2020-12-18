@@ -254,7 +254,7 @@ The list of features that are planned for the subsequent release are available i
 ## Contributing
 
 Contribution guidelines are detailed in the
-[CONTRIBUTIONS](https://github.com/ging/fiware-cosmos-orion-flink-connector/blob/master/CONTRIBUTIONS.md) file.
+[CONTRIBUTING](https://github.com/ging/fiware-cosmos-orion-flink-connector/blob/master/CONTRIBUTING.md) file.
 
 ## Testing
 

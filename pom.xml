@@ -23,7 +23,7 @@ under the License.
 
 	<groupId>org.fiware.cosmos</groupId>
 	<artifactId>orion.flink.connector</artifactId>
-	<version>1.2.3</version>
+	<version>1.2.4</version>
 	<packaging>jar</packaging>
 
 	<name>Fiware Orion Flink Connector</name>
