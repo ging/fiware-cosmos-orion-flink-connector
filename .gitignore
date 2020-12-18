@@ -5,3 +5,4 @@ scalastyle-output.xml
 /node_modules/
 dependency-reduced-pom.xml
 package-lock.json
+cla.patch
