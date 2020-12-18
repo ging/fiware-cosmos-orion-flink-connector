@@ -5,7 +5,7 @@
 [![](https://img.shields.io/badge/tag-fiware--cosmos-orange.svg?logo=stackoverflow)](http://stackoverflow.com/questions/tagged/fiware-cosmos)
 <br/>
 [![Documentation badge](https://readthedocs.org/projects/fiware-cosmos-flink/badge/?version=latest)](https://fiware-cosmos-flink.readthedocs.io/en/latest/)
-[![CI](https://github.com/ging/fiware-cosmos-orion-flink-connector/workflows/CI/badge.svg)](https://github.com/ging/fiware-cosmos-orion-flink-connector/actions?query=workflow%3ACI)
+[![CI](https://github.com/ging/fiware-cosmos-orion-flink-connector/workflows/CI/badge.svg)](https://github.com/ging/fiware-cosmos-orion-flink-connector/actions)
 [![Coverage Status](https://coveralls.io/repos/github/ging/fiware-cosmos-orion-flink-connector/badge.svg?branch=master)](https://coveralls.io/github/ging/fiware-cosmos-orion-flink-connector?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ff824123db8542a3ad34ee3e1be58bd4)](https://www.codacy.com/manual/sonsoleslp/fiware-cosmos-orion-flink-connector?utm_source=github.com&utm_medium=referral&utm_content=ging/fiware-cosmos-orion-flink-connector&utm_campaign=Badge_Grade)
 [![Known Vulnerabilities](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ging/fiware-cosmos-orion-flink-connector?targetFile=pom.xml)
