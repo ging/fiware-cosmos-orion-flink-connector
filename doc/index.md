@@ -39,7 +39,7 @@ context data. These tools are:
 
 -   [Orion-Spark Connector Streaming Examples](https://github.com/ging/fiware-cosmos-orion-spark-connector)
 
--   [Apache Spark Processing Engine](https://ﬁ
+-   [Apache Spark Processing Engine](https://spark.apache.org/)
 
 As the state of the real world changes, the entities representing your IoT devices are constantly changing. Big data
 analysis allows for the study of datasets coming from your context data which are too large for traditional
