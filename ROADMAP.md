@@ -16,10 +16,14 @@ only, and this section may be revised to provide newer information at any time.
 The following list of features are planned to be addressed in the short term, and incorporated in the next release of
 the product:
 
+-   **Automatic subscription**: Enhance the Flink connector to handle all the subscriptions to entities from the connector itself.
+
 ## Medium term
 
 The following list of features are planned to be addressed in the medium term, typically within the subsequent
 release(s) generated in the next 9 months after next planned release:
+
+-   **Integration in research/learning environments**: Integrate the connector within Apache Zeppelin to analyze and visualize streaming data.
 
 -   **Docker images**: Provide FIWARE Docker images to facilitate the deployment of a complete big data processing
     scenario.
