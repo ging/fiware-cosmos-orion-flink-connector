@@ -1,0 +1,19 @@
+{
+    "enabler": "FIWARE Cosmos Orion-Flink Connector",
+    "chapter": "core",
+    "academy": "core/cosmos",
+    "readthedocs": "fiware-cosmos-spark.readthedocs.io",
+    "helpdesk": "",
+    "coveralls": "https://coveralls.io/github/ging/fiware-cosmos-orion-flink-connector",
+    "github": ["ging/fiware-cosmos-orion-flink-connector"],
+    "dockerregistry": [],
+    "docker": [],
+    "email": "",
+    "status": "full",
+    "compose": "",
+    "exclude": [""],
+    "stackexchange": [""],
+    "unit-test": "",
+    "smoke-test": "",
+    "dockerfile": ""
+}
